@@ -1,11 +1,23 @@
 "use strict";
-var registeredUsers = {};
-function getUser(user) {
-    return registeredUsers[user.authorId + user.characterId];
+var Bluebird = require("bluebird");
+var mongodb_1 = require("mongodb");
+var client = new mongodb_1.MongoClient();
+var _connection;
+function getConnection() {
+    return new Bluebird(function (resolve, reject) {
+        if (_connection) {
+            resolve(_connection);
+            return;
+        }
+        client.connect('mongodb://localhost:27017/eve-discord-bot')
+            .then(function (conn) {
+            _connection = conn;
+            resolve(conn);
+        })
+            .catch(function (err) {
+            reject(err);
+        });
+    });
 }
-exports.getUser = getUser;
-function registerUser(user) {
-    registeredUsers[user.authorId + user.characterId];
-}
-exports.registerUser = registerUser;
+exports.getConnection = getConnection;
 //# sourceMappingURL=index.js.map
