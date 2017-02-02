@@ -42,9 +42,9 @@ export const getPriceParser = new Parser('get', true, (parsedLevel, messageParts
                         .then(price => {
                             let response: string;
                             if (type === priceService.OrderType.SELL) {
-                                response = `Minimum sell price at ${hub.hubPrettyName} for ${results[0].name} is ${formatCurrency(price.price)} ISK`;
+                                response = `${formatCurrency(price.volume_remain)} ${results[0].name} ${price.volume_remain === 1 ? 'is' : 'are'} on sell order for ${formatCurrency(price.price, 2)} ISK at ${hub.hubPrettyName}`;
                             } else {
-                                response = `Maximum buy price at ${hub.hubPrettyName} for ${results[0].name} is ${formatCurrency(price.price)} ISK`;
+                                response = `${formatCurrency(price.volume_remain)} ${results[0].name} ${price.volume_remain === 1 ? 'is' : 'are'} on buy order for ${formatCurrency(price.price, 2)} ISK at ${hub.hubPrettyName}`;
                             }
 
                             resolve(response);

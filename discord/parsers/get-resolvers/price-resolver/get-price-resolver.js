@@ -37,10 +37,10 @@ exports.getPriceParser = new parser_1.Parser('get', true, function (parsedLevel,
                     .then(function (price) {
                     var response;
                     if (type_1 === priceService.OrderType.SELL) {
-                        response = "Minimum sell price at " + hub_1.hubPrettyName + " for " + results[0].name + " is " + currency_formatter_1.formatCurrency(price.price) + " ISK";
+                        response = currency_formatter_1.formatCurrency(price.volume_remain) + " " + results[0].name + " " + (price.volume_remain === 1 ? 'is' : 'are') + " on sell order for " + currency_formatter_1.formatCurrency(price.price, 2) + " ISK at " + hub_1.hubPrettyName;
                     }
                     else {
-                        response = "Maximum buy price at " + hub_1.hubPrettyName + " for " + results[0].name + " is " + currency_formatter_1.formatCurrency(price.price) + " ISK";
+                        response = currency_formatter_1.formatCurrency(price.volume_remain) + " " + results[0].name + " " + (price.volume_remain === 1 ? 'is' : 'are') + " on buy order for " + currency_formatter_1.formatCurrency(price.price, 2) + " ISK at " + hub_1.hubPrettyName;
                     }
                     resolve(response);
                 })
