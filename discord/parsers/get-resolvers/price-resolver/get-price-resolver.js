@@ -6,6 +6,7 @@ var priceService = require("../../../../eve-client/api/price.service");
 var searchService = require("../../../../eve-client/api/search.service");
 var parser_1 = require("../../parser");
 var message_parser_1 = require("../../../parsers/message-parser");
+var currency_formatter_1 = require("../../../../formatters/currency-formatter");
 exports.getPriceParser = new parser_1.Parser('get', true, function (parsedLevel, messageParts) {
     if (messageParts.parts[parsedLevel].content === 'help' && messageParts.parts[parsedLevel].type === message_parser_1.PartType.COMMAND) {
         return Bluebird.resolve('usage:\n```get price "<item full or partial name>" from "<jita|amarr|rens|dodixie|hek>" type "<buy|sell>"```\nthis will return the min buy price or the max sell price.' +
@@ -36,10 +37,10 @@ exports.getPriceParser = new parser_1.Parser('get', true, function (parsedLevel,
                     .then(function (price) {
                     var response;
                     if (type_1 === priceService.OrderType.SELL) {
-                        response = "Minimum sell price at " + hub_1.hubPrettyName + " for " + results[0].name + " is " + price.price + " ISK";
+                        response = "Minimum sell price at " + hub_1.hubPrettyName + " for " + results[0].name + " is " + currency_formatter_1.formatCurrency(price.price) + " ISK";
                     }
                     else {
-                        response = "Maximum buy price at " + hub_1.hubPrettyName + " for " + results[0].name + " is " + price.price + " ISK";
+                        response = "Maximum buy price at " + hub_1.hubPrettyName + " for " + results[0].name + " is " + currency_formatter_1.formatCurrency(price.price) + " ISK";
                     }
                     resolve(response);
                 })

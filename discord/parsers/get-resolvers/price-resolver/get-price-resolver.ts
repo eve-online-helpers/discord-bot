@@ -6,6 +6,7 @@ import * as searchService from '../../../../eve-client/api/search.service';
 
 import { Parser } from '../../parser';
 import { PartType, getInputForCommand } from '../../../parsers/message-parser';
+import { formatCurrency } from '../../../../formatters/currency-formatter';
 
 
 export const getPriceParser = new Parser('get', true, (parsedLevel, messageParts) => {
@@ -41,9 +42,9 @@ export const getPriceParser = new Parser('get', true, (parsedLevel, messageParts
                         .then(price => {
                             let response: string;
                             if (type === priceService.OrderType.SELL) {
-                                response = `Minimum sell price at ${hub.hubPrettyName} for ${results[0].name} is ${price.price} ISK`;
+                                response = `Minimum sell price at ${hub.hubPrettyName} for ${results[0].name} is ${formatCurrency(price.price)} ISK`;
                             } else {
-                                response = `Maximum buy price at ${hub.hubPrettyName} for ${results[0].name} is ${price.price} ISK`;
+                                response = `Maximum buy price at ${hub.hubPrettyName} for ${results[0].name} is ${formatCurrency(price.price)} ISK`;
                             }
 
                             resolve(response);
