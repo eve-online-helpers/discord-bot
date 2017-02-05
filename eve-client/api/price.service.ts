@@ -10,18 +10,18 @@ export class OrderType {
     static SELL = 'sell';
 }
 
-export function getPriceForItemOnStation(itemId: number, hubRequested: HubData, orderType: string) {
+export function getPriceForItemOnStation(itemId: number, regionId: number, stationId: number, orderType: string) {
     return new Bluebird<PriceResponse>((resolve, reject) => {
-        axios.get<PriceResponse[]>(PRICE_ENDPOINT.replace('{regionId}', hubRequested.regionId.toString()).replace('{itemId}', itemId.toString()).replace('{orderType}', orderType))
+        axios.get<PriceResponse[]>(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()).replace('{orderType}', orderType))
             .then(result => {
                 let relevantOrder: PriceResponse;
                 if (orderType === OrderType.BUY) {
                     relevantOrder = _.maxBy(_.filter(result.data, (order) => {
-                        return order.location_id === hubRequested.hubId;
+                        return order.location_id === stationId;
                     }), record => record.price);
                 } else if (orderType === OrderType.SELL) {
                     relevantOrder = _.minBy(_.filter(result.data, (order) => {
-                        return order.location_id === hubRequested.hubId;
+                        return order.location_id === stationId;
                     }), record => record.price);
                 }
                 resolve(relevantOrder);

@@ -36,7 +36,7 @@ router.get('/callback', function (req: express.Request, res: express.Response) {
       user.characterName = verifyResponse.data.CharacterName;
       user.characterId = verifyResponse.data.CharacterID
 
-      persistanse.registerUser(user);
+      // persistanse.registerUser(user);
 
       discord.sendMessage('Hurray! User registered successfully, type help to see what else you can do', user);
       res.send(`<h2>User registered successfully, you can now close the tab</h2>`);

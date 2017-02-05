@@ -7,9 +7,6 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@types/js-yaml": "^3.5.29",
-    "@types/lodash": "^4.14.52",
-    "@types/mongodb": "^2.1.37",
     "axios": "^0.15.3",
     "bluebird": "^3.4.7",
     "body-parser": "~1.15.2",
@@ -23,9 +20,13 @@
     "moment": "^2.17.1",
     "mongodb": "^2.2.22",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "yargs-parser": "^4.2.1"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.35"
+    "@types/core-js": "^0.9.35",
+    "@types/js-yaml": "^3.5.29",
+    "@types/lodash": "^4.14.52",
+    "@types/mongodb": "^2.1.37"
   }
 }

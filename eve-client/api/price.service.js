@@ -11,19 +11,19 @@ var OrderType = (function () {
 OrderType.BUY = 'buy';
 OrderType.SELL = 'sell';
 exports.OrderType = OrderType;
-function getPriceForItemOnStation(itemId, hubRequested, orderType) {
+function getPriceForItemOnStation(itemId, regionId, stationId, orderType) {
     return new Bluebird(function (resolve, reject) {
-        axios.get(PRICE_ENDPOINT.replace('{regionId}', hubRequested.regionId.toString()).replace('{itemId}', itemId.toString()).replace('{orderType}', orderType))
+        axios.get(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()).replace('{orderType}', orderType))
             .then(function (result) {
             var relevantOrder;
             if (orderType === OrderType.BUY) {
                 relevantOrder = _.maxBy(_.filter(result.data, function (order) {
-                    return order.location_id === hubRequested.hubId;
+                    return order.location_id === stationId;
                 }), function (record) { return record.price; });
             }
             else if (orderType === OrderType.SELL) {
                 relevantOrder = _.minBy(_.filter(result.data, function (order) {
-                    return order.location_id === hubRequested.hubId;
+                    return order.location_id === stationId;
                 }), function (record) { return record.price; });
             }
             resolve(relevantOrder);

@@ -2,7 +2,6 @@
 var express = require("express");
 var moment = require("moment");
 var auth = require("../eve-client/auth");
-var persistanse = require("../persistance");
 var discord = require("../discord");
 var user_model_1 = require("../models/user.model");
 var router = express.Router();
@@ -29,7 +28,7 @@ router.get('/callback', function (req, res) {
         .then(function (verifyResponse) {
         user.characterName = verifyResponse.data.CharacterName;
         user.characterId = verifyResponse.data.CharacterID;
-        persistanse.registerUser(user);
+        // persistanse.registerUser(user);
         discord.sendMessage('Hurray! User registered successfully, type help to see what else you can do', user);
         res.send("<h2>User registered successfully, you can now close the tab</h2>");
     })

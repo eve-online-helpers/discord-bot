@@ -1,7 +1,7 @@
 "use strict";
 var discord = require("discord.js");
-var messageParser = require("./parsers/message-parser");
-var top_parser_1 = require("./parsers/top-parser");
+var yargs = require("yargs-parser");
+var commands_1 = require("../commands");
 var client = new discord.Client();
 function init() {
     client.on('ready', function () {
@@ -13,23 +13,26 @@ function init() {
             return;
         }
         console.info('message recieved: ', message.content);
-        var messageParts = message.content.split(' ');
-        if (messageParts[0].includes('<@262599809347747842>')) {
-            messageParts.splice(0, 1);
-        }
-        var parsedMessage = messageParser.parseMessage(messageParts.join(' '));
-        top_parser_1.topParser.resolveSubParser(0, parsedMessage)
-            .then(function (response) {
-            message.reply(response);
+        message.content = normalizeMessage(message.content);
+        var parsedMessage = yargs(message.content);
+        commands_1.CommandsBucket.getResult(parsedMessage)
+            .then(function (result) {
+            message.reply(result);
         })
             .catch(function (err) {
-            console.error(err);
-            message.reply('Error processing message, CONCORD forces has been dispached to deal with the problem ASAP. If you see them please pass them this message: ' + err.toString());
+            message.reply(err);
         });
     });
     client.login('MjYyNTk5ODA5MzQ3NzQ3ODQy.C1kfyw.FCRoB8zbrSEzcgXzuXb563SgsBQ');
 }
 exports.init = init;
+function normalizeMessage(message) {
+    message = message.toLowerCase();
+    if (message.includes('<@262599809347747842>')) {
+        message = message.replace('<@262599809347747842>', '');
+    }
+    return message.trim().replace(/ +(?= )/g, '');
+}
 function sendMessage(message, user) {
     client.users.get(user.authorId).sendMessage(message);
 }

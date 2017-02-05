@@ -1,8 +1,9 @@
 import * as discord from 'discord.js';
-import * as messageParser from './parsers/message-parser';
+import * as yargs from 'yargs-parser';
 
 import { UserModel } from '../models/user.model';
-import { topParser } from './parsers/top-parser';
+import { YargsResult } from '../models/yargs-result.model';
+import { CommandsBucket } from '../commands';
 
 const client = new discord.Client();
 export function init() {
@@ -17,24 +18,27 @@ export function init() {
         }
 
         console.info('message recieved: ', message.content);
-        let messageParts = message.content.split(' ');
-        if (messageParts[0].includes('<@262599809347747842>')) {
-            messageParts.splice(0, 1);
-        }
+        message.content = normalizeMessage(message.content);
 
-        let parsedMessage = messageParser.parseMessage(messageParts.join(' '));
-
-        topParser.resolveSubParser(0, parsedMessage)
-            .then((response) => {
-                message.reply(response);
+        const parsedMessage = <YargsResult>yargs(message.content);
+        CommandsBucket.getResult(parsedMessage)
+            .then(result => {
+                message.reply(result);
             })
             .catch(err => {
-                console.error(err);
-                message.reply('Error processing message, CONCORD forces has been dispached to deal with the problem ASAP. If you see them please pass them this message: ' + err.toString());
+                message.reply(err);
             })
     });
 
     client.login('MjYyNTk5ODA5MzQ3NzQ3ODQy.C1kfyw.FCRoB8zbrSEzcgXzuXb563SgsBQ')
+}
+
+function normalizeMessage(message: string) {
+    message = message.toLowerCase();
+    if (message.includes('<@262599809347747842>')) {
+        message = message.replace('<@262599809347747842>', '');
+    }
+    return message.trim().replace(/ +(?= )/g, '');
 }
 
 export function sendMessage(message: string, user: UserModel) {
