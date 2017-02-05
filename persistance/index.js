@@ -8,7 +8,7 @@ tradeHubsMap.set('amarr', 'Amarr VIII (Oris) - Emperor Family Academy');
 tradeHubsMap.set('rens', 'Rens VI - Moon 8 - Brutor Tribe Treasury');
 tradeHubsMap.set('dodixie', 'Dodixie IX - Moon 20 - Federation Navy Assembly Plant');
 tradeHubsMap.set('hek', 'Hek VIII - Moon 12 - Boundless Creation Factory');
-client.connect('mongodb://localhost:27017/eve-discord-bot')
+client.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/eve-discord-bot')
     .then(function (conn) {
     _connection = conn;
     console.info('connected to db');
