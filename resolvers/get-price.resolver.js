@@ -30,6 +30,10 @@ function getPriceResolver(yargs) {
                 resolve(res.volume_remain + " " + item.name + " " + (res.volume_remain === 1 ? 'is' : 'are') + " available for " + orderType + " at " + station.stationName + " for **" + currency_formatter_1.formatCurrency(res.price) + " ISK**");
             })
                 .catch(function (err) {
+                if (err && err.code === 404) {
+                    resolve("No items named \"" + item.name + "\" has been found on " + station.stationName);
+                    return;
+                }
                 reject(err);
             });
         })

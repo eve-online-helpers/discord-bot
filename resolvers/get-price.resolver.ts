@@ -38,6 +38,10 @@ export function getPriceResolver(yargs: YargsResult) {
                         resolve(`${res.volume_remain} ${item.name} ${res.volume_remain === 1 ? 'is' : 'are'} available for ${orderType} at ${station.stationName} for **${formatCurrency(res.price)} ISK**`)
                     })
                     .catch(err => {
+                        if(err && err.code === 404){
+                            resolve(`No items named "${item.name}" has been found on ${station.stationName}`);
+                            return;
+                        }
                         reject(err);
                     });
             })

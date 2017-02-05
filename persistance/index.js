@@ -22,7 +22,7 @@ function getConnection() {
 exports.getConnection = getConnection;
 function getItemByName(itemName) {
     var conn = getConnection();
-    return conn.collection('items').findOne({ name: new RegExp(itemName, 'i') });
+    return conn.collection('items').findOne({ name: new RegExp("^" + itemName, 'i') });
 }
 exports.getItemByName = getItemByName;
 function getStationByName(stationName) {

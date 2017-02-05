@@ -14,6 +14,10 @@ export function getPriceForItemOnStation(itemId: number, regionId: number, stati
     return new Bluebird<PriceResponse>((resolve, reject) => {
         axios.get<PriceResponse[]>(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()).replace('{orderType}', orderType))
             .then(result => {
+                if(result.data.length === 0){
+                    reject({code: 404});
+                    return;
+                }
                 let relevantOrder: PriceResponse;
                 if (orderType === OrderType.BUY) {
                     relevantOrder = _.maxBy(_.filter(result.data, (order) => {

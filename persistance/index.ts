@@ -29,7 +29,7 @@ export function getConnection(): Db {
 
 export function getItemByName(itemName: string): Promise<ItemDBResponse> {
     const conn = getConnection();
-    return conn.collection('items').findOne({ name: new RegExp(itemName, 'i') });
+    return conn.collection('items').findOne({ name: new RegExp(`^${itemName}`, 'i') });
 }
 
 export function getStationByName(stationName: string): Promise<StationDBResponse> {
