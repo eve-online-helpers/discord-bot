@@ -1,9 +1,10 @@
 import * as Bluebird from 'bluebird';
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient, Db, InsertOneWriteOpResult } from 'mongodb';
 import { StationDBResponse } from '../models/station-db-response';
 import { ItemDBResponse } from '../models/item-db-response.model';
 import { UserModel } from '../models/user.model';
 import { getConfigurations } from '../configurations';
+import { BaseReminder } from '../reminders/base-reminder';
 
 const config = getConfigurations();
 const client = new MongoClient();
@@ -62,4 +63,8 @@ export function addUser(user: UserModel): Bluebird<UserModel> {
                     });
             });
     });
+}
+
+export function addReminder(reminder: BaseReminder<any>): Promise<InsertOneWriteOpResult> {
+    return _connection.collection('reminders').insertOne(reminder);
 }

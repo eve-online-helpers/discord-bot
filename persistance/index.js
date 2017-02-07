@@ -55,4 +55,8 @@ function addUser(user) {
     });
 }
 exports.addUser = addUser;
+function addReminder(reminder) {
+    return _connection.collection('reminders').insertOne(reminder);
+}
+exports.addReminder = addReminder;
 //# sourceMappingURL=index.js.map
