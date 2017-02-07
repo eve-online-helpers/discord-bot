@@ -5,4 +5,4 @@ var _config = {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = _config;
-//# sourceMappingURL=prod.js.map
+//# sourceMappingURL=production.js.map
