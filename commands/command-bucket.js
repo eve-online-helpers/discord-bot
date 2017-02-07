@@ -6,7 +6,7 @@ var CommandsBucket = (function () {
     CommandsBucket.getResult = function (yargs, from) {
         var op = yargs._.join(' ');
         if (!CommandsBucket._resolvers.has(op)) {
-            return Bluebird.reject("Operation `" + op + "` is not a know command. Please check spelling or run `@eve-helper help`");
+            return Bluebird.resolve("Operation `" + op + "` is not a know command. Please check spelling or run `@eve-helper help`");
         }
         return CommandsBucket._resolvers.get(op)(yargs, from);
     };

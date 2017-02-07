@@ -8,7 +8,7 @@ export class CommandsBucket {
     static getResult(yargs: YargsResult, from: string): Bluebird<string> {
         const op = yargs._.join(' ');
         if (!CommandsBucket._resolvers.has(op)) {
-            return Bluebird.reject(`Operation \`${op}\` is not a know command. Please check spelling or run \`@eve-helper help\``);
+            return Bluebird.resolve(`Operation \`${op}\` is not a know command. Please check spelling or run \`@eve-helper help\``);
         }
 
         return CommandsBucket._resolvers.get(op)(yargs, from);
