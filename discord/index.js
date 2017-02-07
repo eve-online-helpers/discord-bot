@@ -2,6 +2,8 @@
 var discord = require("discord.js");
 var yargs = require("yargs-parser");
 var commands_1 = require("../commands");
+var configurations_1 = require("../configurations");
+var config = configurations_1.getConfigurations();
 var client = new discord.Client();
 function init() {
     client.on('ready', function () {
@@ -15,15 +17,23 @@ function init() {
         console.info('message recieved: ', message.content);
         message.content = normalizeMessage(message.content);
         var parsedMessage = yargs(message.content);
-        commands_1.CommandsBucket.getResult(parsedMessage)
+        commands_1.CommandsBucket.getResult(parsedMessage, message.author.id)
             .then(function (result) {
+            console.info(result);
+            if (config.replyDisabled) {
+                return;
+            }
             message.reply(result);
         })
             .catch(function (err) {
-            message.reply(err);
+            console.log(err);
+            if (config.replyDisabled) {
+                return;
+            }
+            message.reply('Weird error happened, some cov-ops and stealth bombers were dispached to assess the situation, additional info: ', err);
         });
     });
-    client.login('MjYyNTk5ODA5MzQ3NzQ3ODQy.C1kfyw.FCRoB8zbrSEzcgXzuXb563SgsBQ');
+    client.login(config.discordToken);
 }
 exports.init = init;
 function normalizeMessage(message) {

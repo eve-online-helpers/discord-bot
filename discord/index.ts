@@ -4,7 +4,9 @@ import * as yargs from 'yargs-parser';
 import { UserModel } from '../models/user.model';
 import { YargsResult } from '../models/yargs-result.model';
 import { CommandsBucket } from '../commands';
+import { getConfigurations } from '../configurations';
 
+const config = getConfigurations();
 const client = new discord.Client();
 export function init() {
     client.on('ready', () => {
@@ -21,16 +23,26 @@ export function init() {
         message.content = normalizeMessage(message.content);
 
         const parsedMessage = <YargsResult>yargs(message.content);
-        CommandsBucket.getResult(parsedMessage)
+        CommandsBucket.getResult(parsedMessage, message.author.id)
             .then(result => {
+                console.info(result);
+                if(config.replyDisabled){
+                    return;
+                }
+
                 message.reply(result);
             })
             .catch(err => {
-                message.reply(err);
+                console.log(err);
+                if(config.replyDisabled){
+                    return;
+                }
+
+                message.reply('Weird error happened, some cov-ops and stealth bombers were dispached to assess the situation, additional info: ', err);
             })
     });
 
-    client.login('MjYyNTk5ODA5MzQ3NzQ3ODQy.C1kfyw.FCRoB8zbrSEzcgXzuXb563SgsBQ')
+    client.login(config.discordToken)
 }
 
 function normalizeMessage(message: string) {

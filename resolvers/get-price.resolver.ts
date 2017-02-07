@@ -10,7 +10,7 @@ import { formatCurrency } from '../formatters/currency-formatter';
 export function getPriceResolver(yargs: YargsResult) {
     return new Bluebird<string>((resolve, reject) => {
         if (yargs['help']) {
-            resolve('Get Price usage: `get price --item "<item name>" --from "<jita|amarr|hek|dodixie|rens|(another station name)>" --type "<buy|sell>"`\n\n' +
+            resolve('\n\nGet Price usage: `get price --item "<item name>" --from "<jita|amarr|hek|dodixie|rens|(another station name)>" --type "<buy|sell>"`\n\n' +
                 '__Defaults (default values for parameters)__\n' +
                 '```' +
                 '--from: "Jita"\n' +
@@ -32,6 +32,16 @@ export function getPriceResolver(yargs: YargsResult) {
                 const item = <ItemDBResponse>res[0];
                 const station = <StationDBResponse>res[1];
                 const orderType = <string>yargs['type'] || 'sell';
+
+                if(!item){
+                    resolve(`Item ${yargs['item']} not found in EVE universe`);
+                    return;
+                }
+
+                if(!station){
+                    resolve(`Station ${yargs['from']} not found in EVE universe`);
+                    return;
+                }
 
                 priceService.getPriceForItemOnStation(item.id, station.regionID, station.stationID, orderType)
                     .then(res => {

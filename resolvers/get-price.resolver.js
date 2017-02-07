@@ -6,7 +6,7 @@ var currency_formatter_1 = require("../formatters/currency-formatter");
 function getPriceResolver(yargs) {
     return new Bluebird(function (resolve, reject) {
         if (yargs['help']) {
-            resolve('Get Price usage: `get price --item "<item name>" --from "<jita|amarr|hek|dodixie|rens|(another station name)>" --type "<buy|sell>"`\n\n' +
+            resolve('\n\nGet Price usage: `get price --item "<item name>" --from "<jita|amarr|hek|dodixie|rens|(another station name)>" --type "<buy|sell>"`\n\n' +
                 '__Defaults (default values for parameters)__\n' +
                 '```' +
                 '--from: "Jita"\n' +
@@ -25,6 +25,14 @@ function getPriceResolver(yargs) {
             var item = res[0];
             var station = res[1];
             var orderType = yargs['type'] || 'sell';
+            if (!item) {
+                resolve("Item " + yargs['item'] + " not found in EVE universe");
+                return;
+            }
+            if (!station) {
+                resolve("Station " + yargs['from'] + " not found in EVE universe");
+                return;
+            }
             priceService.getPriceForItemOnStation(item.id, station.regionID, station.stationID, orderType)
                 .then(function (res) {
                 resolve(res.volume_remain + " " + item.name + " " + (res.volume_remain === 1 ? 'is' : 'are') + " available for " + orderType + " at " + station.stationName + " for **" + currency_formatter_1.formatCurrency(res.price) + " ISK**");

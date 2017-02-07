@@ -2,7 +2,10 @@ import * as Bluebird from 'bluebird';
 import { MongoClient, Db } from 'mongodb';
 import { StationDBResponse } from '../models/station-db-response';
 import { ItemDBResponse } from '../models/item-db-response.model';
+import { UserModel } from '../models/user.model';
+import { getConfigurations } from '../configurations';
 
+const config = getConfigurations();
 const client = new MongoClient();
 let _connection: Db;
 
@@ -14,7 +17,7 @@ tradeHubsMap.set('dodixie', 'Dodixie IX - Moon 20 - Federation Navy Assembly Pla
 tradeHubsMap.set('hek', 'Hek VIII - Moon 12 - Boundless Creation Factory');
 
 
-client.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/eve-discord-bot')
+client.connect(process.env.MONGODB_URI || config.mongodbConnection)
     .then(conn => {
         _connection = conn;
         console.info('connected to db');
@@ -38,4 +41,25 @@ export function getStationByName(stationName: string): Promise<StationDBResponse
 
     const conn = getConnection();
     return conn.collection('stations').findOne({ stationName: new RegExp(stationName, 'i') });
+}
+
+export function addUser(user: UserModel): Bluebird<UserModel> {
+    return new Bluebird<UserModel>((resolve, reject) => {
+        const usersColl = _connection.collection('users');
+        usersColl
+            .findOne({ authorId: user.authorId, characterId: user.characterId })
+            .then(dbUser => {
+                if (dbUser) {
+                    reject(user);
+                }
+
+                usersColl.insertOne(user)
+                    .then(result => {
+                        resolve(user);
+                    })
+                    .catch(err => {
+                        reject(err);
+                    });
+            });
+    });
 }
