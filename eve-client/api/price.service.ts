@@ -1,3 +1,5 @@
+import * as memotyCache from 'memory-cache';
+import * as moment from 'moment';
 import * as Bluebird from 'bluebird';
 import * as _ from 'lodash';
 import * as axios from 'axios';
@@ -11,11 +13,19 @@ export class OrderType {
 }
 
 export function getPriceForItemOnStation(itemId: number, regionId: number, stationId: number, orderType: string) {
+    let prices: PriceResponse[] = memotyCache.get('' + itemId + regionId + orderType);
+    if (prices) {
+        return Bluebird.resolve(filterPrices(prices, stationId, orderType));
+    }
+
     return new Bluebird<PriceResponse>((resolve, reject) => {
         axios.get<PriceResponse[]>(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()).replace('{orderType}', orderType))
             .then(result => {
-                if(result.data.length === 0){
-                    reject({code: 404});
+                let expires= moment(result.headers['expires']+ '+0000', 'ddd, DD MMM YYYY HH:mm:ss Z');
+                let diff = expires.diff(moment());
+                memotyCache.put('' + itemId + regionId + orderType, result.data, diff)
+                if (result.data.length === 0) {
+                    reject({ code: 404 });
                     return;
                 }
                 let relevantOrder: PriceResponse;
@@ -35,6 +45,21 @@ export function getPriceForItemOnStation(itemId: number, regionId: number, stati
                 reject(err);
             });
     });
+}
+
+function filterPrices(prices: PriceResponse[], stationId: number, orderType: string): PriceResponse {
+    let relevantOrder: PriceResponse;
+    if (orderType === OrderType.BUY) {
+        relevantOrder = _.maxBy(_.filter(prices, (order) => {
+            return order.location_id === stationId;
+        }), record => record.price);
+    } else if (orderType === OrderType.SELL) {
+        relevantOrder = _.minBy(_.filter(prices, (order) => {
+            return order.location_id === stationId;
+        }), record => record.price);
+    }
+
+    return relevantOrder;
 }
 
 export interface PriceResponse {

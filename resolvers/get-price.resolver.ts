@@ -33,12 +33,12 @@ export function getPriceResolver(yargs: YargsResult) {
                 const station = <StationDBResponse>res[1];
                 const orderType = <string>yargs['type'] || 'sell';
 
-                if(!item){
+                if (!item) {
                     resolve(`Item ${yargs['item']} not found in EVE universe`);
                     return;
                 }
 
-                if(!station){
+                if (!station) {
                     resolve(`Station ${yargs['from']} not found in EVE universe`);
                     return;
                 }
@@ -48,7 +48,7 @@ export function getPriceResolver(yargs: YargsResult) {
                         resolve(`${res.volume_remain} ${item.name} ${res.volume_remain === 1 ? 'is' : 'are'} available for ${orderType} at ${station.stationName} for **${formatCurrency(res.price)} ISK**`)
                     })
                     .catch(err => {
-                        if(err && err.code === 404){
+                        if (err && err.code === 404) {
                             resolve(`No items named "${item.name}" has been found on ${station.stationName}`);
                             return;
                         }
