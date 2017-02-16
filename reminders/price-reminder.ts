@@ -1,5 +1,5 @@
-import * as Bluebird from 'Bluebird';
-import { BaseReminder } from './base-reminder';
+import * as Bluebird from 'bluebird';
+import { BaseReminder, HandlerResult } from './base-reminder';
 
 export class PriceReminderModel {
     itemId: number;
@@ -16,7 +16,11 @@ export class PriceReminder extends BaseReminder<PriceReminderModel>{
         this.reminderData = new PriceReminderModel();
     }
 
-    handleReminder(): Bluebird<string> {
+    static getInstance() {
+        return new PriceReminder();
+    }
 
+    handleReminder(): Bluebird<HandlerResult> {
+        return Bluebird.resolve(new HandlerResult('done', this.from));
     }
 }

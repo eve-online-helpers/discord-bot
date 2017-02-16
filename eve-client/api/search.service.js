@@ -27,4 +27,3 @@ function resolveStringToNames(str, isStrict) {
     });
 }
 exports.resolveStringToNames = resolveStringToNames;
-//# sourceMappingURL=search.service.js.map

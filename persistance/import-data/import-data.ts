@@ -19,7 +19,6 @@ export function importStations(filePath) {
 export function importItems(filePath) {
     const items = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
     const conn = persistence.getConnection();
-
     conn.dropCollection('items')
 
     const keys = Object.keys(items);

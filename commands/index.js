@@ -7,4 +7,3 @@ command_bucket_1.CommandsBucket.addResolver('register', resolvers.registerResolv
 command_bucket_1.CommandsBucket.addResolver('remind price', resolvers.priceRemindResolver);
 // _CommandsBucket.addResolver('get pi', resolvers.getPiResolver);
 exports.CommandsBucket = command_bucket_1.CommandsBucket;
-//# sourceMappingURL=index.js.map

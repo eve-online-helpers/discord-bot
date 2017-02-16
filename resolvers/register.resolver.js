@@ -9,4 +9,3 @@ function registerResolver(yargs, from) {
     });
 }
 exports.registerResolver = registerResolver;
-//# sourceMappingURL=register.resolver.js.map

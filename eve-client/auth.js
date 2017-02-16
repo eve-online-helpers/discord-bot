@@ -24,4 +24,3 @@ function verifyUser(user) {
     });
 }
 exports.verifyUser = verifyUser;
-//# sourceMappingURL=auth.js.map

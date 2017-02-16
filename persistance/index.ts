@@ -68,3 +68,8 @@ export function addUser(user: UserModel): Bluebird<UserModel> {
 export function addReminder(reminder: BaseReminder<any>): Promise<InsertOneWriteOpResult> {
     return _connection.collection('reminders').insertOne(reminder);
 }
+
+export function getReminders(): Promise<BaseReminder<any>[]> {
+    return _connection.collection('reminders').find({})
+        .toArray();
+}

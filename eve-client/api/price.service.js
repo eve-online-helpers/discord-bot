@@ -14,16 +14,20 @@ OrderType.BUY = 'buy';
 OrderType.SELL = 'sell';
 exports.OrderType = OrderType;
 function getPriceForItemOnStation(itemId, regionId, stationId, orderType) {
-    var prices = memotyCache.get('' + itemId + regionId + orderType);
+    var priceSearchKey = '' + itemId + regionId + orderType;
+    var prices = memotyCache.get(priceSearchKey);
     if (prices) {
+        console.info("price for " + priceSearchKey + " has been found in cache, skipping CCP call");
         return Bluebird.resolve(filterPrices(prices, stationId, orderType));
     }
+    console.info("price for " + priceSearchKey + " not found in cache, executing CCP call");
     return new Bluebird(function (resolve, reject) {
         axios.get(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()).replace('{orderType}', orderType))
             .then(function (result) {
             var expires = moment(result.headers['expires'] + '+0000', 'ddd, DD MMM YYYY HH:mm:ss Z');
             var diff = expires.diff(moment());
-            memotyCache.put('' + itemId + regionId + orderType, result.data, diff);
+            memotyCache.put(priceSearchKey, result.data, diff);
+            console.info("cache key " + priceSearchKey + " has been added with " + (diff / 1000).toFixed(0) + "s TTL");
             if (result.data.length === 0) {
                 reject({ code: 404 });
                 return;
@@ -62,4 +66,3 @@ function filterPrices(prices, stationId, orderType) {
     }
     return relevantOrder;
 }
-//# sourceMappingURL=price.service.js.map

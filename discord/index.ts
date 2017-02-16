@@ -2,6 +2,7 @@ import * as discord from 'discord.js';
 import * as yargs from 'yargs-parser';
 
 import { UserModel } from '../models/user.model';
+import { StringError } from '../models/string-error';
 import { YargsResult } from '../models/yargs-result.model';
 import { CommandsBucket } from '../commands';
 import { getConfigurations } from '../configurations';
@@ -10,7 +11,7 @@ const config = getConfigurations();
 const client = new discord.Client();
 export function init() {
     client.on('ready', () => {
-        console.info('discord::connected');
+        console.info('discord::connected')
     });
 
     client.on('message', (message: discord.Message) => {
@@ -29,12 +30,17 @@ export function init() {
                 if(config.replyDisabled){
                     return;
                 }
-
+                
                 message.reply(result);
             })
             .catch(err => {
                 console.log(err);
                 if(config.replyDisabled){
+                    return;
+                }
+
+                if(err instanceof StringError){
+                    message.reply(err.message);
                     return;
                 }
 
@@ -53,6 +59,7 @@ function normalizeMessage(message: string) {
     return message.trim().replace(/ +(?= )/g, '');
 }
 
-export function sendMessage(message: string, user: UserModel) {
-    client.users.get(user.authorId).sendMessage(message);
+export function sendMessage(message: string, userId: string) {
+    client.users.get(userId).sendMessage(message);
 }
+

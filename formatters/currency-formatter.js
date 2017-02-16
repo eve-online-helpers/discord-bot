@@ -4,4 +4,3 @@ function formatCurrency(price, n, x) {
     return price.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
 }
 exports.formatCurrency = formatCurrency;
-//# sourceMappingURL=currency-formatter.js.map

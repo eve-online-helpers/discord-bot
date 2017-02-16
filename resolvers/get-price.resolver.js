@@ -51,4 +51,3 @@ function getPriceResolver(yargs) {
     });
 }
 exports.getPriceResolver = getPriceResolver;
-//# sourceMappingURL=get-price.resolver.js.map

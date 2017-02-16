@@ -57,4 +57,3 @@ function priceRemindResolver(yargs, from) {
     });
 }
 exports.priceRemindResolver = priceRemindResolver;
-//# sourceMappingURL=price-remind.resolver.js.map

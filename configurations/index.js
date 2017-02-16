@@ -19,4 +19,3 @@ function getConfigurations() {
     return _config;
 }
 exports.getConfigurations = getConfigurations;
-//# sourceMappingURL=index.js.map

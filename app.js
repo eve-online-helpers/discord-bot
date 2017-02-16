@@ -8,7 +8,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 
 var discord = require('./discord');
+var scheduler = require('./scheduler');
 discord.init();
+scheduler.startScheduler(5 * 60 * 1000);
 
 var app = express();
 

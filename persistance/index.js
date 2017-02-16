@@ -59,4 +59,8 @@ function addReminder(reminder) {
     return _connection.collection('reminders').insertOne(reminder);
 }
 exports.addReminder = addReminder;
-//# sourceMappingURL=index.js.map
+function getReminders() {
+    return _connection.collection('reminders').find({})
+        .toArray();
+}
+exports.getReminders = getReminders;

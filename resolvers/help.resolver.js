@@ -16,4 +16,3 @@ function helpResolver(yargs) {
     });
 }
 exports.helpResolver = helpResolver;
-//# sourceMappingURL=help.resolver.js.map

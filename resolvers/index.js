@@ -9,4 +9,3 @@ exports.helpResolver = help_resolver_1.helpResolver;
 exports.registerResolver = register_resolver_1.registerResolver;
 exports.getPiResolver = get_pi_resolver_1.getPiResolver;
 exports.priceRemindResolver = price_remind_resolver_1.priceRemindResolver;
-//# sourceMappingURL=index.js.map

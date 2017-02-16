@@ -5,4 +5,3 @@ var StationDBResponse = (function () {
     return StationDBResponse;
 }());
 exports.StationDBResponse = StationDBResponse;
-//# sourceMappingURL=station-db-response.js.map

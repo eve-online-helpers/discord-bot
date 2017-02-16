@@ -1,6 +1,7 @@
 "use strict";
 var discord = require("discord.js");
 var yargs = require("yargs-parser");
+var string_error_1 = require("../models/string-error");
 var commands_1 = require("../commands");
 var configurations_1 = require("../configurations");
 var config = configurations_1.getConfigurations();
@@ -30,6 +31,10 @@ function init() {
             if (config.replyDisabled) {
                 return;
             }
+            if (err instanceof string_error_1.StringError) {
+                message.reply(err.message);
+                return;
+            }
             message.reply('Weird error happened, some cov-ops and stealth bombers were dispached to assess the situation, additional info: ', err);
         });
     });
@@ -43,8 +48,7 @@ function normalizeMessage(message) {
     }
     return message.trim().replace(/ +(?= )/g, '');
 }
-function sendMessage(message, user) {
-    client.users.get(user.authorId).sendMessage(message);
+function sendMessage(message, userId) {
+    client.users.get(userId).sendMessage(message);
 }
 exports.sendMessage = sendMessage;
-//# sourceMappingURL=index.js.map

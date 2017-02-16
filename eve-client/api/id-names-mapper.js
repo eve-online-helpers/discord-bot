@@ -30,4 +30,3 @@ exports.tradeHubsIds.set('hek', {
     hubPrettyName: 'Hek',
     regionId: 10000042
 });
-//# sourceMappingURL=id-names-mapper.js.map

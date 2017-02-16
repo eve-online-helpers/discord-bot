@@ -3,3 +3,4 @@ typings
 **/*.js.map
 .vscode
 start.sh
+env.json

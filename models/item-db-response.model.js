@@ -5,4 +5,3 @@ var ItemDBResponse = (function () {
     return ItemDBResponse;
 }());
 exports.ItemDBResponse = ItemDBResponse;
-//# sourceMappingURL=item-db-response.model.js.map

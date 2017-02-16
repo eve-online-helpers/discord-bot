@@ -51,4 +51,3 @@ router.get('/authorize/:author_id', function (req, res) {
     res.redirect("https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=" + redirectUri + "&scope=publicData esi-planets.manage_planets.v1&state=" + req.params.author_id);
 });
 module.exports = router;
-//# sourceMappingURL=index.js.map
