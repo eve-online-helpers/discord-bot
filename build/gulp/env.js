@@ -9,5 +9,5 @@ try {
         EVE_CLIENT_SECRET: vars.EVE_CLIENT_SECRET
     });
 } catch (e) {
-    console.error(e);
+    console.warn('env.json was not found, will try to load env variables');
 }
