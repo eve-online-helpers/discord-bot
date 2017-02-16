@@ -2,8 +2,8 @@ language: node_js
 node_js:
   - "6.9.1"
 before_script:
-  - npm install -g gulp
+  - yarn global add gulp
 install:
   - yarn
 script:
-  - gulp ts
+  - echo "bla bla"
