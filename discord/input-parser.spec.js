@@ -15,4 +15,20 @@ describe('imput parser tests', function () {
         chai_1.expect(result.params[0].key).to.be.equal('p');
         chai_1.expect(result.params[0].value).to.be.equal('rifter blueprint');
     });
+    it('should return true for existing item', function () {
+        var result = input_parser_1.parseInput('!p');
+        chai_1.expect(result.has('p')).to.be.true;
+    });
+    it('should return false for non existing item', function () {
+        var result = input_parser_1.parseInput('!p');
+        chai_1.expect(result.has('a')).to.be.false;
+    });
+    it('should return InputParam with key "p"', function () {
+        var result = input_parser_1.parseInput('!p');
+        chai_1.expect(result.get('p').key).to.be.equal('p');
+    });
+    it('should return null for non existing key', function () {
+        var result = input_parser_1.parseInput('!p');
+        chai_1.expect(result.get('a')).to.be.null;
+    });
 });

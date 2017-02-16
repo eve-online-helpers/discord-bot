@@ -17,4 +17,24 @@ describe('imput parser tests', () => {
         expect(result.params[0].key).to.be.equal('p');
         expect(result.params[0].value).to.be.equal('rifter blueprint');
     });
+
+    it('should return true for existing item', ()=>{
+        let result = parseInput('!p');
+        expect(result.has('p')).to.be.true;
+    });
+
+    it('should return false for non existing item', ()=>{
+        let result = parseInput('!p');
+        expect(result.has('a')).to.be.false;
+    });
+
+    it('should return InputParam with key "p"', ()=>{
+        let result = parseInput('!p');
+        expect(result.get('p').key).to.be.equal('p');
+    });
+
+    it('should return null for non existing key', ()=>{
+        let result = parseInput('!p');
+        expect(result.get('a')).to.be.null;
+    });
 });
