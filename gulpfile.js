@@ -12,9 +12,6 @@ gulp.task('serve', () => {
     });
 
 });
-gulp.task('test', (done) => {
-    gulp.series('ts', 'mocha-travis')();
-    done();
-});
+gulp.task('test', gulp.series('ts', 'mocha-travis'));
 
 
