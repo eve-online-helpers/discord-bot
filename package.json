@@ -26,6 +26,7 @@
     "yargs-parser": "^4.2.1"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/chai": "^3.4.34",
     "@types/core-js": "^0.9.35",
     "@types/js-yaml": "^3.5.29",
