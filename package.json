@@ -37,7 +37,7 @@
     "@types/mongodb": "^2.1.37",
     "chai": "^3.5.0",
     "cross-env": "^3.1.4",
-    "gulp": "https://github.com/gulpjs/gulp.git#4.0",
+    "gulp": "gulpjs/gulp#4.0",
     "gulp-env": "^0.4.0",
     "gulp-express": "^0.3.5",
     "gulp-mocha": "^3.0.1",

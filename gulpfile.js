@@ -3,11 +3,18 @@ require('./build/gulp/ts');
 require('./build/gulp/mocha');
 
 const gulp = require('gulp');
-gulp.task('serve', gulp.series('ts', 'mocha', 'express'));
-gulp.task('test', gulp.series('ts', 'mocha-travis'));
-
-gulp.watch('**/*.ts', done => {
+gulp.task('serve', () => {
     gulp.series('ts', 'mocha', 'express')();
+
+    gulp.watch('**/*.ts', done => {
+        gulp.series('ts', 'mocha', 'express')();
+        done();
+    });
+
+});
+gulp.task('test', (done) => {
+    gulp.series('ts', 'mocha-travis')();
     done();
 });
+
 
