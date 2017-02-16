@@ -1,7 +1,7 @@
 const server = require('gulp-express');
 const gulp = require('gulp');
 
-const env
+let env;
 try {
     env = require('../../env.json');
 }
