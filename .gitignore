@@ -4,3 +4,6 @@ typings
 .vscode
 start.sh
 env.json
+.coverrun
+.coverdata
+reports
