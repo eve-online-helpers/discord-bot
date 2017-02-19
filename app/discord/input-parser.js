@@ -2,6 +2,7 @@
 var input_param_model_1 = require("../models/input-param.model");
 var parsed_input_model_1 = require("../models/parsed-input.model");
 function parseInput(input) {
+    input = input.trim();
     if (!input.startsWith('!')) {
         return null;
     }
@@ -12,7 +13,7 @@ function parseInput(input) {
         var param = new input_param_model_1.InputParam();
         var innerParts = part.split(' ');
         param.key = innerParts.splice(0, 1)[0];
-        param.value = innerParts.join(' ');
+        param.value = innerParts.join(' ').trim();
         result.params.push(param);
     }
     return result;

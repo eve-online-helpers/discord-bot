@@ -31,4 +31,14 @@ describe('imput parser tests', function () {
         var result = input_parser_1.parseInput('!p');
         chai_1.expect(result.get('a')).to.be.null;
     });
+    it('should parse input correctly with a lot of spaces', function () {
+        var result = input_parser_1.parseInput('   !p  some input         !help   ');
+        chai_1.expect(result.has('p')).to.be.true;
+        chai_1.expect(result.has('help')).to.be.true;
+    });
+    it('should parse input correctly with a lot of spaces and trim the value', function () {
+        var result = input_parser_1.parseInput('   !p  some input         !help   ');
+        chai_1.expect(result.has('p')).to.be.true;
+        chai_1.expect(result.get('p').value).to.be.equal('some input');
+    });
 });

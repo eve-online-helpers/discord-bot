@@ -37,4 +37,16 @@ describe('imput parser tests', () => {
         let result = parseInput('!p');
         expect(result.get('a')).to.be.null;
     });
+
+    it('should parse input correctly with a lot of spaces', () => {
+        let result = parseInput('   !p  some input         !help   ');
+        expect(result.has('p')).to.be.true;
+        expect(result.has('help')).to.be.true;
+    });
+
+    it('should parse input correctly with a lot of spaces and trim the value', () => {
+        let result = parseInput('   !p  some input         !help   ');
+        expect(result.has('p')).to.be.true;
+        expect(result.get('p').value).to.be.equal('some input');
+    });
 });

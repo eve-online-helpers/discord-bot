@@ -1,6 +1,6 @@
 "use strict";
 var discord = require("discord.js");
-var yargs = require("yargs-parser");
+var parser = require("./input-parser");
 var string_error_1 = require("../models/string-error");
 var commands_1 = require("../commands");
 var configurations_1 = require("../configurations");
@@ -11,13 +11,13 @@ function init() {
         console.info('discord::connected');
     });
     client.on('message', function (message) {
-        if (message.author.id === '262599809347747842' || message.content.indexOf('<@262599809347747842>') === -1 && message.channel.type !== 'dm') {
+        if (message.author.id === '262599809347747842' || !message.content.startsWith('!')) {
             console.info('message not for me, ignoring');
             return;
         }
         console.info('message recieved: ', message.content);
         message.content = normalizeMessage(message.content);
-        var parsedMessage = yargs(message.content);
+        var parsedMessage = parser.parseInput(message.content);
         commands_1.CommandsBucket.getResult(parsedMessage, message.author.id)
             .then(function (result) {
             console.info(result);

@@ -2,6 +2,7 @@ import { InputParam } from '../models/input-param.model';
 import { ParsedInput } from '../models/parsed-input.model';
 
 export function parseInput(input: string): ParsedInput {
+    input = input.trim();
     if (!input.startsWith('!')) {
         return null;
     }
@@ -14,7 +15,7 @@ export function parseInput(input: string): ParsedInput {
 
         let innerParts = part.split(' ');
         param.key = innerParts.splice(0, 1)[0];
-        param.value = innerParts.join(' ');
+        param.value = innerParts.join(' ').trim();
 
         result.params.push(param);
     }

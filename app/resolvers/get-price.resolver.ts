@@ -1,62 +1,67 @@
 import * as Bluebird from 'bluebird';
 import * as priceService from '../eve-client/api/price.service';
 
-import { YargsResult } from '../models/yargs-result.model';
+import { ParsedInput } from '../models/parsed-input.model';
 import { getItemByName, getStationByName } from '../persistance';
 import { StationDBResponse } from '../models/station-db-response';
 import { ItemDBResponse } from '../models/item-db-response.model';
 import { formatCurrency } from '../formatters/currency-formatter';
+import { StringError } from '../models/string-error';
 
-export function getPriceResolver(yargs: YargsResult) {
+export function getPriceResolver(input: ParsedInput): Bluebird<string> {
     return new Bluebird<string>((resolve, reject) => {
-        if (yargs['help']) {
-            resolve('\n\nGet Price usage: `get price --item "<item name>" --from "<jita|amarr|hek|dodixie|rens|(another station name)>" --type "<buy|sell>"`\n\n' +
+        if (input.has('help')) {
+            resolve('\n\ngp usage: `!gp <item name> <!jita !amarr !hek !dodixie !rens|>`\n\n' +
                 '__Defaults (default values for parameters)__\n' +
                 '```' +
-                '--from: "Jita"\n' +
-                '--type: "sell"' +
+                'locations defaults to: !jita\n' +
                 '```');
             return;
         }
 
-        if (!yargs['item'] || yargs['item'] === '') {
-            reject('`--item` parameter is mandatory');
+        let item = (input.get('gp')).value;
+        if (!item) {
+            reject(new StringError('item name is mandatory'));
         }
 
-        const ops = [];
-        ops.push(getItemByName(<string>yargs['item']));
-        ops.push(getStationByName(<string>yargs['from'] || 'jita'));
+        //     if (!yargs['item'] || yargs['item'] === '') {
+        //         reject('`--item` parameter is mandatory');
+        //     }
 
-        Promise.all(ops)
-            .then(res => {
-                const item = <ItemDBResponse>res[0];
-                const station = <StationDBResponse>res[1];
-                const orderType = <string>yargs['type'] || 'sell';
+        //     const ops = [];
+        //     ops.push(getItemByName(<string>yargs['item']));
+        //     ops.push(getStationByName(<string>yargs['from'] || 'jita'));
 
-                if (!item) {
-                    resolve(`Item ${yargs['item']} not found in EVE universe`);
-                    return;
-                }
+        //     Promise.all(ops)
+        //         .then(res => {
+        //             const item = <ItemDBResponse>res[0];
+        //             const station = <StationDBResponse>res[1];
+        //             const orderType = <string>yargs['type'] || 'sell';
 
-                if (!station) {
-                    resolve(`Station ${yargs['from']} not found in EVE universe`);
-                    return;
-                }
+        //             if (!item) {
+        //                 resolve(`Item ${yargs['item']} not found in EVE universe`);
+        //                 return;
+        //             }
 
-                priceService.getPriceForItemOnStation(item.id, station.regionID, station.stationID, orderType)
-                    .then(res => {
-                        resolve(`${res.volume_remain} ${item.name} ${res.volume_remain === 1 ? 'is' : 'are'} available for ${orderType} at ${station.stationName} for **${formatCurrency(res.price)} ISK**`);
-                    })
-                    .catch(err => {
-                        if (err && err.code === 404) {
-                            resolve(`No items named "${item.name}" has been found on ${station.stationName}`);
-                            return;
-                        }
-                        reject(err);
-                    });
-            })
-            .catch(err => {
-                reject(err);
-            });
+        //             if (!station) {
+        //                 resolve(`Station ${yargs['from']} not found in EVE universe`);
+        //                 return;
+        //             }
+
+        //             priceService.getPriceForItemOnStation(item.id, station.regionID, station.stationID, orderType)
+        //                 .then(res => {
+        //                     resolve(`${res.volume_remain} ${item.name} ${res.volume_remain === 1 ? 'is' : 'are'} available for ${orderType} at ${station.stationName} for **${formatCurrency(res.price)} ISK**`);
+        //                 })
+        //                 .catch(err => {
+        //                     if (err && err.code === 404) {
+        //                         resolve(`No items named "${item.name}" has been found on ${station.stationName}`);
+        //                         return;
+        //                     }
+        //                     reject(err);
+        //                 });
+        //         })
+        //         .catch(err => {
+        //             reject(err);
+        //         });
     });
 }

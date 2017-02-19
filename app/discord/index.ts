@@ -1,5 +1,5 @@
 import * as discord from 'discord.js';
-import * as yargs from 'yargs-parser';
+import * as parser from './input-parser';
 
 import { UserModel } from '../models/user.model';
 import { StringError } from '../models/string-error';
@@ -15,7 +15,7 @@ export function init() {
     });
 
     client.on('message', (message: discord.Message) => {
-        if (message.author.id === '262599809347747842' || message.content.indexOf('<@262599809347747842>') === -1 && message.channel.type !== 'dm') {
+        if (message.author.id === '262599809347747842' || !message.content.startsWith('!')) {
             console.info('message not for me, ignoring');
             return;
         }
@@ -23,7 +23,7 @@ export function init() {
         console.info('message recieved: ', message.content);
         message.content = normalizeMessage(message.content);
 
-        const parsedMessage = <YargsResult>yargs(message.content);
+        const parsedMessage = parser.parseInput(message.content);
         CommandsBucket.getResult(parsedMessage, message.author.id)
             .then(result => {
                 console.info(result);
