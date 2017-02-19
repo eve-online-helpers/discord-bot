@@ -10,7 +10,7 @@ export class PriceReminderModel {
     type: string;
 }
 
-export class PriceReminder extends BaseReminder<PriceReminderModel>{
+export class PriceReminder extends BaseReminder<PriceReminderModel> {
     constructor() {
         super();
         this.reminderData = new PriceReminderModel();

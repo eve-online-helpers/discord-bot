@@ -5,13 +5,13 @@ import * as auth from '../eve-client/auth';
 import * as persistanse from '../persistance';
 import { UserModel } from '../models/user.model';
 import { IVerifyReponseModel } from '../models/verify-response.model';
-import { getConfigurations } from '../configurations'
+import { getConfigurations } from '../configurations';
 
 const conf = getConfigurations();
 const BASIC_AUTH = new Buffer(`${conf.eveClientId}:${conf.eveClientSecret}`).toString('base64');
 const redirectUri = conf.redirectUri + auth.CLIENT_ID;
 
-var router = express.Router();
+const router = express.Router();
 router.get('/', function (req: express.Request, res: express.Response, next) {
   res.render('index', { title: 'Express' });
 });
@@ -33,7 +33,7 @@ router.get('/callback', function (req: express.Request, res: express.Response) {
     .then(auth.verifyUser)
     .then((verifyResponse) => {
       user.characterName = verifyResponse.data.CharacterName;
-      user.characterId = verifyResponse.data.CharacterID
+      user.characterId = verifyResponse.data.CharacterID;
 
       persistanse.addUser(user)
         .then(user => {

@@ -1,5 +1,5 @@
 export class ParsedInput {
-    params: InputParam[]
+    params: InputParam[];
     constructor() {
         this.params = [];
     }

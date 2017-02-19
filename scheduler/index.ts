@@ -2,7 +2,7 @@ import * as Bluebird from 'bluebird';
 import * as _ from 'lodash';
 import { getReminders } from '../persistance';
 import { BaseReminder, resolveReminderInstance } from '../reminders/base-reminder';
-import {sendMessage} from '../discord';
+import { sendMessage } from '../discord';
 
 let _isSchedulerActive = false;
 let _repeatInterval: number;
@@ -26,14 +26,14 @@ function iterationRun() {
         getReminders()
             .then(reminders => {
                 console.info('scheduler:: iterationRun:: reminders recieved from db');
-                let handlers = getReminderHandlers(reminders)
+                let handlers = getReminderHandlers(reminders);
                 Bluebird.props(handlers)
                     .then((results => {
                         console.log(JSON.stringify(results));
                         console.info('scheduler:: iterationRun:: reminders resolved');
 
-                        _.forOwn(results, (result)=>{
-                            if(!result){
+                        _.forOwn(results, (result) => {
+                            if (!result) {
                                 return;
                             }
 
@@ -44,7 +44,7 @@ function iterationRun() {
                             iterationRun();
                         }
                     }));
-            })
+            });
     }, _repeatInterval);
 }
 

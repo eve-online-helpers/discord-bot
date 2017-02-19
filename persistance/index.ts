@@ -38,7 +38,7 @@ export function getItemByName(itemName: string): Promise<ItemDBResponse> {
 
 export function getStationByName(stationName: string): Promise<StationDBResponse> {
     stationName = tradeHubsMap.get(stationName) || stationName;
-    stationName = stationName.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+    stationName = stationName.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 
     const conn = getConnection();
     return conn.collection('stations').findOne({ stationName: new RegExp(stationName, 'i') });

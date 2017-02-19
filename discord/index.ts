@@ -11,7 +11,7 @@ const config = getConfigurations();
 const client = new discord.Client();
 export function init() {
     client.on('ready', () => {
-        console.info('discord::connected')
+        console.info('discord::connected');
     });
 
     client.on('message', (message: discord.Message) => {
@@ -27,28 +27,28 @@ export function init() {
         CommandsBucket.getResult(parsedMessage, message.author.id)
             .then(result => {
                 console.info(result);
-                if(config.replyDisabled){
+                if (config.replyDisabled) {
                     return;
                 }
-                
+
                 message.reply(result);
             })
             .catch(err => {
                 console.log(err);
-                if(config.replyDisabled){
+                if (config.replyDisabled) {
                     return;
                 }
 
-                if(err instanceof StringError){
+                if (err instanceof StringError) {
                     message.reply(err.message);
                     return;
                 }
 
                 message.reply('Weird error happened, some cov-ops and stealth bombers were dispached to assess the situation, additional info: ', err);
-            })
+            });
     });
 
-    client.login(config.discordToken)
+    client.login(config.discordToken);
 }
 
 function normalizeMessage(message: string) {

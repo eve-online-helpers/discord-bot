@@ -31,6 +31,6 @@ gulp.task('mocha-travis', () => {
             vars: env
         }))
         .pipe(cover.format({ reporter: 'lcov' }))
-        // .pipe(gulp.dest('reports'))
+        .pipe(gulp.dest('reports'))
         .pipe(coveralls());
 });

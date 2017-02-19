@@ -20,7 +20,7 @@ export function getPriceResolver(yargs: YargsResult) {
         }
 
         if (!yargs['item'] || yargs['item'] === '') {
-            reject('`--item` parameter is mandatory')
+            reject('`--item` parameter is mandatory');
         }
 
         const ops = [];
@@ -45,7 +45,7 @@ export function getPriceResolver(yargs: YargsResult) {
 
                 priceService.getPriceForItemOnStation(item.id, station.regionID, station.stationID, orderType)
                     .then(res => {
-                        resolve(`${res.volume_remain} ${item.name} ${res.volume_remain === 1 ? 'is' : 'are'} available for ${orderType} at ${station.stationName} for **${formatCurrency(res.price)} ISK**`)
+                        resolve(`${res.volume_remain} ${item.name} ${res.volume_remain === 1 ? 'is' : 'are'} available for ${orderType} at ${station.stationName} for **${formatCurrency(res.price)} ISK**`);
                     })
                     .catch(err => {
                         if (err && err.code === 404) {

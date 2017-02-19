@@ -1,8 +1,8 @@
 import * as mongo from 'mongodb';
 
-export class ItemDBResponse{
+export class ItemDBResponse {
     _id: mongo.ObjectID;
-    id:number;
+    id: number;
     name: string;
     groupId: number;
 }

@@ -1,4 +1,4 @@
-export interface YargsResult{
-    _:string[];
-    [id:string]: string|string[];
+export interface YargsResult {
+    _: string[];
+    [id: string]: string | string[];
 }

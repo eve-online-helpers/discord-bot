@@ -20,7 +20,7 @@ export function getToken(code: string) {
       }
     }
   );
-}  
+}
 
 export function verifyUser(user: UserModel) {
   return axios.get<IVerifyReponseModel>('https://login.eveonline.com/oauth/verify',

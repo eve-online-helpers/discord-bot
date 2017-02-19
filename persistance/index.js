@@ -30,7 +30,7 @@ function getItemByName(itemName) {
 exports.getItemByName = getItemByName;
 function getStationByName(stationName) {
     stationName = tradeHubsMap.get(stationName) || stationName;
-    stationName = stationName.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+    stationName = stationName.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
     var conn = getConnection();
     return conn.collection('stations').findOne({ stationName: new RegExp(stationName, 'i') });
 }

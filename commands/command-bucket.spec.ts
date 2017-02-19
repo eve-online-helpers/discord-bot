@@ -14,7 +14,7 @@ describe('command-bucket tests', () => {
         yargsMock = {
             _: ['get', 'prices'],
         };
-    })
+    });
     it('should add command without errors', () => {
         CommandsBucket.addResolver('testResolver', resolveFn);
     });
@@ -30,14 +30,14 @@ describe('command-bucket tests', () => {
             });
     });
     it('should return error if resolver not found', (done) => {
-        let _yargsMock = { _: ['unknown', 'resolver'] }
+        let _yargsMock = { _: ['unknown', 'resolver'] };
         CommandsBucket.getResult(_yargsMock, 'someUser')
             .then(res => {
                 done(new Error('resolver found'));
             })
             .catch((err: Error) => {
-                ex(err).to.be.instanceOf(StringError)
+                ex(err).to.be.instanceOf(StringError);
                 done();
             });
-    })
+    });
 });

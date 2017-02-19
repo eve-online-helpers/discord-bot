@@ -11,7 +11,7 @@ export function resolveReminderInstance(reminder: BaseReminder<any>): BaseRemind
             priceRem.reminderData = reminder.reminderData;
             priceRem.from = reminder.from;
             priceRem.reminderType = reminder.reminderType;
-            return priceRem
+            return priceRem;
 
         default:
             return null;
@@ -31,6 +31,5 @@ export abstract class BaseReminder<T>{
     from: string;
     reminderType: string;
     reminderData: T;
-
     abstract handleReminder(): Bluebird<HandlerResult>;
 }
