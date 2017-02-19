@@ -4,7 +4,7 @@ const gulp = require('gulp');
 
 const tsProject = ts.createProject('./tsconfig.json');
 gulp.task('ts', function(){
-    return gulp.src(['./**/*.ts', '!./node_modules/**'])
+    return tsProject.src()
     .pipe(tsProject())
-    .js.pipe(gulp.dest('./'));
+    .js.pipe(gulp.dest('./app/'));
 });

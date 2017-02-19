@@ -9,7 +9,7 @@ import { ReminderType } from '../../reminders/base-reminder';
 export function priceRemindResolver(yargs: YargsResult, from: string) {
     return new Bluebird<string>((resolve, reject) => {
         if (!yargs['item'] || yargs['item'] === '') {
-            resolve('`--item` parameter is mandatory')
+            resolve('`--item` parameter is mandatory');
             return;
         }
         if (!yargs['operator'] || yargs['operator'] === '' || !['<', '>'].includes(<string>yargs['operator'])) {
@@ -55,12 +55,12 @@ export function priceRemindResolver(yargs: YargsResult, from: string) {
                 priceReminder.from = from;
 
                 addReminder(priceReminder)
-                .then(res=>{
-                    resolve('Reminder as successfuly saves, it will be activated upon reaching condition.');
-                })
-                .catch(err=>{
-                    reject(err);
-                });
+                    .then(res => {
+                        resolve('Reminder as successfuly saves, it will be activated upon reaching condition.');
+                    })
+                    .catch(err => {
+                        reject(err);
+                    });
             });
     });
 }

@@ -24,7 +24,7 @@ export function resolveStringToNames(str: string, isStrict: boolean): Bluebird<N
             })
             .catch(err => {
                 reject(err);
-            })
+            });
     });
 
 }
@@ -36,5 +36,5 @@ interface SearchStringResult {
 interface NameResolutionResponse {
     id: number;
     name: string;
-    category: string
+    category: string;
 }

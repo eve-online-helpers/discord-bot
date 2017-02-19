@@ -1,27 +1,6 @@
-export class ParsedInput {
-    params: InputParam[];
-    constructor() {
-        this.params = [];
-    }
+import { InputParam } from '../models/input-param.model';
+import { ParsedInput } from '../models/parsed-input.model';
 
-    get(key: string): InputParam {
-        if (!this.has(key)) {
-            return null;
-        }
-
-        return this.params.filter(p => p.key === key)[0];
-    }
-
-    has(key: string) {
-        return this.params.findIndex(p => p.key === key) !== -1;
-    }
-}
-
-export class InputParam {
-    constructor(public key?: string, public value?: string) {
-
-    }
-}
 export function parseInput(input: string): ParsedInput {
     if (!input.startsWith('!')) {
         return null;

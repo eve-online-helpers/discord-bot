@@ -13,7 +13,7 @@ export class OrderType {
 }
 
 export function getPriceForItemOnStation(itemId: number, regionId: number, stationId: number, orderType: string) {
-    let priceSearchKey ='' + itemId + regionId + orderType;
+    let priceSearchKey = '' + itemId + regionId + orderType;
     let prices: PriceResponse[] = memotyCache.get(priceSearchKey);
     if (prices) {
         console.info(`price for ${priceSearchKey} has been found in cache, skipping CCP call`);
@@ -24,10 +24,10 @@ export function getPriceForItemOnStation(itemId: number, regionId: number, stati
     return new Bluebird<PriceResponse>((resolve, reject) => {
         axios.get<PriceResponse[]>(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()).replace('{orderType}', orderType))
             .then(result => {
-                let expires= moment(result.headers['expires']+ '+0000', 'ddd, DD MMM YYYY HH:mm:ss Z');
+                let expires = moment(result.headers['expires'] + '+0000', 'ddd, DD MMM YYYY HH:mm:ss Z');
                 let diff = expires.diff(moment());
-                memotyCache.put(priceSearchKey, result.data, diff)
-                console.info(`cache key ${priceSearchKey} has been added with ${(diff/1000).toFixed(0)}s TTL`);
+                memotyCache.put(priceSearchKey, result.data, diff);
+                console.info(`cache key ${priceSearchKey} has been added with ${(diff / 1000).toFixed(0)}s TTL`);
                 if (result.data.length === 0) {
                     reject({ code: 404 });
                     return;

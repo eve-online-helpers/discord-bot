@@ -3,23 +3,23 @@ import * as fs from 'fs';
 import * as persistence from '../';
 
 export function importStations(filePath) {
-    var stations = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
+    let stations = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
     const conn = persistence.getConnection();
 
-    conn.dropCollection('stations')
+    conn.dropCollection('stations');
     conn.collection('stations').insertMany(stations)
         .then(res => {
             console.log('import of stations complete with');
         })
         .catch(err => {
             console.error(err);
-        })
+        });
 }
 
 export function importItems(filePath) {
     const items = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
     const conn = persistence.getConnection();
-    conn.dropCollection('items')
+    conn.dropCollection('items');
 
     const keys = Object.keys(items);
     let ops = [];
@@ -28,7 +28,7 @@ export function importItems(filePath) {
             id: key,
             name: items[key].name.en,
             groupId: items[key].groupID
-        }
+        };
         ops.push(conn.collection('items').insertOne(dbItem));
     });
 

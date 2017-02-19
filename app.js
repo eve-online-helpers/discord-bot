@@ -5,10 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
+var index = require('./app/routes/index');
 
-var discord = require('./discord');
-var scheduler = require('./scheduler');
+var discord = require('./app/discord');
+var scheduler = require('./app/scheduler');
 discord.init();
 scheduler.startScheduler(5 * 60 * 1000);
 
