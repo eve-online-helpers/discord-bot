@@ -14,6 +14,10 @@ export function getPriceResolver(input: ParsedInput): Bluebird<string> {
     return new Bluebird<string>((resolve, reject) => {
         if (input.has('help')) {
             resolve('\n\nprice usage: `!p <item name> <!jita !amarr !hek !dodixie !rens|>`\n\n' +
+                '__Wildcards, you can use wildcards to make search more advanced:__\n' +
+                '```!p *vexor  will search all items that end with `vexor`\n' +
+                '!p vexor*  will search all items that start with `vexor`\n' +
+                '!p *vexor* will search all items that include `vexor` ```\n\n' +
                 '__Defaults (default values for parameters)__\n' +
                 '```' +
                 'locations defaults to: !jita\n' +
@@ -46,7 +50,7 @@ export function getPriceResolver(input: ParsedInput): Bluebird<string> {
 
                 if (items.length > 20) {
                     // TODO: beutify response
-                    reject(new StringError(`Search returned too many items (${items.length}), please refine your search and try again!`));
+                    reject(new StringError(`Search returned too many items (${items.length}), please refine your search and try again! (max of 20 items display is available)`));
                     return;
                 }
 
@@ -66,9 +70,13 @@ export function getPriceResolver(input: ParsedInput): Bluebird<string> {
                             }
                             let priceResult = priceResultsInspections[i].value();
                             discordResponse += `__${items[i].name}__\n`;
-                            discordResponse += `sell: ${priceResult.sell.volume_remain} items for **${formatCurrency(priceResult.sell.price, 2)} ISK**\n`;
-                            discordResponse += `buy: ${priceResult.buy.volume_remain} items for **${formatCurrency(priceResult.buy.price, 2)} ISK**\n`;
-                            discordResponse += '\n';
+                            if (priceResult.sell) {
+                                discordResponse += `sell: ${priceResult.sell.volume_remain} items for **${formatCurrency(priceResult.sell.price, 2)} ISK**\n`;
+                            }
+                            if (priceResult.buy) {
+                                discordResponse += `buy: ${priceResult.buy.volume_remain} items for **${formatCurrency(priceResult.buy.price, 2)} ISK**\n`;
+                                discordResponse += '\n';
+                            }
                         }
                         discordResponse += itemsNotFound;
                         resolve(discordResponse);

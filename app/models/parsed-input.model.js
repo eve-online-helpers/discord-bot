@@ -13,7 +13,8 @@ var ParsedInput = (function () {
         return this.params.findIndex(function (p) { return p.key === key; }) !== -1;
     };
     ParsedInput.prototype.getFirst = function (keys) {
-        for (var key in keys) {
+        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+            var key = keys_1[_i];
             if (this.has(key)) {
                 return this.get(key);
             }

@@ -17,7 +17,7 @@ export class ParsedInput {
     }
 
     getFirst(keys: string[]) {
-        for (let key in keys) {
+        for (let key of keys) {
             if (this.has(key)) {
                 return this.get(key);
             }

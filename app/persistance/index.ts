@@ -44,6 +44,19 @@ export function getItemByName(itemName: string): Promise<ItemDBResponse> {
 }
 
 export function getItemsByName(itemName: string): Promise<ItemDBResponse[]> {
+    let regexString = '';
+    if (itemName.startsWith('*')) {
+        itemName = itemName.substr(1, itemName.length);
+    } else {
+        itemName = '^' + itemName;
+    }
+
+    if (itemName.endsWith('*')) {
+        itemName = itemName.substr(0, itemName.length - 1);
+    } else {
+        itemName = itemName + '$';
+    }
+
     if (EXCEPTION_ITEMS[itemName]) {
         return _connection.collection('items').find({ name: EXCEPTION_ITEMS[itemName] }).toArray();
     }
