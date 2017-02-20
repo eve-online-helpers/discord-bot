@@ -47,9 +47,9 @@ function filterPrices(prices, stationId) {
     var result = new PriceServiceResponse();
     result.buy = _.maxBy(_.filter(prices, function (order) {
         return order.location_id === stationId && order.is_buy_order;
-    }), function (record) { return record.price; });
+    }), function (record) { return record.price; }) || prices[0];
     result.sell = _.minBy(_.filter(prices, function (order) {
         return order.location_id === stationId && !order.is_buy_order;
-    }), function (record) { return record.price; });
+    }), function (record) { return record.price; }) || prices[0];
     return result;
 }

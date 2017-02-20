@@ -51,10 +51,10 @@ function filterPrices(prices: PriceResponse[], stationId: number): PriceServiceR
     let result = new PriceServiceResponse();
     result.buy = _.maxBy(_.filter(prices, (order) => {
         return order.location_id === stationId && order.is_buy_order;
-    }), record => record.price);
+    }), record => record.price) || prices[0];
     result.sell = _.minBy(_.filter(prices, (order) => {
         return order.location_id === stationId && !order.is_buy_order;
-    }), record => record.price);
+    }), record => record.price) || prices[0];
 
     return result;
 }
