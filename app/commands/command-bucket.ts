@@ -8,7 +8,7 @@ export class CommandsBucket {
 
     static getResult(input: ParsedInput, from: string): Bluebird<string> {
         if (!CommandsBucket._resolvers.has(input.params[0].key)) {
-            return Bluebird.reject(new StringError(`Operation \`${input.params[0].key}\` is not a know command. Please check spelling or run \`@eve-helper help\``));
+            return Bluebird.reject(new StringError(`Operation \`${input.params[0].key}\` is not a know command. Please check spelling or run \`!help\``));
         }
 
         return CommandsBucket._resolvers.get(input.params[0].key)(input, from);

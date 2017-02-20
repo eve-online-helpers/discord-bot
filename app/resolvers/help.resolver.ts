@@ -1,15 +1,15 @@
 import * as Bluebird from 'bluebird';
-import { YargsResult } from '../models/yargs-result.model';
+import { ParsedInput } from '../models/parsed-input.model';
 
-export function helpResolver(yargs: YargsResult) {
+export function helpResolver(input: ParsedInput) {
     return new Bluebird<string>((resolve, reject) => {
         let help =
             'Hello, and welcome to eve-helper! \n' +
             'You can use eve-helper from public channel by referencing it buy name or you can write a private message.\n\n' +
             '__The following commands are avaiable without registration:__\n' +
             '```' +
-            'help        This help message\n' +
-            'get price   Get sell or buy price for item in system please run `get price --help` for more info```\n\n';
+            '!help    This help message\n' +
+            '!p       Get sell and buy prices for items thar match search param for additional info run <!p !help> ```\n\n';
 
         // help +=
         // '__The following commands are available but require authentication:__\n' +

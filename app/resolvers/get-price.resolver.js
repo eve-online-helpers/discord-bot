@@ -7,31 +7,35 @@ var string_error_1 = require("../models/string-error");
 function getPriceResolver(input) {
     return new Bluebird(function (resolve, reject) {
         if (input.has('help')) {
-            resolve('\n\ngp usage: `!gp <item name> <!jita !amarr !hek !dodixie !rens|>`\n\n' +
+            resolve('\n\nprice usage: `!p <item name> <!jita !amarr !hek !dodixie !rens|>`\n\n' +
                 '__Defaults (default values for parameters)__\n' +
                 '```' +
                 'locations defaults to: !jita\n' +
                 '```');
             return;
         }
-        var item = input.get('gp').value;
-        var station = input.getFirst(['jita', 'amarr', 'hek', 'dodixie']);
+        var item = input.get('p').value;
+        var stationParam = input.getFirst(['jita', 'amarr', 'hek', 'dodixie']);
         if (!item) {
             reject(new string_error_1.StringError('item name is mandatory'));
         }
         if (item.length < 3) {
-            reject(new string_error_1.StringError("item name should be at least 3 chatacter long, \"" + item + "\" is too short."));
+            reject(new string_error_1.StringError("Item name should be at least 3 chatacter long, `" + item + "` is too short."));
         }
         var ops = [];
         ops.push(persistance_1.getItemsByName(item));
-        ops.push(persistance_1.getStationByName(station ? station.key : 'jita'));
+        ops.push(persistance_1.getStationByName(stationParam ? stationParam.key : 'jita'));
         Promise.all(ops)
             .then(function (res) {
             var items = res[0];
             var station = res[1];
-            if (items.length > 10) {
+            if (items.length === 0) {
+                reject(new string_error_1.StringError("No items found that match search criteria (" + item + ")"));
+                return;
+            }
+            if (items.length > 20) {
                 // TODO: beutify response
-                reject(new string_error_1.StringError("Too many items!"));
+                reject(new string_error_1.StringError("Search returned too many items (" + items.length + "), please refine your search and try again!"));
                 return;
             }
             var pricesInspections = [];
@@ -41,16 +45,21 @@ function getPriceResolver(input) {
             }
             Promise.all(pricesInspections)
                 .then(function (priceResultsInspections) {
-                var discordResponse = '';
+                var discordResponse = "**Results for " + station.stationName + "**\n\n";
+                var itemsNotFound = '';
                 for (var i = 0; i < priceResultsInspections.length; i++) {
                     if (priceResultsInspections[i].isRejected()) {
                         console.log("item not found: " + items[i].name);
+                        itemsNotFound += "No orders for " + items[i].name + " were found\n";
                         continue;
                     }
                     var priceResult = priceResultsInspections[i].value();
-                    discordResponse += items[i].name + " ==> sell: " + priceResult.sell.volume_remain + " items for " + currency_formatter_1.formatCurrency(priceResult.sell.price) + " ISK, buy: " + priceResult.buy.volume_remain + " items for " + currency_formatter_1.formatCurrency(priceResult.buy.price) + " ISK";
+                    discordResponse += "__" + items[i].name + "__\n";
+                    discordResponse += "sell: " + priceResult.sell.volume_remain + " items for **" + currency_formatter_1.formatCurrency(priceResult.sell.price, 2) + " ISK**\n";
+                    discordResponse += "buy: " + priceResult.buy.volume_remain + " items for **" + currency_formatter_1.formatCurrency(priceResult.buy.price, 2) + " ISK**\n";
                     discordResponse += '\n';
                 }
+                discordResponse += itemsNotFound;
                 resolve(discordResponse);
             })
                 .catch(function (err) {
