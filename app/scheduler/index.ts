@@ -1,7 +1,7 @@
 import * as Bluebird from 'bluebird';
 import * as _ from 'lodash';
 import { getReminders } from '../persistance';
-import { BaseReminder, resolveReminderInstance } from '../reminders/base-reminder';
+import { BaseReminder, resolveReminderInstance, HandlerResult } from '../reminders/base-reminder';
 import { sendMessage } from '../discord';
 
 let _isSchedulerActive = false;
@@ -49,7 +49,7 @@ function iterationRun() {
 }
 
 function getReminderHandlers(reminders: BaseReminder<any>[]) {
-    let handlers: { [id: string]: () => Bluebird<string> } = {};
+    let handlers: { [id: string]: () => Bluebird<HandlerResult> } = {};
     reminders.forEach(reminder => {
         const reminderInstance = resolveReminderInstance(reminder);
         if (!reminderInstance) {
@@ -57,7 +57,7 @@ function getReminderHandlers(reminders: BaseReminder<any>[]) {
             return;
         }
 
-        handlers[reminder._id.toString()] = resolveReminderInstance(reminder).handleReminder();
+        handlers[reminder._id.toString()] = resolveReminderInstance(reminder).handleReminder;
     });
     return handlers;
 }

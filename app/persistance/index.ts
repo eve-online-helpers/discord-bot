@@ -22,14 +22,16 @@ tradeHubsMap.set('dodixie', 'Dodixie IX - Moon 20 - Federation Navy Assembly Pla
 tradeHubsMap.set('hek', 'Hek VIII - Moon 12 - Boundless Creation Factory');
 
 
-client.connect(process.env.MONGODB_URI || config.mongodbConnection)
-    .then(conn => {
-        _connection = conn;
-        console.info('connected to db');
-    })
-    .catch(err => {
-        console.error(err);
-    });
+export function initConnection() {
+    client.connect(process.env.MONGODB_URI || config.mongodbConnection)
+        .then(conn => {
+            _connection = conn;
+            console.info('connected to db');
+        })
+        .catch(err => {
+            console.error(err);
+        });
+}
 
 export function getConnection(): Db {
     return _connection;

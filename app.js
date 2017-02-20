@@ -9,7 +9,9 @@ var index = require('./app/routes/index');
 
 var discord = require('./app/discord');
 var scheduler = require('./app/scheduler');
+var persistance = require('./app/persistance');
 discord.init();
+persistance.initConnection();
 scheduler.startScheduler(5 * 60 * 1000);
 
 var app = express();

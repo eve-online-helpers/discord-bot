@@ -1,4 +1,4 @@
-import * as Bluebird from 'Bluebird';
+import * as Bluebird from 'bluebird';
 import { PriceReminder } from './price-reminder';
 
 // const _reminders = {

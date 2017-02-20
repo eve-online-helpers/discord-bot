@@ -50,7 +50,7 @@ function getReminderHandlers(reminders) {
             console.error("scheduler:: iterationRun:: reminder of type " + reminder.reminderType + " not found");
             return;
         }
-        handlers[reminder._id.toString()] = base_reminder_1.resolveReminderInstance(reminder).handleReminder();
+        handlers[reminder._id.toString()] = base_reminder_1.resolveReminderInstance(reminder).handleReminder;
     });
     return handlers;
 }
