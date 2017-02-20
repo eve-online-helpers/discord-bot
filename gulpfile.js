@@ -6,10 +6,10 @@ require('./build/gulp/tslint');
 
 const gulp = require('gulp');
 gulp.task('serve', () => {
-    gulp.series('tslint', 'ts', 'mocha', 'express')();
+    gulp.series('tslint', 'ts', 'express')();
 
     gulp.watch('**/*.ts', done => {
-        gulp.series('tslint','ts', 'mocha', 'express')();
+        gulp.series('tslint','ts', 'express')();
         done();
     });
 

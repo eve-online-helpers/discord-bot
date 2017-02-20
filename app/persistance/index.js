@@ -2,6 +2,9 @@
 var Bluebird = require("bluebird");
 var mongodb_1 = require("mongodb");
 var configurations_1 = require("../configurations");
+var EXCEPTION_ITEMS = {
+    plex: "30 Day Pilot's License Extension (PLEX)"
+};
 var config = configurations_1.getConfigurations();
 var client = new mongodb_1.MongoClient();
 var _connection;
@@ -28,6 +31,13 @@ function getItemByName(itemName) {
     return conn.collection('items').findOne({ name: new RegExp("^" + itemName, 'i') });
 }
 exports.getItemByName = getItemByName;
+function getItemsByName(itemName) {
+    if (EXCEPTION_ITEMS[itemName]) {
+        return _connection.collection('items').find({ name: EXCEPTION_ITEMS[itemName] }).toArray();
+    }
+    return _connection.collection('items').find({ name: new RegExp(itemName, 'i') }).toArray();
+}
+exports.getItemsByName = getItemsByName;
 function getStationByName(stationName) {
     stationName = tradeHubsMap.get(stationName) || stationName;
     stationName = stationName.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');

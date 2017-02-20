@@ -15,5 +15,15 @@ export class ParsedInput {
     has(key: string) {
         return this.params.findIndex(p => p.key === key) !== -1;
     }
+
+    getFirst(keys: string[]) {
+        for (let key in keys) {
+            if (this.has(key)) {
+                return this.get(key);
+            }
+        }
+
+        return null;
+    }
 }
 

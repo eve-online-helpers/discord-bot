@@ -5,44 +5,40 @@ import * as _ from 'lodash';
 import * as axios from 'axios';
 import { HubData } from '../../eve-client/api/id-names-mapper';
 
-const PRICE_ENDPOINT = 'https://esi.tech.ccp.is/latest/markets/{regionId}/orders/?type_id={itemId}&order_type={orderType}';
-
-export class OrderType {
-    static BUY = 'buy';
-    static SELL = 'sell';
+const PRICE_ENDPOINT = 'https://esi.tech.ccp.is/latest/markets/{regionId}/orders/?type_id={itemId}';
+export class PriceServiceResponse {
+    sell: PriceResponse;
+    buy: PriceResponse;
 }
 
-export function getPriceForItemOnStation(itemId: number, regionId: number, stationId: number, orderType: string) {
-    let priceSearchKey = '' + itemId + regionId + orderType;
-    let prices: PriceResponse[] = memotyCache.get(priceSearchKey);
-    if (prices) {
+export function getPriceForItemOnStation(itemId: number, regionId: number, stationId: number) {
+    let priceSearchKey = '' + itemId + regionId;
+    let pricesOrError: PriceResponse[] & { code: number } = memotyCache.get(priceSearchKey);
+
+    if (pricesOrError) {
         console.info(`price for ${priceSearchKey} has been found in cache, skipping CCP call`);
-        return Bluebird.resolve(filterPrices(prices, stationId, orderType));
+        if (pricesOrError.code && pricesOrError.code === 404) {
+            return Bluebird.reject(pricesOrError);
+        }
+
+        return Bluebird.resolve(filterPrices(pricesOrError, stationId));
     }
     console.info(`price for ${priceSearchKey} not found in cache, executing CCP call`);
 
-    return new Bluebird<PriceResponse>((resolve, reject) => {
-        axios.get<PriceResponse[]>(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()).replace('{orderType}', orderType))
+    return new Bluebird<PriceServiceResponse>((resolve, reject) => {
+        axios.get<PriceResponse[]>(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()))
             .then(result => {
                 let expires = moment(result.headers['expires'] + '+0000', 'ddd, DD MMM YYYY HH:mm:ss Z');
                 let diff = expires.diff(moment());
-                memotyCache.put(priceSearchKey, result.data, diff);
-                console.info(`cache key ${priceSearchKey} has been added with ${(diff / 1000).toFixed(0)}s TTL`);
                 if (result.data.length === 0) {
+                    memotyCache.put(priceSearchKey, { code: 404 }, diff);
                     reject({ code: 404 });
                     return;
                 }
-                let relevantOrder: PriceResponse;
-                if (orderType === OrderType.BUY) {
-                    relevantOrder = _.maxBy(_.filter(result.data, (order) => {
-                        return order.location_id === stationId;
-                    }), record => record.price);
-                } else if (orderType === OrderType.SELL) {
-                    relevantOrder = _.minBy(_.filter(result.data, (order) => {
-                        return order.location_id === stationId;
-                    }), record => record.price);
-                }
-                resolve(relevantOrder);
+                memotyCache.put(priceSearchKey, result.data, diff);
+                console.info(`cache key ${priceSearchKey} has been added with ${(diff / 1000).toFixed(0)}s TTL`);
+
+                resolve(filterPrices(result.data, stationId));
             })
             .catch(err => {
                 console.error(err);
@@ -51,19 +47,16 @@ export function getPriceForItemOnStation(itemId: number, regionId: number, stati
     });
 }
 
-function filterPrices(prices: PriceResponse[], stationId: number, orderType: string): PriceResponse {
-    let relevantOrder: PriceResponse;
-    if (orderType === OrderType.BUY) {
-        relevantOrder = _.maxBy(_.filter(prices, (order) => {
-            return order.location_id === stationId;
-        }), record => record.price);
-    } else if (orderType === OrderType.SELL) {
-        relevantOrder = _.minBy(_.filter(prices, (order) => {
-            return order.location_id === stationId;
-        }), record => record.price);
-    }
+function filterPrices(prices: PriceResponse[], stationId: number): PriceServiceResponse {
+    let result = new PriceServiceResponse();
+    result.buy = _.maxBy(_.filter(prices, (order) => {
+        return order.location_id === stationId && order.is_buy_order;
+    }), record => record.price);
+    result.sell = _.minBy(_.filter(prices, (order) => {
+        return order.location_id === stationId && !order.is_buy_order;
+    }), record => record.price);
 
-    return relevantOrder;
+    return result;
 }
 
 export interface PriceResponse {

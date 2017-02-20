@@ -6,8 +6,12 @@ import { UserModel } from '../models/user.model';
 import { getConfigurations } from '../configurations';
 import { BaseReminder } from '../reminders/base-reminder';
 
+const EXCEPTION_ITEMS = {
+    plex: `30 Day Pilot's License Extension (PLEX)`
+};
 const config = getConfigurations();
 const client = new MongoClient();
+
 let _connection: Db;
 
 const tradeHubsMap = new Map<string, string>();
@@ -32,8 +36,16 @@ export function getConnection(): Db {
 }
 
 export function getItemByName(itemName: string): Promise<ItemDBResponse> {
+
     const conn = getConnection();
     return conn.collection('items').findOne({ name: new RegExp(`^${itemName}`, 'i') });
+}
+
+export function getItemsByName(itemName: string): Promise<ItemDBResponse[]> {
+    if (EXCEPTION_ITEMS[itemName]) {
+        return _connection.collection('items').find({ name: EXCEPTION_ITEMS[itemName] }).toArray();
+    }
+    return _connection.collection('items').find({ name: new RegExp(itemName, 'i') }).toArray();
 }
 
 export function getStationByName(stationName: string): Promise<StationDBResponse> {

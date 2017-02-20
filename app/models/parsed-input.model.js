@@ -12,6 +12,14 @@ var ParsedInput = (function () {
     ParsedInput.prototype.has = function (key) {
         return this.params.findIndex(function (p) { return p.key === key; }) !== -1;
     };
+    ParsedInput.prototype.getFirst = function (keys) {
+        for (var key in keys) {
+            if (this.has(key)) {
+                return this.get(key);
+            }
+        }
+        return null;
+    };
     return ParsedInput;
 }());
 exports.ParsedInput = ParsedInput;
