@@ -9,11 +9,11 @@ gulp.task('serve', () => {
     gulp.series('tslint', 'ts', 'express')();
 
     gulp.watch('**/*.ts', done => {
-        gulp.series('tslint','ts', 'express')();
+        gulp.series('tslint','ts', 'mocha', 'express')();
         done();
     });
 
 });
-gulp.task('test', gulp.series('tslint','ts', 'mocha-travis'));
+gulp.task('test', gulp.series('tslint','ts', 'mocha', 'mocha-travis'));
 
 

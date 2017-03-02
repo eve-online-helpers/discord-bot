@@ -8,17 +8,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+require("reflect-metadata");
 var Bluebird = require("bluebird");
 var priceService = require("../eve-client/api/price.service");
 var inversify_1 = require("inversify");
 var persistance_1 = require("../persistance");
 var currency_formatter_1 = require("../formatters/currency-formatter");
 var string_error_1 = require("../models/string-error");
+var inversify_types_1 = require("../configurations/inversify.types");
 var PriceResolver = (function () {
-    function PriceResolver() {
+    function PriceResolver(persistance) {
+        this.persistance = persistance;
     }
-    PriceResolver.prototype.getPriceResolver = function (input) {
+    PriceResolver.prototype.resolveMessage = function (input) {
         var persistance = this.persistance;
+        console.log(this);
         return new Bluebird(function (resolve, reject) {
             if (input.has('help')) {
                 resolve('\n\nprice usage: `!p <item name> <!jita !amarr !hek !dodixie !rens|>`\n\n' +
@@ -92,8 +99,9 @@ var PriceResolver = (function () {
     };
     return PriceResolver;
 }());
-__decorate([
-    inversify_1.inject('Persistance'),
-    __metadata("design:type", Object)
-], PriceResolver.prototype, "persistance", void 0);
+PriceResolver = __decorate([
+    inversify_1.injectable(),
+    __param(0, inversify_1.inject(inversify_types_1.TYPES.Perisistance)),
+    __metadata("design:paramtypes", [Object])
+], PriceResolver);
 exports.PriceResolver = PriceResolver;

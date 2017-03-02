@@ -7,7 +7,7 @@ import { expect as ex } from 'chai';
 describe('getPriceResolver', () => {
     let pResolver: PriceResolver;
     before(() => {
-        pResolver = new PriceResolver();
+        pResolver = new PriceResolver(null);
     });
 
     after(() => {
@@ -19,7 +19,7 @@ describe('getPriceResolver', () => {
         input.params.push(new InputParam('p'));
         input.params.push(new InputParam('help'));
 
-        pResolver.getPriceResolver(input)
+        pResolver.resolveMessage(input)
             .then((res) => {
                 ex(res.includes('price usage')).to.be.true;
                 done();
@@ -33,7 +33,7 @@ describe('getPriceResolver', () => {
         let input = new ParsedInput();
         input.params.push(new InputParam('p'));
 
-        pResolver.getPriceResolver(input)
+        pResolver.resolveMessage(input)
             .then((res) => {
                 done(new Error('test failed'));
             })
@@ -47,7 +47,7 @@ describe('getPriceResolver', () => {
         let input = new ParsedInput();
         input.params.push(new InputParam('p', '11'));
 
-        pResolver.getPriceResolver(input)
+        pResolver.resolveMessage(input)
             .then((res) => {
                 done(new Error('test failed'));
             })

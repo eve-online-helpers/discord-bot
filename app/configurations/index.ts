@@ -1,5 +1,3 @@
-import * as inversify from './inversify.config';
-
 export interface ConfigModel {
     mongodbConnection?: string;
     redirectUri: string;

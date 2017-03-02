@@ -1,7 +1,8 @@
+import 'reflect-metadata';
 import * as Bluebird from 'bluebird';
 import * as priceService from '../eve-client/api/price.service';
 
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { ParsedInput } from '../models/parsed-input.model';
 import { getStationByName } from '../persistance';
 import { IPersistance } from '../persistance/i-persistance';
@@ -9,14 +10,20 @@ import { StationDBResponse } from '../models/station-db-response';
 import { ItemDBResponse } from '../models/item-db-response.model';
 import { formatCurrency } from '../formatters/currency-formatter';
 import { StringError } from '../models/string-error';
+import { IResolvable } from './i-resolvable';
+import { TYPES } from '../configurations/inversify.types';
+
 // TODO: move PriceResponse to models!
 import { PriceResponse, PriceServiceResponse } from '../eve-client/api/price.service';
 
-export class PriceResolver {
-    @inject('Persistance') private persistance: IPersistance;
+@injectable()
+export class PriceResolver implements IResolvable {
+    constructor( @inject(TYPES.Perisistance) private persistance: IPersistance) {
+    }
 
-    getPriceResolver(input: ParsedInput): Bluebird<string> {
+    resolveMessage(input: ParsedInput): Bluebird<string> {
         const persistance = this.persistance;
+        console.log(this);
         return new Bluebird<string>((resolve, reject) => {
             if (input.has('help')) {
                 resolve('\n\nprice usage: `!p <item name> <!jita !amarr !hek !dodixie !rens|>`\n\n' +
