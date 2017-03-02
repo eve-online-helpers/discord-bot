@@ -4,7 +4,11 @@
         "target": "es5",
         "noImplicitAny": false,
         "sourceMap": true,
-        "watch": false
+        "watch": false,
+        "typeRoots": [
+            "./node_modules/axios/index.d.ts",
+            "./node_modules/@types"
+        ]
     },
     "include": [
         "app/**/*.ts"
