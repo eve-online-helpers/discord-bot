@@ -1,11 +1,13 @@
-import { getPriceResolver } from './get-price.resolver';
+import { PriceResolver } from './get-price.resolver';
 import { InputParam } from '../models/input-param.model';
 import { ParsedInput } from '../models/parsed-input.model';
 import * as persistance from '../persistance';
 import { expect as ex } from 'chai';
 
 describe('getPriceResolver', () => {
+    let pResolver: PriceResolver;
     before(() => {
+        pResolver = new PriceResolver();
     });
 
     after(() => {
@@ -17,7 +19,7 @@ describe('getPriceResolver', () => {
         input.params.push(new InputParam('p'));
         input.params.push(new InputParam('help'));
 
-        getPriceResolver(input)
+        pResolver.getPriceResolver(input)
             .then((res) => {
                 ex(res.includes('price usage')).to.be.true;
                 done();
@@ -31,7 +33,7 @@ describe('getPriceResolver', () => {
         let input = new ParsedInput();
         input.params.push(new InputParam('p'));
 
-        getPriceResolver(input)
+        pResolver.getPriceResolver(input)
             .then((res) => {
                 done(new Error('test failed'));
             })
@@ -45,7 +47,7 @@ describe('getPriceResolver', () => {
         let input = new ParsedInput();
         input.params.push(new InputParam('p', '11'));
 
-        getPriceResolver(input)
+        pResolver.getPriceResolver(input)
             .then((res) => {
                 done(new Error('test failed'));
             })

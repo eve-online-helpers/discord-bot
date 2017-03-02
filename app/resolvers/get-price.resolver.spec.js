@@ -4,7 +4,9 @@ var input_param_model_1 = require("../models/input-param.model");
 var parsed_input_model_1 = require("../models/parsed-input.model");
 var chai_1 = require("chai");
 describe('getPriceResolver', function () {
+    var pResolver;
     before(function () {
+        pResolver = new get_price_resolver_1.PriceResolver();
     });
     after(function () {
     });
@@ -12,7 +14,7 @@ describe('getPriceResolver', function () {
         var input = new parsed_input_model_1.ParsedInput();
         input.params.push(new input_param_model_1.InputParam('p'));
         input.params.push(new input_param_model_1.InputParam('help'));
-        get_price_resolver_1.getPriceResolver(input)
+        pResolver.getPriceResolver(input)
             .then(function (res) {
             chai_1.expect(res.includes('price usage')).to.be.true;
             done();
@@ -24,7 +26,7 @@ describe('getPriceResolver', function () {
     it('should return `item name is mandatory` error if no items has been sent', function (done) {
         var input = new parsed_input_model_1.ParsedInput();
         input.params.push(new input_param_model_1.InputParam('p'));
-        get_price_resolver_1.getPriceResolver(input)
+        pResolver.getPriceResolver(input)
             .then(function (res) {
             done(new Error('test failed'));
         })
@@ -36,7 +38,7 @@ describe('getPriceResolver', function () {
     it('should return error if item string is less than 3 characters', function (done) {
         var input = new parsed_input_model_1.ParsedInput();
         input.params.push(new input_param_model_1.InputParam('p', '11'));
-        get_price_resolver_1.getPriceResolver(input)
+        pResolver.getPriceResolver(input)
             .then(function (res) {
             done(new Error('test failed'));
         })

@@ -4,7 +4,9 @@
         "target": "es5",
         "noImplicitAny": false,
         "sourceMap": true,
-        "watch": false
+        "watch": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
     "include": [
         "app/**/*.ts"
