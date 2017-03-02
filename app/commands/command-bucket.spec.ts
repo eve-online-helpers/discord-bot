@@ -4,13 +4,19 @@ import { expect as ex } from 'chai';
 import { CommandsBucket } from './command-bucket';
 import { ParsedInput } from '../models/parsed-input.model';
 import { StringError } from '../models/string-error';
+import { IResolvable } from '../resolvers/i-resolvable';
 
 describe('command-bucket tests', () => {
     let inputMock: ParsedInput;
-    let resolveFn = (yargsMock, form): Bluebird<string> => {
-        return Bluebird.resolve('true');
-    };
+    let resolver: IResolvable;
+
+    class MockResolver implements IResolvable {
+        resolveMessage(input: ParsedInput): Bluebird<string> {
+            return Bluebird.resolve('true');
+        }
+    }
     before(() => {
+        resolver = new MockResolver();
         inputMock = <ParsedInput>{
             params: [{
                 key: 'gp',
@@ -19,10 +25,10 @@ describe('command-bucket tests', () => {
         };
     });
     it('should add command without errors', () => {
-        CommandsBucket.addResolver('testResolver', resolveFn);
+        CommandsBucket.addResolver('testResolver', resolver);
     });
     it('should get result from command by args', (done) => {
-        CommandsBucket.addResolver('gp', resolveFn);
+        CommandsBucket.addResolver('gp', resolver);
         CommandsBucket.getResult(inputMock, 'someUser')
             .then((result) => {
                 ex(result).to.be.equal('true');

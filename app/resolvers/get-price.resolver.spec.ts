@@ -1,11 +1,16 @@
-import { getPriceResolver } from './get-price.resolver';
+import * as persistance from '../persistance';
+
+import { PriceResolver } from './get-price.resolver';
 import { InputParam } from '../models/input-param.model';
 import { ParsedInput } from '../models/parsed-input.model';
-import * as persistance from '../persistance';
 import { expect as ex } from 'chai';
 
+import { PersistanceMock } from '../../mocks/persistance.mock';
+
 describe('getPriceResolver', () => {
+    let pResolver: PriceResolver;
     before(() => {
+        pResolver = new PriceResolver(new PersistanceMock());
     });
 
     after(() => {
@@ -17,7 +22,7 @@ describe('getPriceResolver', () => {
         input.params.push(new InputParam('p'));
         input.params.push(new InputParam('help'));
 
-        getPriceResolver(input)
+        pResolver.resolveMessage(input)
             .then((res) => {
                 ex(res.includes('price usage')).to.be.true;
                 done();
@@ -31,7 +36,7 @@ describe('getPriceResolver', () => {
         let input = new ParsedInput();
         input.params.push(new InputParam('p'));
 
-        getPriceResolver(input)
+        pResolver.resolveMessage(input)
             .then((res) => {
                 done(new Error('test failed'));
             })
@@ -45,7 +50,7 @@ describe('getPriceResolver', () => {
         let input = new ParsedInput();
         input.params.push(new InputParam('p', '11'));
 
-        getPriceResolver(input)
+        pResolver.resolveMessage(input)
             .then((res) => {
                 done(new Error('test failed'));
             })
@@ -55,17 +60,31 @@ describe('getPriceResolver', () => {
             });
     });
 
-    // it('should return error if no items were found that match search', (done) => {
-    //     let input = new ParsedInput();
-    //     input.params.push(new InputParam('p', 'UNKNOWN_ITEM'));
+    it('should return error if no items were found that match search', (done) => {
+        let input = new ParsedInput();
+        input.params.push(new InputParam('p', 'UNKNOWN_ITEM'));
 
-    //     getPriceResolver(input)
-    //         .then((res) => {
-    //             done(new Error('test failed'));
-    //         })
-    //         .catch(err => {
-    //             ex(err.message.includes('least 3 chatacter long')).to.be.true;
-    //             done();
-    //         });
-    // });
+        pResolver.resolveMessage(input)
+            .then((res) => {
+                done(new Error('test failed'));
+            })
+            .catch(err => {
+                ex(err.message.includes('UNKNOWN_ITEM')).to.be.true;
+                done();
+            });
+    });
+
+    it('should return error if more than 20 item results returned from search', (done) => {
+        let input = new ParsedInput();
+        input.params.push(new InputParam('p', 'MANY_ITEMS'));
+
+        pResolver.resolveMessage(input)
+            .then((res) => {
+                done(new Error('test failed'));
+            })
+            .catch(err => {
+                ex(err.message.includes('21')).to.be.true;
+                done();
+            });
+    });
 });

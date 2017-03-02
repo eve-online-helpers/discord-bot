@@ -9,13 +9,13 @@ export interface ConfigModel {
 }
 
 let _config: ConfigModel;
+const env = process.env.NODE_ENV || 'dev';
+console.info(`running with ${env} configurations`);
+
 export function getConfigurations() {
     if (_config) {
         return _config;
     }
-
-    const env = process.env.NODE_ENV || 'dev';
-    console.info(`running with ${env} configurations`);
 
     _config = <ConfigModel>require(`./${env}`).default;
     if (!process.env.DISCORD_TOKEN) {

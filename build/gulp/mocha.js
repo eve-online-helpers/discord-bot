@@ -15,6 +15,9 @@ catch (e) {
 gulp.task('mocha', () => {
     return gulp.src(['**/*.spec.js', '!node_modules/**'], { read: false })
         // gulp-mocha needs filepaths so you can't have any plugins before it
+        .pipe(gulp_env({
+            vars: env
+        }))
         .pipe(mocha({ reporter: 'nyan' }));
 });
 

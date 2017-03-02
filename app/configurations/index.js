@@ -1,11 +1,11 @@
 "use strict";
 var _config;
+var env = process.env.NODE_ENV || 'dev';
+console.info("running with " + env + " configurations");
 function getConfigurations() {
     if (_config) {
         return _config;
     }
-    var env = process.env.NODE_ENV || 'dev';
-    console.info("running with " + env + " configurations");
     _config = require("./" + env).default;
     if (!process.env.DISCORD_TOKEN) {
         throw new Error('DISCORD_TOKEN env variable is required, please set it and run application again');
