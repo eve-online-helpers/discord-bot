@@ -23,7 +23,6 @@ export class PriceResolver implements IResolvable {
 
     resolveMessage(input: ParsedInput): Bluebird<string> {
         const persistance = this.persistance;
-        console.log(this);
         return new Bluebird<string>((resolve, reject) => {
             if (input.has('help')) {
                 resolve('\n\nprice usage: `!p <item name> <!jita !amarr !hek !dodixie !rens|>`\n\n' +
@@ -44,12 +43,12 @@ export class PriceResolver implements IResolvable {
                 reject(new StringError('item name is mandatory'));
             }
             if (item.length < 3) {
-                reject(new StringError(`Item name should be at least 3 chatacter long, \`${item}\` is too short.`));
+                return reject(new StringError(`Item name should be at least 3 chatacter long, \`${item}\` is too short.`));
             }
 
             const ops = [];
             ops.push(persistance.getItemsByName(item));
-            ops.push(getStationByName(stationParam ? stationParam.key : 'jita'));
+            ops.push(persistance.getStationByName(stationParam ? stationParam.key : 'jita'));
 
             Promise.all(ops)
                 .then(res => {

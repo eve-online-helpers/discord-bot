@@ -15,7 +15,6 @@ require("reflect-metadata");
 var Bluebird = require("bluebird");
 var priceService = require("../eve-client/api/price.service");
 var inversify_1 = require("inversify");
-var persistance_1 = require("../persistance");
 var currency_formatter_1 = require("../formatters/currency-formatter");
 var string_error_1 = require("../models/string-error");
 var inversify_types_1 = require("../configurations/inversify.types");
@@ -25,7 +24,6 @@ var PriceResolver = (function () {
     }
     PriceResolver.prototype.resolveMessage = function (input) {
         var persistance = this.persistance;
-        console.log(this);
         return new Bluebird(function (resolve, reject) {
             if (input.has('help')) {
                 resolve('\n\nprice usage: `!p <item name> <!jita !amarr !hek !dodixie !rens|>`\n\n' +
@@ -45,11 +43,11 @@ var PriceResolver = (function () {
                 reject(new string_error_1.StringError('item name is mandatory'));
             }
             if (item.length < 3) {
-                reject(new string_error_1.StringError("Item name should be at least 3 chatacter long, `" + item + "` is too short."));
+                return reject(new string_error_1.StringError("Item name should be at least 3 chatacter long, `" + item + "` is too short."));
             }
             var ops = [];
             ops.push(persistance.getItemsByName(item));
-            ops.push(persistance_1.getStationByName(stationParam ? stationParam.key : 'jita'));
+            ops.push(persistance.getStationByName(stationParam ? stationParam.key : 'jita'));
             Promise.all(ops)
                 .then(function (res) {
                 var items = res[0];

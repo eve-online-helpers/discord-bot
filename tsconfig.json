@@ -9,6 +9,7 @@
         "emitDecoratorMetadata": true
     },
     "include": [
-        "app/**/*.ts"
+        "app/**/*.ts",
+        "mocks/**/*.ts"
     ]
 }

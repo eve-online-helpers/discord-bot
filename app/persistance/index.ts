@@ -27,6 +27,10 @@ tradeHubsMap.set('hek', 'Hek VIII - Moon 12 - Boundless Creation Factory');
 @injectable()
 export class Persistance implements IPersistance {
     getItemsByName(itemName: string): Promise<ItemDBResponse[]> {
+        if (EXCEPTION_ITEMS[itemName]) {
+            return _connection.collection('items').find({ name: EXCEPTION_ITEMS[itemName] }).toArray();
+        }
+
         let regexString = '';
         if (itemName.startsWith('*')) {
             itemName = itemName.substr(1, itemName.length);
@@ -40,10 +44,15 @@ export class Persistance implements IPersistance {
             itemName = itemName + '$';
         }
 
-        if (EXCEPTION_ITEMS[itemName]) {
-            return _connection.collection('items').find({ name: EXCEPTION_ITEMS[itemName] }).toArray();
-        }
         return _connection.collection('items').find({ name: new RegExp(itemName, 'i') }).toArray();
+    }
+
+    getStationByName(stationName: string): Promise<StationDBResponse> {
+        stationName = tradeHubsMap.get(stationName) || stationName;
+        stationName = stationName.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+
+        const conn = getConnection();
+        return conn.collection('stations').findOne({ stationName: new RegExp(stationName, 'i') });
     }
 }
 

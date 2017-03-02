@@ -26,6 +26,9 @@ var Persistance = (function () {
     function Persistance() {
     }
     Persistance.prototype.getItemsByName = function (itemName) {
+        if (EXCEPTION_ITEMS[itemName]) {
+            return _connection.collection('items').find({ name: EXCEPTION_ITEMS[itemName] }).toArray();
+        }
         var regexString = '';
         if (itemName.startsWith('*')) {
             itemName = itemName.substr(1, itemName.length);
@@ -39,10 +42,13 @@ var Persistance = (function () {
         else {
             itemName = itemName + '$';
         }
-        if (EXCEPTION_ITEMS[itemName]) {
-            return _connection.collection('items').find({ name: EXCEPTION_ITEMS[itemName] }).toArray();
-        }
         return _connection.collection('items').find({ name: new RegExp(itemName, 'i') }).toArray();
+    };
+    Persistance.prototype.getStationByName = function (stationName) {
+        stationName = tradeHubsMap.get(stationName) || stationName;
+        stationName = stationName.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+        var conn = getConnection();
+        return conn.collection('stations').findOne({ stationName: new RegExp(stationName, 'i') });
     };
     return Persistance;
 }());
