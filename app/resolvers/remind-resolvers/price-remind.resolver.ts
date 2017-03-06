@@ -1,10 +1,15 @@
 import * as Bluebird from 'bluebird';
-import { getItemByName, getStationByName, addReminder } from '../../persistance';
 import { ItemDBResponse } from '../../models/item-db-response.model';
 import { StationDBResponse } from '../../models/station-db-response';
 import { YargsResult } from '../../models/yargs-result.model';
 import { PriceReminder } from '../../reminders/price-reminder';
 import { ReminderType } from '../../reminders/base-reminder';
+
+import { IPersistance } from '../../persistance/i-persistance';
+import { container } from '../../configurations/inversify.config';
+import { TYPES } from '../../configurations/inversify.types';
+
+let persistance = container.get<IPersistance>(TYPES.Perisistance);
 
 export function priceRemindResolver(yargs: YargsResult, from: string) {
     return new Bluebird<string>((resolve, reject) => {
@@ -26,8 +31,8 @@ export function priceRemindResolver(yargs: YargsResult, from: string) {
         }
 
         const ops = [];
-        ops.push(getItemByName(<string>yargs['item']));
-        ops.push(getStationByName(<string>yargs['from'] || 'jita'));
+        ops.push(persistance.getItemByName(<string>yargs['item']));
+        ops.push(persistance.getStationByName(<string>yargs['from'] || 'jita'));
 
         Promise.all(ops)
             .then(res => {
@@ -54,7 +59,7 @@ export function priceRemindResolver(yargs: YargsResult, from: string) {
                 priceReminder.reminderData.type = <string>yargs['operator'] || 'sell';
                 priceReminder.from = from;
 
-                addReminder(priceReminder)
+                persistance.addReminder(priceReminder)
                     .then(res => {
                         resolve('Reminder as successfuly saves, it will be activated upon reaching condition.');
                     })

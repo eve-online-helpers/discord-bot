@@ -6,9 +6,8 @@
         "sourceMap": true,
         "watch": false,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
         "typeRoots": [
-            "./node_modules/axios/index.d.ts",
             "./node_modules/@types"
         ]
     },

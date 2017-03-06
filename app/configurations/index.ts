@@ -6,6 +6,9 @@ export interface ConfigModel {
     eveClientSecret?: string;
     discordToken?: string;
     replyDisabled?: boolean;
+    esiApi: {
+        searchEndpoint: string;
+    };
 }
 
 let _config: ConfigModel;

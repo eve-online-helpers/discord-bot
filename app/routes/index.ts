@@ -2,10 +2,15 @@ import * as express from 'express';
 import * as moment from 'moment';
 import * as path from 'path';
 import * as auth from '../eve-client/auth';
-import * as persistanse from '../persistance';
 import { UserModel } from '../models/user.model';
 import { IVerifyReponseModel } from '../models/verify-response.model';
 import { getConfigurations } from '../configurations';
+
+import { IPersistance } from '../persistance/i-persistance';
+import { container } from '../configurations/inversify.config';
+import { TYPES } from '../configurations/inversify.types';
+
+let persistance = container.get<IPersistance>(TYPES.Perisistance);
 
 const conf = getConfigurations();
 const BASIC_AUTH = new Buffer(`${conf.eveClientId}:${conf.eveClientSecret}`).toString('base64');
@@ -35,7 +40,7 @@ router.get('/callback', function (req: express.Request, res: express.Response) {
       user.characterName = verifyResponse.data.CharacterName;
       user.characterId = verifyResponse.data.CharacterID;
 
-      persistanse.addUser(user)
+      persistance.addUser(user)
         .then(user => {
           res.send(`<h2>Character ${user.characterName} registered successfully, you can now close the tab</h2>`);
           console.info(`character authenticated successfully: ${JSON.stringify(user, null, 2)}`);

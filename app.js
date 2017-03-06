@@ -9,9 +9,9 @@ var index = require('./app/routes/index');
 
 var discord = require('./app/discord');
 var scheduler = require('./app/scheduler');
-var persistance = require('./app/persistance');
+var container = require('./app/configurations/inversify.config').container;
+var TYPES = require('./app/configurations/inversify.types').TYPES;
 discord.init();
-persistance.initConnection();
 scheduler.startScheduler(5 * 60 * 1000);
 
 var app = express();
@@ -31,14 +31,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

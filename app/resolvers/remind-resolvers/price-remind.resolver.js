@@ -1,8 +1,10 @@
 "use strict";
 var Bluebird = require("bluebird");
-var persistance_1 = require("../../persistance");
 var price_reminder_1 = require("../../reminders/price-reminder");
 var base_reminder_1 = require("../../reminders/base-reminder");
+var inversify_config_1 = require("../../configurations/inversify.config");
+var inversify_types_1 = require("../../configurations/inversify.types");
+var persistance = inversify_config_1.container.get(inversify_types_1.TYPES.Perisistance);
 function priceRemindResolver(yargs, from) {
     return new Bluebird(function (resolve, reject) {
         if (!yargs['item'] || yargs['item'] === '') {
@@ -22,8 +24,8 @@ function priceRemindResolver(yargs, from) {
             return;
         }
         var ops = [];
-        ops.push(persistance_1.getItemByName(yargs['item']));
-        ops.push(persistance_1.getStationByName(yargs['from'] || 'jita'));
+        ops.push(persistance.getItemByName(yargs['item']));
+        ops.push(persistance.getStationByName(yargs['from'] || 'jita'));
         Promise.all(ops)
             .then(function (res) {
             var item = res[0];
@@ -46,7 +48,7 @@ function priceRemindResolver(yargs, from) {
             priceReminder.reminderData.price = +yargs['price'];
             priceReminder.reminderData.type = yargs['operator'] || 'sell';
             priceReminder.from = from;
-            persistance_1.addReminder(priceReminder)
+            persistance.addReminder(priceReminder)
                 .then(function (res) {
                 resolve('Reminder as successfuly saves, it will be activated upon reaching condition.');
             })

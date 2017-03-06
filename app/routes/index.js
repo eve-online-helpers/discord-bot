@@ -2,9 +2,11 @@
 var express = require("express");
 var moment = require("moment");
 var auth = require("../eve-client/auth");
-var persistanse = require("../persistance");
 var user_model_1 = require("../models/user.model");
 var configurations_1 = require("../configurations");
+var inversify_config_1 = require("../configurations/inversify.config");
+var inversify_types_1 = require("../configurations/inversify.types");
+var persistance = inversify_config_1.container.get(inversify_types_1.TYPES.Perisistance);
 var conf = configurations_1.getConfigurations();
 var BASIC_AUTH = new Buffer(conf.eveClientId + ":" + conf.eveClientSecret).toString('base64');
 var redirectUri = conf.redirectUri + auth.CLIENT_ID;
@@ -28,7 +30,7 @@ router.get('/callback', function (req, res) {
         .then(function (verifyResponse) {
         user.characterName = verifyResponse.data.CharacterName;
         user.characterId = verifyResponse.data.CharacterID;
-        persistanse.addUser(user)
+        persistance.addUser(user)
             .then(function (user) {
             res.send("<h2>Character " + user.characterName + " registered successfully, you can now close the tab</h2>");
             console.info("character authenticated successfully: " + JSON.stringify(user, null, 2));

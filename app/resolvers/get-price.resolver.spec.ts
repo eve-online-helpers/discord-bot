@@ -1,5 +1,3 @@
-import * as persistance from '../persistance';
-
 import { PriceResolver } from './get-price.resolver';
 import { InputParam } from '../models/input-param.model';
 import { ParsedInput } from '../models/parsed-input.model';

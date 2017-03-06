@@ -1,9 +1,12 @@
 import * as Bluebird from 'bluebird';
 import * as _ from 'lodash';
-import { getReminders } from '../persistance';
+import { container } from '../configurations/inversify.config';
+import { TYPES } from '../configurations/inversify.types';
+import { IPersistance } from '../persistance/i-persistance';
 import { BaseReminder, resolveReminderInstance, HandlerResult } from '../reminders/base-reminder';
 import { sendMessage } from '../discord';
 
+const persistance = container.get<IPersistance>(TYPES.Perisistance);
 let _isSchedulerActive = false;
 let _repeatInterval: number;
 export function startScheduler(repeatInterval: number) {
@@ -23,7 +26,7 @@ export function stopScheduler() {
 function iterationRun() {
     setTimeout(() => {
         console.info('scheduler:: iterationRun:: iteration start');
-        getReminders()
+        persistance.getReminders()
             .then(reminders => {
                 console.info('scheduler:: iterationRun:: reminders recieved from db');
                 let handlers = getReminderHandlers(reminders);

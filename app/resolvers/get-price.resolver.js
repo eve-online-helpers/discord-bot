@@ -40,7 +40,7 @@ var PriceResolver = (function () {
             var item = input.get('p').value;
             var stationParam = input.getFirst(['jita', 'amarr', 'hek', 'dodixie']);
             if (!item) {
-                reject(new string_error_1.StringError('item name is mandatory'));
+                return reject(new string_error_1.StringError('item name is mandatory'));
             }
             if (item.length < 3) {
                 return reject(new string_error_1.StringError("Item name should be at least 3 chatacter long, `" + item + "` is too short."));

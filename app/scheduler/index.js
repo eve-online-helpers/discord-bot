@@ -1,9 +1,11 @@
 "use strict";
 var Bluebird = require("bluebird");
 var _ = require("lodash");
-var persistance_1 = require("../persistance");
+var inversify_config_1 = require("../configurations/inversify.config");
+var inversify_types_1 = require("../configurations/inversify.types");
 var base_reminder_1 = require("../reminders/base-reminder");
 var discord_1 = require("../discord");
+var persistance = inversify_config_1.container.get(inversify_types_1.TYPES.Perisistance);
 var _isSchedulerActive = false;
 var _repeatInterval;
 function startScheduler(repeatInterval) {
@@ -21,7 +23,7 @@ exports.stopScheduler = stopScheduler;
 function iterationRun() {
     setTimeout(function () {
         console.info('scheduler:: iterationRun:: iteration start');
-        persistance_1.getReminders()
+        persistance.getReminders()
             .then(function (reminders) {
             console.info('scheduler:: iterationRun:: reminders recieved from db');
             var handlers = getReminderHandlers(reminders);

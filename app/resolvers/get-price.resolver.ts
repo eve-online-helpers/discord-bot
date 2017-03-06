@@ -4,7 +4,6 @@ import * as priceService from '../eve-client/api/price.service';
 
 import { inject, injectable } from 'inversify';
 import { ParsedInput } from '../models/parsed-input.model';
-import { getStationByName } from '../persistance';
 import { IPersistance } from '../persistance/i-persistance';
 import { StationDBResponse } from '../models/station-db-response';
 import { ItemDBResponse } from '../models/item-db-response.model';
@@ -40,7 +39,7 @@ export class PriceResolver implements IResolvable {
             let item = input.get('p').value;
             let stationParam = input.getFirst(['jita', 'amarr', 'hek', 'dodixie']);
             if (!item) {
-                reject(new StringError('item name is mandatory'));
+                return reject(new StringError('item name is mandatory'));
             }
             if (item.length < 3) {
                 return reject(new StringError(`Item name should be at least 3 chatacter long, \`${item}\` is too short.`));

@@ -1,6 +1,5 @@
 import * as path from 'path';
 import * as importers from './import-data';
-import * as persistence from '../';
 
 const FILE_BASE_DIRECTORY = process.argv[2];
 setTimeout(() => {

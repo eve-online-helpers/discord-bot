@@ -1,10 +1,12 @@
 "use strict";
 var yaml = require("js-yaml");
 var fs = require("fs");
-var persistence = require("../");
+var inversify_config_1 = require("../../configurations/inversify.config");
+var inversify_types_1 = require("../../configurations/inversify.types");
+var persistance = inversify_config_1.container.get(inversify_types_1.TYPES.Perisistance);
 function importStations(filePath) {
     var stations = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
-    var conn = persistence.getConnection();
+    var conn = persistance.getConnection();
     conn.dropCollection('stations');
     conn.collection('stations').insertMany(stations)
         .then(function (res) {
@@ -17,7 +19,7 @@ function importStations(filePath) {
 exports.importStations = importStations;
 function importItems(filePath) {
     var items = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
-    var conn = persistence.getConnection();
+    var conn = persistance.getConnection();
     conn.dropCollection('items');
     var keys = Object.keys(items);
     var ops = [];
