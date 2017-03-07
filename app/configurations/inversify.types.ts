@@ -1,4 +1,7 @@
 export const TYPES = {
     Perisistance: Symbol('Perisistance'),
-    PriceResolver: Symbol('PriceResolver')
+    PriceResolver: Symbol('PriceResolver'),
+    InfoResolver: Symbol('InfoResolver'),
+    SearchService: Symbol('SearchService'),
+    HelpResolver: Symbol('HelpResolver')
 };

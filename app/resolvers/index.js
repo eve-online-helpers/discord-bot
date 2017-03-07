@@ -1,5 +1,4 @@
 "use strict";
-var help_resolver_1 = require("./help.resolver");
 var register_resolver_1 = require("./register.resolver");
 var get_pi_resolver_1 = require("./get-pi.resolver");
 var about_resolver_1 = require("./about-resolver/about.resolver");
@@ -7,8 +6,11 @@ var price_remind_resolver_1 = require("./remind-resolvers/price-remind.resolver"
 var inversify_config_1 = require("../configurations/inversify.config");
 var inversify_types_1 = require("../configurations/inversify.types");
 var pResolver = inversify_config_1.container.get(inversify_types_1.TYPES.PriceResolver);
+var iResolver = inversify_config_1.container.get(inversify_types_1.TYPES.InfoResolver);
+var hResolver = inversify_config_1.container.get(inversify_types_1.TYPES.HelpResolver);
 exports.getPriceResolver = pResolver;
-exports.helpResolver = help_resolver_1.helpResolver;
+exports.infoResolver = iResolver;
+exports.helpResolver = hResolver;
 exports.registerResolver = register_resolver_1.registerResolver;
 exports.getPiResolver = get_pi_resolver_1.getPiResolver;
 exports.priceRemindResolver = price_remind_resolver_1.priceRemindResolver;

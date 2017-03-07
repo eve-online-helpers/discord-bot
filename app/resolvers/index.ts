@@ -1,5 +1,4 @@
 import { PriceResolver } from './get-price.resolver';
-import { helpResolver as _helpResolver } from './help.resolver';
 import { registerResolver as _registerResolver } from './register.resolver';
 import { getPiResolver as _getPiResolver } from './get-pi.resolver';
 import { aboutResolver as _aboutResolver } from './about-resolver/about.resolver';
@@ -9,8 +8,11 @@ import { TYPES } from '../configurations/inversify.types';
 import { IResolvable } from '../resolvers/i-resolvable';
 
 const pResolver = container.get<IResolvable>(TYPES.PriceResolver);
+const iResolver = container.get<IResolvable>(TYPES.InfoResolver);
+const hResolver = container.get<IResolvable>(TYPES.HelpResolver);
 export const getPriceResolver = pResolver;
-export const helpResolver = _helpResolver;
+export const infoResolver = iResolver;
+export const helpResolver = hResolver;
 export const registerResolver = _registerResolver;
 export const getPiResolver = _getPiResolver;
 export const priceRemindResolver = _priceRemindResolver;
