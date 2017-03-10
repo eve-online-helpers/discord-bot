@@ -10,6 +10,7 @@ export interface ConfigModel {
         searchEndpoint: string;
         characterInfoEnpoint: string;
         corporationInfoEnpoint: string;
+        allianceInfoEndpoint: string;
     };
 }
 

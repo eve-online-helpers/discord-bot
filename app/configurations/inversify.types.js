@@ -6,5 +6,6 @@ exports.TYPES = {
     SearchService: Symbol('SearchService'),
     CharacterService: Symbol('CharacterService'),
     CorporationService: Symbol('CorporationService'),
+    AllianceService: Symbol('AllianceService'),
     HelpResolver: Symbol('HelpResolver')
 };

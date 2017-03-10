@@ -35,7 +35,7 @@ function init() {
                 message.reply(err.message);
                 return;
             }
-            message.reply('Weird error happened, some cov-ops and stealth bombers were dispached to assess the situation, additional info: ', err.toString());
+            message.reply("Weird error happened, some cov-ops and stealth bombers were dispached to assess the situation, additional info: " + (err ? err.toString() : err));
         });
     });
     client.login(config.discordToken);

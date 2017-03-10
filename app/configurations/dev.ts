@@ -8,7 +8,8 @@ const _config: ConfigModel = {
     esiApi: {
         searchEndpoint: 'https://esi.tech.ccp.is/latest/search/?search={searchString}&categories={seachCategories}&strict={strict}',
         characterInfoEnpoint: 'https://esi.tech.ccp.is/latest/characters/{characterId}',
-        corporationInfoEnpoint: 'https://esi.tech.ccp.is/latest/corporations/{corporationId}'
+        corporationInfoEnpoint: 'https://esi.tech.ccp.is/latest/corporations/{corporationId}',
+        allianceInfoEndpoint: 'https://esi.tech.ccp.is/latest/alliances/{allianceId}'
     }
 };
 

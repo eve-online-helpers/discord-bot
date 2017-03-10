@@ -18,7 +18,9 @@ var HelpResolver = (function () {
                 '__The following commands are avaiable without registration:__\n' +
                 '```' +
                 '!help           This help message\n' +
-                '!p <item>       Get sell and buy prices for items that match item (full or partial) for additional info run <!p !help> ```\n\n';
+                '!p <item>       Get sell and buy prices for items that match item (full or partial) for additional info run <!p !help>\n' +
+                '!c <character>  Get details for character, it\'s corporation and alliance if any. (note: search is strict)\n\n' +
+                '```\n';
             // help +=
             // '__The following commands are available but require authentication:__\n' +
             // '```' +

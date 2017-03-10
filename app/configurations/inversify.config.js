@@ -3,6 +3,7 @@ var inversify_1 = require("inversify");
 var search_service_1 = require("../eve-client/api/search-service");
 var character_service_1 = require("../eve-client/api/character-service");
 var corporation_service_1 = require("../eve-client/api/corporation-service");
+var alliance_service_1 = require("../eve-client/api/alliance-service");
 var persistance_1 = require("../persistance/persistance");
 var info_resolver_1 = require("../resolvers/info-resolver/info-resolver");
 var get_price_resolver_1 = require("../resolvers/get-price.resolver");
@@ -13,6 +14,7 @@ exports.container.bind(inversify_types_1.TYPES.Perisistance).toConstantValue(new
 exports.container.bind(inversify_types_1.TYPES.SearchService).toConstantValue(new search_service_1.SearchService());
 exports.container.bind(inversify_types_1.TYPES.CharacterService).toConstantValue(new character_service_1.CharacterService());
 exports.container.bind(inversify_types_1.TYPES.CorporationService).toConstantValue(new corporation_service_1.CorporationService());
+exports.container.bind(inversify_types_1.TYPES.AllianceService).toConstantValue(new alliance_service_1.AllianceService());
 exports.container.bind(inversify_types_1.TYPES.PriceResolver).to(get_price_resolver_1.PriceResolver);
 exports.container.bind(inversify_types_1.TYPES.InfoResolver).to(info_resolver_1.InfoResolver);
 exports.container.bind(inversify_types_1.TYPES.HelpResolver).to(help_resolver_1.HelpResolver);
