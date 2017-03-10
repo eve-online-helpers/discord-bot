@@ -12,7 +12,7 @@ var scheduler = require('./app/scheduler');
 var container = require('./app/configurations/inversify.config').container;
 var TYPES = require('./app/configurations/inversify.types').TYPES;
 discord.init();
-scheduler.startScheduler(5 * 60 * 1000);
+// scheduler.startScheduler(5 * 60 * 1000);
 
 var app = express();
 
