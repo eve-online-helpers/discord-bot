@@ -1,11 +1,11 @@
 "use strict";
-var axios = require("axios");
+var axios_1 = require("axios");
 var Bluebird = require("bluebird");
 var SEARCH_ENDPOINT = 'https://esi.tech.ccp.is/latest/search/?search={searchString}&categories={seachCategories}&strict={strict}';
 var NAME_RESOLTION_ENDPOINT = 'https://esi.tech.ccp.is/latest/universe/names/?datasource=tranquility';
 function resolveStringToNames(str, isStrict) {
     return new Bluebird(function (resolve, reject) {
-        axios.get(SEARCH_ENDPOINT
+        axios_1.default.get(SEARCH_ENDPOINT
             .replace('{searchString}', str)
             .replace('{seachCategories}', 'inventorytype')
             .replace('{strict}', isStrict.toString()))
@@ -13,7 +13,7 @@ function resolveStringToNames(str, isStrict) {
             return (results.data.inventorytype);
         })
             .then(function (itemsIds) {
-            axios.post(NAME_RESOLTION_ENDPOINT, itemsIds)
+            axios_1.default.post(NAME_RESOLTION_ENDPOINT, itemsIds)
                 .then(function (response) {
                 resolve(response.data);
             })

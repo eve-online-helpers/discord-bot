@@ -2,7 +2,7 @@ import * as memotyCache from 'memory-cache';
 import * as moment from 'moment';
 import * as Bluebird from 'bluebird';
 import * as _ from 'lodash';
-import * as axios from 'axios';
+import axios from 'axios';
 import { HubData } from '../../eve-client/api/id-names-mapper';
 
 const PRICE_ENDPOINT = 'https://esi.tech.ccp.is/latest/markets/{regionId}/orders/?type_id={itemId}';
@@ -26,7 +26,7 @@ export function getPriceForItemOnStation(itemId: number, regionId: number, stati
     console.info(`price for ${priceSearchKey} not found in cache, executing CCP call`);
 
     return new Bluebird<PriceServiceResponse>((resolve, reject) => {
-        axios.get<PriceResponse[]>(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()))
+        axios.get(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()))
             .then(result => {
                 let expires = moment(result.headers['expires'] + '+0000', 'ddd, DD MMM YYYY HH:mm:ss Z');
                 let diff = expires.diff(moment());

@@ -10,7 +10,7 @@ catch (e) {
 }
 
 gulp.task('express', () => {
-    server.run(['--inspect','./bin/www'], {
+    server.run(['--debug','./bin/www'], {
         env: env
     });
 })

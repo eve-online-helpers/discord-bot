@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 require("reflect-metadata");
-var axios = require("axios");
+var axios_1 = require("axios");
 var inversify_1 = require("inversify");
 var configurations_1 = require("../../../configurations");
 var SearchService = (function () {
@@ -22,8 +22,9 @@ var SearchService = (function () {
             .replace('{searchString}', search)
             .replace('{seachCategories}', categores.join(','))
             .replace('{strict}', strict.toString());
-        return axios.get(endpoint)
-            .then(function (r) { return r.result; });
+        endpoint = encodeURI(endpoint);
+        return axios_1.default.get(endpoint)
+            .then(function (r) { return r.data; });
     };
     return SearchService;
 }());

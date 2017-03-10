@@ -1,5 +1,7 @@
 import { Container } from 'inversify';
 import { ISearchService, SearchService } from '../eve-client/api/search-service';
+import { ICharacterService, CharacterService } from '../eve-client/api/character-service';
+import { ICorporationService, CorporationService } from '../eve-client/api/corporation-service';
 import { IPersistance } from '../persistance/i-persistance';
 import { Persistance } from '../persistance/persistance';
 import { IResolvable } from '../resolvers/i-resolvable';
@@ -10,8 +12,10 @@ import { TYPES } from './inversify.types';
 
 export const container = new Container();
 container.bind<IPersistance>(TYPES.Perisistance).toConstantValue(new Persistance());
+container.bind<ISearchService>(TYPES.SearchService).toConstantValue(new SearchService());
+container.bind<ICharacterService>(TYPES.CharacterService).toConstantValue(new CharacterService());
+container.bind<ICorporationService>(TYPES.CorporationService).toConstantValue(new CorporationService());
 container.bind<IResolvable>(TYPES.PriceResolver).to(PriceResolver);
 container.bind<IResolvable>(TYPES.InfoResolver).to(InfoResolver);
 container.bind<IResolvable>(TYPES.HelpResolver).to(HelpResolver);
-container.bind<ISearchService>(TYPES.SearchService).toConstantValue(new SearchService());
 

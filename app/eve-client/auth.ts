@@ -1,4 +1,4 @@
-import * as axios from 'axios';
+import axios from 'axios';
 import { ITokenModel } from '../models/token-reponse.model';
 import { IVerifyReponseModel } from '../models/verify-response.model';
 import { UserModel } from '../models/user.model';
@@ -8,7 +8,7 @@ export const CLIENT_SECRET = 'SuY41E0dgsDPAwNQQn9fFAe23B03L5WIedRbZc4Z';
 const BASIC_AUTH = new Buffer(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64');
 
 export function getToken(code: string) {
-  return axios.post<ITokenModel>('https://login.eveonline.com/oauth/token',
+  return axios.post('https://login.eveonline.com/oauth/token',
     {
       grant_type: 'authorization_code',
       code: code
@@ -23,7 +23,7 @@ export function getToken(code: string) {
 }
 
 export function verifyUser(user: UserModel) {
-  return axios.get<IVerifyReponseModel>('https://login.eveonline.com/oauth/verify',
+  return axios.get('https://login.eveonline.com/oauth/verify',
     {
       headers: {
         'Authorization': `Bearer ${user.accessToken}`,

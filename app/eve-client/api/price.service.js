@@ -3,7 +3,7 @@ var memotyCache = require("memory-cache");
 var moment = require("moment");
 var Bluebird = require("bluebird");
 var _ = require("lodash");
-var axios = require("axios");
+var axios_1 = require("axios");
 var PRICE_ENDPOINT = 'https://esi.tech.ccp.is/latest/markets/{regionId}/orders/?type_id={itemId}';
 var PriceServiceResponse = (function () {
     function PriceServiceResponse() {
@@ -23,7 +23,7 @@ function getPriceForItemOnStation(itemId, regionId, stationId) {
     }
     console.info("price for " + priceSearchKey + " not found in cache, executing CCP call");
     return new Bluebird(function (resolve, reject) {
-        axios.get(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()))
+        axios_1.default.get(PRICE_ENDPOINT.replace('{regionId}', regionId.toString()).replace('{itemId}', itemId.toString()))
             .then(function (result) {
             var expires = moment(result.headers['expires'] + '+0000', 'ddd, DD MMM YYYY HH:mm:ss Z');
             var diff = expires.diff(moment());

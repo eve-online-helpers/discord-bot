@@ -1,16 +1,18 @@
-import * as Bluebird from 'bluebird';
-import { ICharacterService } from './i-character-service';
+import axios from 'axios';
 import { injectable } from 'inversify';
-
+import { ICharacterPublicResponse } from '../../../models/i-character-public-response.model';
+import { ICharacterService } from './i-character.service';
+import { getConfigurations, ConfigModel } from '../../../configurations';
 
 @injectable()
 export class CharacterService implements ICharacterService {
-    getCharactersIds(searchParam: string, strict: boolean): Bluebird<number[]> {
-        // return axios.get
-        return Bluebird.resolve([]);
+    private config: ConfigModel;
+    constructor() {
+        this.config = getConfigurations();
     }
 
-    getCharacterInfoById(id: number): Bluebird<any> {
-        return Bluebird.resolve([]);
+    getCharacterInfoById(id: number): Promise<ICharacterPublicResponse> {
+        return axios.get(this.config.esiApi.characterInfoEnpoint.replace('{characterId}', id.toString()))
+            .then<ICharacterPublicResponse>(r => r.data);
     }
 }

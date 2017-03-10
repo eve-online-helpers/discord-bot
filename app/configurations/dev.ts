@@ -6,7 +6,9 @@ const _config: ConfigModel = {
     registerUri: 'http://dev.eve-pi-manager.space:3000/authorize/:author_id',
     replyDisabled: false,
     esiApi: {
-        searchEndpoint: 'https://esi.tech.ccp.is/latest/search/?search={searchString}&categories={seachCategories}&strict={strict}'
+        searchEndpoint: 'https://esi.tech.ccp.is/latest/search/?search={searchString}&categories={seachCategories}&strict={strict}',
+        characterInfoEnpoint: 'https://esi.tech.ccp.is/latest/characters/{characterId}',
+        corporationInfoEnpoint: 'https://esi.tech.ccp.is/latest/corporations/{corporationId}'
     }
 };
 

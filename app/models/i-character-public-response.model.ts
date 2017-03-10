@@ -1,12 +1,12 @@
 export interface ICharacterPublicResponse {
-    corporation_name: string;
-    ticker: string;
-    member_count: number;
-    ceo_id: number;
-    corporation_description: string;
-    tax_rate: number;
-    creator_id: number;
-    url: string;
+    corporation_id: number;
+    birthday: string;
+    name: string;
+    gender: string;
+    race_id: number;
+    bloodline_id: number;
+    description: string;
     alliance_id: number;
-    creation_date: string;
+    ancestry_id: number;
+    security_status: number;
 }

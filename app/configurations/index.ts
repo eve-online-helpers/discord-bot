@@ -8,6 +8,8 @@ export interface ConfigModel {
     replyDisabled?: boolean;
     esiApi: {
         searchEndpoint: string;
+        characterInfoEnpoint: string;
+        corporationInfoEnpoint: string;
     };
 }
 

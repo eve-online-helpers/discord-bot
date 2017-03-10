@@ -8,7 +8,7 @@ const gulp = require('gulp');
 gulp.task('serve', () => {
     gulp.series('tslint', 'ts', 'express')();
 
-    gulp.watch('**/*.ts', done => {
+    gulp.watch('app/**/*.ts', done => {
         gulp.series('tslint','ts', 'mocha', 'express')();
         done();
     });

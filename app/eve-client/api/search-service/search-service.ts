@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import * as axios from 'axios';
+import axios from 'axios';
 
 import { injectable } from 'inversify';
 import { ISearchService } from './i-search-service';
@@ -19,8 +19,9 @@ export class SearchService implements ISearchService {
             .replace('{seachCategories}', categores.join(','))
             .replace('{strict}', strict.toString());
 
-        return axios.get<ISearchResult>(endpoint)
-            .then(r => r.result);
+        endpoint = encodeURI(endpoint);
+        return axios.get(endpoint)
+            .then(r => r.data);
     }
 
 }

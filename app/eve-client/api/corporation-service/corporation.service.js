@@ -11,18 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var axios_1 = require("axios");
 var inversify_1 = require("inversify");
 var configurations_1 = require("../../../configurations");
-var CharacterService = (function () {
-    function CharacterService() {
+var CorporationService = (function () {
+    function CorporationService() {
         this.config = configurations_1.getConfigurations();
     }
-    CharacterService.prototype.getCharacterInfoById = function (id) {
-        return axios_1.default.get(this.config.esiApi.characterInfoEnpoint.replace('{characterId}', id.toString()))
+    CorporationService.prototype.getCorporationInfoById = function (id) {
+        return axios_1.default.get(this.config.esiApi.corporationInfoEnpoint.replace('{corporationId}', id.toString()))
             .then(function (r) { return r.data; });
     };
-    return CharacterService;
+    return CorporationService;
 }());
-CharacterService = __decorate([
+CorporationService = __decorate([
     inversify_1.injectable(),
     __metadata("design:paramtypes", [])
-], CharacterService);
-exports.CharacterService = CharacterService;
+], CorporationService);
+exports.CorporationService = CorporationService;
