@@ -54,15 +54,16 @@ var inversify_types_1 = require("../../configurations/inversify.types");
 var search_service_1 = require("../../eve-client/api/search-service");
 var string_error_1 = require("../../models/string-error");
 var InfoResolver = (function () {
-    function InfoResolver(searchService, characterService, allianceService, corporationService) {
+    function InfoResolver(searchService, characterService, allianceService, zkillboardService, corporationService) {
         this.searchService = searchService;
         this.characterService = characterService;
         this.allianceService = allianceService;
+        this.zkillboardService = zkillboardService;
         this.corporationService = corporationService;
     }
     InfoResolver.prototype.resolveMessage = function (input) {
         return __awaiter(this, void 0, Bluebird, function () {
-            var query, searchResult, characterId, characterResult, _a, corporationResult, allianceResult, result, e_1;
+            var query, searchResult, characterId, characterResult, _a, corporationResult, allianceResult, zkillboardResult, result, e_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -80,11 +81,11 @@ var InfoResolver = (function () {
                         characterResult = _b.sent();
                         return [4 /*yield*/, Promise.all([
                                 this.corporationService.getCorporationInfoById(characterResult.corporation_id),
-                                this.allianceService.getAllianceInfoById(characterResult.alliance_id)
+                                this.allianceService.getAllianceInfoById(characterResult.alliance_id),
+                                this.zkillboardService.getZkillboardInfoById(characterId)
                             ])];
                     case 3:
-                        _a = _b.sent(), corporationResult = _a[0], allianceResult = _a[1];
-                        console.log(characterResult.alliance_id);
+                        _a = _b.sent(), corporationResult = _a[0], allianceResult = _a[1], zkillboardResult = _a[2];
                         result = '\n```';
                         result += "Name:               " + characterResult.name;
                         result += characterId === corporationResult.ceo_id ? ' (CEO)\n' : '\n';
@@ -94,9 +95,14 @@ var InfoResolver = (function () {
                         result += "Member Count:       " + corporationResult.member_count + "\n";
                         if (allianceResult) {
                             result += "Alliance Name:      " + allianceResult.alliance_name + "\n";
-                            result += "Alliance Ticker:    " + allianceResult.ticker;
+                            result += "Alliance Ticker:    " + allianceResult.ticker + "\n";
                         }
-                        result += '```';
+                        result += "Ships Destroyed:    " + zkillboardResult.shipsDestroyed + "\n";
+                        result += "Ships Lost:         " + zkillboardResult.shipsLost + "\n";
+                        result += "Solo Kills:         " + zkillboardResult.soloKills + "\n";
+                        result += "Solo Losses:        " + zkillboardResult.soloLosses + "\n";
+                        result += '```\n';
+                        result += "More info on zkillboard: https://zkillboard.com/character/" + characterId + "/";
                         return [2 /*return*/, Bluebird.resolve(result)];
                     case 4:
                         e_1 = _b.sent();
@@ -113,7 +119,8 @@ InfoResolver = __decorate([
     __param(0, inversify_1.inject(inversify_types_1.TYPES.SearchService)),
     __param(1, inversify_1.inject(inversify_types_1.TYPES.CharacterService)),
     __param(2, inversify_1.inject(inversify_types_1.TYPES.AllianceService)),
-    __param(3, inversify_1.inject(inversify_types_1.TYPES.CorporationService)),
-    __metadata("design:paramtypes", [Object, Object, Object, Object])
+    __param(3, inversify_1.inject(inversify_types_1.TYPES.ZkillboardService)),
+    __param(4, inversify_1.inject(inversify_types_1.TYPES.CorporationService)),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, Object])
 ], InfoResolver);
 exports.InfoResolver = InfoResolver;

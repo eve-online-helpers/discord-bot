@@ -9,6 +9,7 @@ import { ISearchService, SearchCategories } from '../../eve-client/api/search-se
 import { ICharacterService } from '../../eve-client/api/character-service';
 import { ICorporationService } from '../../eve-client/api/corporation-service';
 import { IAllianceService } from '../../eve-client/api/alliance-service';
+import { IZkillboardService } from '../../eve-client/api/zkillboard-service';
 import { ParsedInput } from '../../models/parsed-input.model';
 import { ISearchResult } from '../../models/i-seach-result.model';
 import { IResolvable } from '../i-resolvable';
@@ -21,6 +22,7 @@ export class InfoResolver implements IResolvable {
         @inject(TYPES.SearchService) private searchService: ISearchService,
         @inject(TYPES.CharacterService) private characterService: ICharacterService,
         @inject(TYPES.AllianceService) private allianceService: IAllianceService,
+        @inject(TYPES.ZkillboardService) private zkillboardService: IZkillboardService,
         @inject(TYPES.CorporationService) private corporationService: ICorporationService) { }
 
     async resolveMessage(input: ParsedInput): Bluebird<string> {
@@ -36,13 +38,11 @@ export class InfoResolver implements IResolvable {
             const characterId = _.first(searchResult.character);
             const characterResult = await this.characterService.getCharacterInfoById(characterId);
 
-            const [corporationResult, allianceResult] = await Promise.all([
+            const [corporationResult, allianceResult, zkillboardResult] = await Promise.all([
                 this.corporationService.getCorporationInfoById(characterResult.corporation_id),
-                this.allianceService.getAllianceInfoById(characterResult.alliance_id)]);
+                this.allianceService.getAllianceInfoById(characterResult.alliance_id),
+                this.zkillboardService.getZkillboardInfoById(characterId)]);
 
-
-
-            console.log(characterResult.alliance_id);
             let result = '\n```';
             result += `Name:               ${characterResult.name}`;
             result += characterId === corporationResult.ceo_id ? ' (CEO)\n' : '\n';
@@ -52,38 +52,19 @@ export class InfoResolver implements IResolvable {
             result += `Member Count:       ${corporationResult.member_count}\n`;
             if (allianceResult) {
                 result += `Alliance Name:      ${allianceResult.alliance_name}\n`;
-                result += `Alliance Ticker:    ${allianceResult.ticker}`;
+                result += `Alliance Ticker:    ${allianceResult.ticker}\n`;
             }
-            result += '```';
+            result += `Ships Destroyed:    ${zkillboardResult.shipsDestroyed}\n`;
+            result += `Ships Lost:         ${zkillboardResult.shipsLost}\n`;
+            result += `Solo Kills:         ${zkillboardResult.soloKills}\n`;
+            result += `Solo Losses:        ${zkillboardResult.soloLosses}\n`;
+            result += '```\n';
+            result += `More info on zkillboard: https://zkillboard.com/character/${characterId}/`;
 
             return Bluebird.resolve(result);
         }
         catch (e) {
             return Bluebird.reject(e);
         }
-
-        // return new Bluebird<string>((resolve, reject) => {
-        //     if (!query) {
-        //         return reject(new StringError('Search is mandatory!'));
-        //     }
-
-        //     let searchResultPromise = this.searchService.searchByStringForCategories(query, [SearchCategories.CORPORATION, SearchCategories.CHARACTER]);
-        //     let seachResult = awair searchResultPromise();
-
-        //     this.searchService.searchByStringForCategories(query, [SearchCategories.CORPORATION, SearchCategories.CHARACTER])
-        //         .then((res: ISearchResult) => {
-        //             if (!res.character) {
-        //                 return reject(new StringError(`Character with name ${query} not found`));
-        //             }
-
-        //             return _.first(res.character);
-        //         })
-        //         .then(this.characterService.getCharacterInfoById.bind(this.characterService))
-        //         .then((c) => {
-
-        //             resolve(JSON.stringify(c));
-        //         })
-        //         .catch(err => reject(err));
-        // });
     }
 }

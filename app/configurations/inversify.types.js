@@ -7,5 +7,6 @@ exports.TYPES = {
     CharacterService: Symbol('CharacterService'),
     CorporationService: Symbol('CorporationService'),
     AllianceService: Symbol('AllianceService'),
+    ZkillboardService: Symbol('ZkillboardService'),
     HelpResolver: Symbol('HelpResolver')
 };

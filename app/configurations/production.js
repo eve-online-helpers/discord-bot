@@ -6,7 +6,8 @@ var _config = {
         searchEndpoint: 'https://esi.tech.ccp.is/latest/search/?search={searchString}&categories={seachCategories}&strict={strict}',
         characterInfoEnpoint: 'https://esi.tech.ccp.is/latest/characters/{characterId}',
         corporationInfoEnpoint: 'https://esi.tech.ccp.is/latest/corporations/{corporationId}',
-        allianceInfoEndpoint: 'https://esi.tech.ccp.is/latest/alliances/{allianceId}'
+        allianceInfoEndpoint: 'https://esi.tech.ccp.is/latest/alliances/{allianceId}',
+        zkillboardInfoEndpoint: 'https://zkillboard.com/api/stats/characterID/{characterId}/'
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
