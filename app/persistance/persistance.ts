@@ -101,4 +101,10 @@ export class Persistance implements IPersistance {
         return this._connection.collection('reminders').find({})
             .toArray();
     }
+
+    getItemsByIds(itemsIds: string[]): Promise<ItemDBResponse[]> {
+        return this._connection.collection('items').find({
+            id: { $in: itemsIds }
+        }).toArray();
+    }
 }

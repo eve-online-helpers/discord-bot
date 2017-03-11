@@ -10,7 +10,9 @@ import { ICharacterService } from '../../eve-client/api/character-service';
 import { ICorporationService } from '../../eve-client/api/corporation-service';
 import { IAllianceService } from '../../eve-client/api/alliance-service';
 import { IZkillboardService } from '../../eve-client/api/zkillboard-service';
+import { IPersistance } from '../../persistance/i-persistance';
 import { ParsedInput } from '../../models/parsed-input.model';
+import { IZkillboardLossesPublicResponse } from '../../models/i-zkillboard-losses-public-response-model';
 import { ISearchResult } from '../../models/i-seach-result.model';
 import { IResolvable } from '../i-resolvable';
 import { StringError } from '../../models/string-error';
@@ -19,6 +21,7 @@ import { StringError } from '../../models/string-error';
 export class InfoResolver implements IResolvable {
 
     constructor(
+        @inject(TYPES.Perisistance) private persistance: IPersistance,
         @inject(TYPES.SearchService) private searchService: ISearchService,
         @inject(TYPES.CharacterService) private characterService: ICharacterService,
         @inject(TYPES.AllianceService) private allianceService: IAllianceService,
@@ -38,10 +41,14 @@ export class InfoResolver implements IResolvable {
             const characterId = _.first(searchResult.character);
             const characterResult = await this.characterService.getCharacterInfoById(characterId);
 
-            const [corporationResult, allianceResult, zkillboardResult] = await Promise.all([
+            const [corporationResult, allianceResult, zkillboardResult, zkillboardLosses] = await Promise.all([
                 this.corporationService.getCorporationInfoById(characterResult.corporation_id),
                 this.allianceService.getAllianceInfoById(characterResult.alliance_id),
-                this.zkillboardService.getZkillboardInfoById(characterId)]);
+                this.zkillboardService.getZkillboardInfoById(characterId),
+                this.zkillboardService.getZkillboardLossesById(characterId)]);
+
+            const shipsIdsFlown = this.getShipsIdsFlown(zkillboardLosses);
+            const shipsFlown = await this.persistance.getItemsByIds(shipsIdsFlown);
 
             let result = '\n```';
             result += `Name:               ${characterResult.name}`;
@@ -58,6 +65,7 @@ export class InfoResolver implements IResolvable {
             result += `Ships Lost:         ${zkillboardResult.shipsLost}\n`;
             result += `Solo Kills:         ${zkillboardResult.soloKills}\n`;
             result += `Solo Losses:        ${zkillboardResult.soloLosses}\n`;
+            result += `Ships Flown:    ${_.map(shipsFlown, s => s.name).join(', ')}\n`;
             result += '```\n';
             result += `More info on zkillboard: https://zkillboard.com/character/${characterId}/`;
 
@@ -66,5 +74,13 @@ export class InfoResolver implements IResolvable {
         catch (e) {
             return Bluebird.reject(e);
         }
+    }
+
+    private getShipsIdsFlown(zkillboarLossesResponse: IZkillboardLossesPublicResponse[]): string[] {
+        let ships: number[] = [];
+        let losses = _.uniqBy(zkillboarLossesResponse, l => l.victim.shipTypeID)
+            .map(l => l.victim.shipTypeID.toString());
+
+        return losses;
     }
 }

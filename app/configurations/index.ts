@@ -12,6 +12,7 @@ export interface ConfigModel {
         corporationInfoEnpoint: string;
         allianceInfoEndpoint: string;
         zkillboardInfoEndpoint: string;
+        zkillboardLossesEndpoint: string;
     };
 }
 

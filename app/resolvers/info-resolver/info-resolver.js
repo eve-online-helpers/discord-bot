@@ -54,7 +54,8 @@ var inversify_types_1 = require("../../configurations/inversify.types");
 var search_service_1 = require("../../eve-client/api/search-service");
 var string_error_1 = require("../../models/string-error");
 var InfoResolver = (function () {
-    function InfoResolver(searchService, characterService, allianceService, zkillboardService, corporationService) {
+    function InfoResolver(persistance, searchService, characterService, allianceService, zkillboardService, corporationService) {
+        this.persistance = persistance;
         this.searchService = searchService;
         this.characterService = characterService;
         this.allianceService = allianceService;
@@ -63,11 +64,11 @@ var InfoResolver = (function () {
     }
     InfoResolver.prototype.resolveMessage = function (input) {
         return __awaiter(this, void 0, Bluebird, function () {
-            var query, searchResult, characterId, characterResult, _a, corporationResult, allianceResult, zkillboardResult, result, e_1;
+            var query, searchResult, characterId, characterResult, _a, corporationResult, allianceResult, zkillboardResult, zkillboardLosses, shipsIdsFlown, shipsFlown, result, e_1;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _b.trys.push([0, 4, , 5]);
+                        _b.trys.push([0, 5, , 6]);
                         query = input.get('c').value;
                         return [4 /*yield*/, this.searchService.searchByStringForCategories(query, [search_service_1.SearchCategories.CORPORATION, search_service_1.SearchCategories.CHARACTER])];
                     case 1:
@@ -82,10 +83,15 @@ var InfoResolver = (function () {
                         return [4 /*yield*/, Promise.all([
                                 this.corporationService.getCorporationInfoById(characterResult.corporation_id),
                                 this.allianceService.getAllianceInfoById(characterResult.alliance_id),
-                                this.zkillboardService.getZkillboardInfoById(characterId)
+                                this.zkillboardService.getZkillboardInfoById(characterId),
+                                this.zkillboardService.getZkillboardLossesById(characterId)
                             ])];
                     case 3:
-                        _a = _b.sent(), corporationResult = _a[0], allianceResult = _a[1], zkillboardResult = _a[2];
+                        _a = _b.sent(), corporationResult = _a[0], allianceResult = _a[1], zkillboardResult = _a[2], zkillboardLosses = _a[3];
+                        shipsIdsFlown = this.getShipsIdsFlown(zkillboardLosses);
+                        return [4 /*yield*/, this.persistance.getItemsByIds(shipsIdsFlown)];
+                    case 4:
+                        shipsFlown = _b.sent();
                         result = '\n```';
                         result += "Name:               " + characterResult.name;
                         result += characterId === corporationResult.ceo_id ? ' (CEO)\n' : '\n';
@@ -101,26 +107,34 @@ var InfoResolver = (function () {
                         result += "Ships Lost:         " + zkillboardResult.shipsLost + "\n";
                         result += "Solo Kills:         " + zkillboardResult.soloKills + "\n";
                         result += "Solo Losses:        " + zkillboardResult.soloLosses + "\n";
+                        result += "Ships Flown:    " + _.map(shipsFlown, function (s) { return s.name; }).join(', ') + "\n";
                         result += '```\n';
                         result += "More info on zkillboard: https://zkillboard.com/character/" + characterId + "/";
                         return [2 /*return*/, Bluebird.resolve(result)];
-                    case 4:
+                    case 5:
                         e_1 = _b.sent();
                         return [2 /*return*/, Bluebird.reject(e_1)];
-                    case 5: return [2 /*return*/];
+                    case 6: return [2 /*return*/];
                 }
             });
         });
+    };
+    InfoResolver.prototype.getShipsIdsFlown = function (zkillboarLossesResponse) {
+        var ships = [];
+        var losses = _.uniqBy(zkillboarLossesResponse, function (l) { return l.victim.shipTypeID; })
+            .map(function (l) { return l.victim.shipTypeID.toString(); });
+        return losses;
     };
     return InfoResolver;
 }());
 InfoResolver = __decorate([
     inversify_1.injectable(),
-    __param(0, inversify_1.inject(inversify_types_1.TYPES.SearchService)),
-    __param(1, inversify_1.inject(inversify_types_1.TYPES.CharacterService)),
-    __param(2, inversify_1.inject(inversify_types_1.TYPES.AllianceService)),
-    __param(3, inversify_1.inject(inversify_types_1.TYPES.ZkillboardService)),
-    __param(4, inversify_1.inject(inversify_types_1.TYPES.CorporationService)),
-    __metadata("design:paramtypes", [Object, Object, Object, Object, Object])
+    __param(0, inversify_1.inject(inversify_types_1.TYPES.Perisistance)),
+    __param(1, inversify_1.inject(inversify_types_1.TYPES.SearchService)),
+    __param(2, inversify_1.inject(inversify_types_1.TYPES.CharacterService)),
+    __param(3, inversify_1.inject(inversify_types_1.TYPES.AllianceService)),
+    __param(4, inversify_1.inject(inversify_types_1.TYPES.ZkillboardService)),
+    __param(5, inversify_1.inject(inversify_types_1.TYPES.CorporationService)),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object])
 ], InfoResolver);
 exports.InfoResolver = InfoResolver;

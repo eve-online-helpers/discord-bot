@@ -8,6 +8,7 @@ import { StationDBResponse } from '../models/station-db-response';
 
 export interface IPersistance {
     getConnection(): Db;
+    getItemsByIds(itemsIds: string[]): Promise<ItemDBResponse[]>;
     getItemsByName(itemName: string): Promise<ItemDBResponse[]>;
     getStationByName(stationName: string): Promise<StationDBResponse>;
     getItemByName(itemName: string): Promise<ItemDBResponse>;

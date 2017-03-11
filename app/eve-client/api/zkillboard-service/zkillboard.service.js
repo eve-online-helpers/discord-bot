@@ -22,6 +22,13 @@ var ZkillboardService = (function () {
         return axios_1.default.get(this.config.esiApi.zkillboardInfoEndpoint.replace('{characterId}', id.toString()))
             .then(function (r) { return r.data; });
     };
+    ZkillboardService.prototype.getZkillboardLossesById = function (id) {
+        if (!id) {
+            return Promise.resolve(null);
+        }
+        return axios_1.default.get(this.config.esiApi.zkillboardLossesEndpoint.replace('{characterId}', id.toString()))
+            .then(function (r) { return r.data; });
+    };
     return ZkillboardService;
 }());
 ZkillboardService = __decorate([

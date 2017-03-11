@@ -9,7 +9,8 @@ var _config = {
         characterInfoEnpoint: 'https://esi.tech.ccp.is/latest/characters/{characterId}',
         corporationInfoEnpoint: 'https://esi.tech.ccp.is/latest/corporations/{corporationId}',
         allianceInfoEndpoint: 'https://esi.tech.ccp.is/latest/alliances/{allianceId}',
-        zkillboardInfoEndpoint: 'https://zkillboard.com/api/stats/characterID/{characterId}/'
+        zkillboardInfoEndpoint: 'https://zkillboard.com/api/stats/characterID/{characterId}/',
+        zkillboardLossesEndpoint: 'https://zkillboard.com/api/losses/characterID/{characterId}/'
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });

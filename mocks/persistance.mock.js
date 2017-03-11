@@ -30,6 +30,9 @@ var PersistanceMock = (function () {
     PersistanceMock.prototype.getReminders = function () {
         return Promise.resolve(null);
     };
+    PersistanceMock.prototype.getItemsByIds = function (itemsIds) {
+        return Promise.resolve([]);
+    };
     return PersistanceMock;
 }());
 exports.PersistanceMock = PersistanceMock;

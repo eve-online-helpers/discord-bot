@@ -36,4 +36,8 @@ export class PersistanceMock implements IPersistance {
     getReminders(): Promise<BaseReminder<any>[]> {
         return Promise.resolve(null);
     }
+
+    getItemsByIds(itemsIds: string[]): Promise<ItemDBResponse[]> {
+        return Promise.resolve([]);
+    }
 }

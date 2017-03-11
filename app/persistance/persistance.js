@@ -93,6 +93,11 @@ var Persistance = (function () {
         return this._connection.collection('reminders').find({})
             .toArray();
     };
+    Persistance.prototype.getItemsByIds = function (itemsIds) {
+        return this._connection.collection('items').find({
+            id: { $in: itemsIds }
+        }).toArray();
+    };
     return Persistance;
 }());
 Persistance = __decorate([
