@@ -65,7 +65,7 @@ export class InfoResolver implements IResolvable {
             result += `Ships Lost:         ${zkillboardResult.shipsLost}\n`;
             result += `Solo Kills:         ${zkillboardResult.soloKills}\n`;
             result += `Solo Losses:        ${zkillboardResult.soloLosses}\n`;
-            result += `Ships Flown:    ${_.map(shipsFlown, s => s.name).join(', ')}\n`;
+            result += `Ships Flown:        ${_.map(shipsFlown, s => s.name).join(', ')}\n`;
             result += '```\n';
             result += `More info on zkillboard: https://zkillboard.com/character/${characterId}/`;
 
