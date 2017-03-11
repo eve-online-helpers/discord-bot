@@ -103,10 +103,10 @@ var InfoResolver = (function () {
                             result += "Alliance Name:      " + allianceResult.alliance_name + "\n";
                             result += "Alliance Ticker:    " + allianceResult.ticker + "\n";
                         }
-                        result += "Ships Destroyed:    " + (zkillboardResult.shipsDestroyed ? zkillboardResult.shipsDestroyed : '0') + "\n";
-                        result += "Ships Lost:         " + (zkillboardResult.shipsLost ? zkillboardResult.shipsLost : '0') + "\n";
-                        result += "Solo Kills:         " + (zkillboardResult.soloKills ? zkillboardResult.soloKills : '0') + "\n";
-                        result += "Solo Losses:        " + (zkillboardResult.soloLosses ? zkillboardResult.soloLosses : '0') + "\n";
+                        result += "Ships Destroyed:    " + (zkillboardResult.shipsDestroyed || '0') + "\n";
+                        result += "Ships Lost:         " + (zkillboardResult.shipsLost || '0') + "\n";
+                        result += "Solo Kills:         " + (zkillboardResult.soloKills || '0') + "\n";
+                        result += "Solo Losses:        " + (zkillboardResult.soloLosses || '0') + "\n";
                         result += "Ships Flown:        " + _.map(shipsFlown, function (s) { return s.name; }).join(', ') + "\n";
                         result += '```\n';
                         result += "More info on zkillboard: https://zkillboard.com/character/" + characterId + "/";
