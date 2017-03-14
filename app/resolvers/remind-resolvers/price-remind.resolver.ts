@@ -1,4 +1,3 @@
-import * as Bluebird from 'bluebird';
 import { ItemDBResponse } from '../../models/item-db-response.model';
 import { StationDBResponse } from '../../models/station-db-response';
 import { YargsResult } from '../../models/yargs-result.model';
@@ -12,7 +11,7 @@ import { TYPES } from '../../configurations/inversify.types';
 let persistance = container.get<IPersistance>(TYPES.Perisistance);
 
 export function priceRemindResolver(yargs: YargsResult, from: string) {
-    return new Bluebird<string>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
         if (!yargs['item'] || yargs['item'] === '') {
             resolve('`--item` parameter is mandatory');
             return;

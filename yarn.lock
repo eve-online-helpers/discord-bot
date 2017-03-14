@@ -238,9 +238,15 @@ aws4@^1.2.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
 
-axios@*, axios@^0.15.3:
+axios@*:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.15.3.tgz#2c9d638b2e191a08ea1d6cc988eadd6ba5bdc053"
+  dependencies:
+    follow-redirects "1.0.0"
+
+"axios@git+https://github.com/dimkinv/axios.git":
+  version "0.15.3"
+  resolved "git+https://github.com/dimkinv/axios.git#1ab554e3a655273e8c142b7dc3d62acff12a0439"
   dependencies:
     follow-redirects "1.0.0"
 

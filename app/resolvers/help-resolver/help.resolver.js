@@ -6,14 +6,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 require("reflect-metadata");
-var Bluebird = require("bluebird");
-var inversify_1 = require("inversify");
-var HelpResolver = (function () {
-    function HelpResolver() {
-    }
-    HelpResolver.prototype.resolveMessage = function (input) {
-        return new Bluebird(function (resolve, reject) {
-            var help = 'Hello, and welcome to eve-helper! \n' +
+const inversify_1 = require("inversify");
+let HelpResolver = class HelpResolver {
+    resolveMessage(input) {
+        return new Promise((resolve, reject) => {
+            let help = 'Hello, and welcome to eve-helper! \n' +
                 'You can use eve-helper from public channel by referencing it buy name or you can write a private message.\n\n' +
                 '__The following commands are avaiable without registration:__\n' +
                 '```' +
@@ -23,9 +20,8 @@ var HelpResolver = (function () {
                 '```\n';
             resolve(help);
         });
-    };
-    return HelpResolver;
-}());
+    }
+};
 HelpResolver = __decorate([
     inversify_1.injectable()
 ], HelpResolver);

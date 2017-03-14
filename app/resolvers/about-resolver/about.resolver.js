@@ -1,9 +1,8 @@
 "use strict";
-var Bluebird = require("bluebird");
-var version = require('../../../version.json').version;
+const version = require('../../../version.json').version;
 function aboutResolver(input) {
-    var result = "```EVE discord bot, version " + version + "```";
-    return new Bluebird(function (resolve, reject) {
+    let result = `\`\`\`EVE discord bot, version ${version}\`\`\``;
+    return new Promise((resolve, reject) => {
         resolve(result);
     });
 }

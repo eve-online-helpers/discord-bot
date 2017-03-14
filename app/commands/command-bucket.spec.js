@@ -1,20 +1,16 @@
 "use strict";
-var Bluebird = require("bluebird");
-var chai_1 = require("chai");
-var command_bucket_1 = require("./command-bucket");
-var string_error_1 = require("../models/string-error");
-describe('command-bucket tests', function () {
-    var inputMock;
-    var resolver;
-    var MockResolver = (function () {
-        function MockResolver() {
+const chai_1 = require("chai");
+const command_bucket_1 = require("./command-bucket");
+const string_error_1 = require("../models/string-error");
+describe('command-bucket tests', () => {
+    let inputMock;
+    let resolver;
+    class MockResolver {
+        resolveMessage(input) {
+            return Promise.resolve('true');
         }
-        MockResolver.prototype.resolveMessage = function (input) {
-            return Bluebird.resolve('true');
-        };
-        return MockResolver;
-    }());
-    before(function () {
+    }
+    before(() => {
         resolver = new MockResolver();
         inputMock = {
             params: [{
@@ -23,32 +19,32 @@ describe('command-bucket tests', function () {
                 }]
         };
     });
-    it('should add command without errors', function () {
+    it('should add command without errors', () => {
         command_bucket_1.CommandsBucket.addResolver('testResolver', resolver);
     });
-    it('should get result from command by args', function (done) {
+    it('should get result from command by args', (done) => {
         command_bucket_1.CommandsBucket.addResolver('gp', resolver);
         command_bucket_1.CommandsBucket.getResult(inputMock, 'someUser')
-            .then(function (result) {
+            .then((result) => {
             chai_1.expect(result).to.be.equal('true');
             done();
         })
-            .catch(function (err) {
+            .catch(err => {
             done(err);
         });
     });
-    it('should return error if resolver not found', function (done) {
-        var _inputMock = {
+    it('should return error if resolver not found', (done) => {
+        let _inputMock = {
             params: [{
                     key: 'unknown',
                     value: ''
                 }]
         };
         command_bucket_1.CommandsBucket.getResult(_inputMock, 'someUser')
-            .then(function (res) {
+            .then(res => {
             done(new Error('resolver found'));
         })
-            .catch(function (err) {
+            .catch((err) => {
             chai_1.expect(err).to.be.instanceOf(string_error_1.StringError);
             done();
         });

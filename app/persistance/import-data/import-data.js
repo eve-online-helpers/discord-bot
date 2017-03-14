@@ -1,30 +1,30 @@
 "use strict";
-var yaml = require("js-yaml");
-var fs = require("fs");
-var inversify_config_1 = require("../../configurations/inversify.config");
-var inversify_types_1 = require("../../configurations/inversify.types");
-var persistance = inversify_config_1.container.get(inversify_types_1.TYPES.Perisistance);
+const yaml = require("js-yaml");
+const fs = require("fs");
+const inversify_config_1 = require("../../configurations/inversify.config");
+const inversify_types_1 = require("../../configurations/inversify.types");
+let persistance = inversify_config_1.container.get(inversify_types_1.TYPES.Perisistance);
 function importStations(filePath) {
-    var stations = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
-    var conn = persistance.getConnection();
+    let stations = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
+    const conn = persistance.getConnection();
     conn.dropCollection('stations');
     conn.collection('stations').insertMany(stations)
-        .then(function (res) {
+        .then(res => {
         console.log('import of stations complete with');
     })
-        .catch(function (err) {
+        .catch(err => {
         console.error(err);
     });
 }
 exports.importStations = importStations;
 function importItems(filePath) {
-    var items = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
-    var conn = persistance.getConnection();
+    const items = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
+    const conn = persistance.getConnection();
     conn.dropCollection('items');
-    var keys = Object.keys(items);
-    var ops = [];
-    keys.forEach(function (key) {
-        var dbItem = {
+    const keys = Object.keys(items);
+    let ops = [];
+    keys.forEach(key => {
+        let dbItem = {
             id: key,
             name: items[key].name.en,
             groupId: items[key].groupID
@@ -32,10 +32,10 @@ function importItems(filePath) {
         ops.push(conn.collection('items').insertOne(dbItem));
     });
     Promise.all(ops)
-        .then(function (res) {
+        .then(res => {
         console.log('import of items complete');
     })
-        .catch(function (err) {
+        .catch(err => {
         console.error(err);
     });
 }

@@ -1,7 +1,11 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es5",
+        "target": "es6",
+        "lib":[
+            "ES2016",
+            "ES2016.Array.Include"
+        ],
         "noImplicitAny": false,
         "sourceMap": true,
         "watch": false,
@@ -14,5 +18,8 @@
     "include": [
         "app/**/*.ts",
         "mocks/**/*.ts"
+    ],
+    "exclude": [
+        "./node_modules/axios/**/*.ts"
     ]
 }

@@ -1,38 +1,35 @@
 "use strict";
-var Bluebird = require("bluebird");
-var station_db_response_1 = require("../app/models/station-db-response");
-var PersistanceMock = (function () {
-    function PersistanceMock() {
-    }
-    PersistanceMock.prototype.getConnection = function () {
+const Bluebird = require("bluebird");
+const station_db_response_1 = require("../app/models/station-db-response");
+class PersistanceMock {
+    getConnection() {
         return null;
-    };
-    PersistanceMock.prototype.getItemsByName = function (mockItemName) {
+    }
+    getItemsByName(mockItemName) {
         switch (mockItemName) {
             case 'UNKNOWN_ITEM':
                 return Promise.resolve([]);
             case 'MANY_ITEMS':
                 return Promise.resolve(new Array(21));
         }
-    };
-    PersistanceMock.prototype.getStationByName = function (stationNme) {
+    }
+    getStationByName(stationNme) {
         return Promise.resolve(new station_db_response_1.StationDBResponse());
-    };
-    PersistanceMock.prototype.getItemByName = function (itemName) {
+    }
+    getItemByName(itemName) {
         return Promise.resolve(null);
-    };
-    PersistanceMock.prototype.addUser = function (user) {
+    }
+    addUser(user) {
         return Bluebird.resolve(null);
-    };
-    PersistanceMock.prototype.addReminder = function (reminder) {
+    }
+    addReminder(reminder) {
         return Promise.resolve(null);
-    };
-    PersistanceMock.prototype.getReminders = function () {
+    }
+    getReminders() {
         return Promise.resolve(null);
-    };
-    PersistanceMock.prototype.getItemsByIds = function (itemsIds) {
+    }
+    getItemsByIds(itemsIds) {
         return Promise.resolve([]);
-    };
-    return PersistanceMock;
-}());
+    }
+}
 exports.PersistanceMock = PersistanceMock;

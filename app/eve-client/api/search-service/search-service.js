@@ -9,25 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 require("reflect-metadata");
-var axios_1 = require("axios");
-var inversify_1 = require("inversify");
-var configurations_1 = require("../../../configurations");
-var SearchService = (function () {
-    function SearchService() {
+const axios_1 = require("axios");
+const inversify_1 = require("inversify");
+const configurations_1 = require("../../../configurations");
+let SearchService = class SearchService {
+    constructor() {
         this.config = configurations_1.getConfigurations();
     }
-    SearchService.prototype.searchByStringForCategories = function (search, categores, strict) {
-        if (strict === void 0) { strict = true; }
-        var endpoint = this.config.esiApi.searchEndpoint
+    searchByStringForCategories(search, categores, strict = true) {
+        let endpoint = this.config.esiApi.searchEndpoint
             .replace('{searchString}', search)
             .replace('{seachCategories}', categores.join(','))
             .replace('{strict}', strict.toString());
         endpoint = encodeURI(endpoint);
         return axios_1.default.get(endpoint)
-            .then(function (r) { return r.data; });
-    };
-    return SearchService;
-}());
+            .then(r => r.data);
+    }
+};
 SearchService = __decorate([
     inversify_1.injectable(),
     __metadata("design:paramtypes", [])

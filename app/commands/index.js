@@ -1,6 +1,6 @@
 "use strict";
-var command_bucket_1 = require("./command-bucket");
-var resolvers = require("../resolvers");
+const command_bucket_1 = require("./command-bucket");
+const resolvers = require("../resolvers");
 command_bucket_1.CommandsBucket.addResolver('p', resolvers.getPriceResolver);
 command_bucket_1.CommandsBucket.addResolver('c', resolvers.infoResolver);
 command_bucket_1.CommandsBucket.addResolver('help', resolvers.helpResolver);

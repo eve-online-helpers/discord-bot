@@ -15,28 +15,28 @@ catch (e) {
 gulp.task('mocha', () => {
     return gulp.src(['**/*.spec.js', '!node_modules/**'], { read: false })
         // gulp-mocha needs filepaths so you can't have any plugins before it
-        .pipe(cover.instrument({
-            pattern: ['**/*.js', '!node_modules/**', '!**/*.spec.js'],
+        // .pipe(cover.instrument({
+        //     pattern: ['**/*.js', '!node_modules/**', '!**/*.spec.js'],
 
-        }))
+        // }))
         .pipe(gulp_env({
             vars: env
         }))
-        .pipe(mocha({ reporter: 'nyan' }))
-        .pipe(cover.gather())
-        .pipe(cover.format({ reporter: 'html' }))
-        .pipe(gulp.dest('reports'));
+        .pipe(mocha({ reporter: 'nyan' }));
+        // .pipe(cover.gather())
+        // .pipe(cover.format({ reporter: 'html' }))
+        // .pipe(gulp.dest('reports'));
 });
 
 gulp.task('mocha-travis', () => {
     return gulp.src(['**/*.spec.js', '!node_modules/**'], { read: false })
-        .pipe(cover.instrument({
-            pattern: ['**/*.js', '!node_modules/**', '!**/*.spec.js'],
+        // .pipe(cover.instrument({
+        //     pattern: ['**/*.js', '!node_modules/**', '!**/*.spec.js'],
 
-        }))
+        // }))
         // gulp-mocha needs filepaths so you can't have any plugins before it
         .pipe(mocha({ reporter: 'min' }))
-        .pipe(cover.gather())
+        // .pipe(cover.gather())
         .pipe(gulp_env({
             vars: env
         }))

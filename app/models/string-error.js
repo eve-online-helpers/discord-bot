@@ -1,8 +1,7 @@
 "use strict";
-var StringError = (function () {
-    function StringError(message) {
+class StringError {
+    constructor(message) {
         this.message = message;
     }
-    return StringError;
-}());
+}
 exports.StringError = StringError;

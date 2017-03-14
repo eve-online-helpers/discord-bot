@@ -1,9 +1,6 @@
 "use strict";
-var SearchCategories = (function () {
-    function SearchCategories() {
-    }
-    return SearchCategories;
-}());
+class SearchCategories {
+}
 SearchCategories.AGENT = 'agent';
 SearchCategories.ALLIANCE = 'alliance';
 SearchCategories.CHARACTER = 'character';

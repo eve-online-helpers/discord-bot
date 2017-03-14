@@ -1,32 +1,32 @@
 "use strict";
-var discord = require("discord.js");
-var parser = require("./input-parser");
-var string_error_1 = require("../models/string-error");
-var commands_1 = require("../commands");
-var configurations_1 = require("../configurations");
-var config = configurations_1.getConfigurations();
-var client = new discord.Client();
+const discord = require("discord.js");
+const parser = require("./input-parser");
+const string_error_1 = require("../models/string-error");
+const commands_1 = require("../commands");
+const configurations_1 = require("../configurations");
+const config = configurations_1.getConfigurations();
+const client = new discord.Client();
 function init() {
-    client.on('ready', function () {
+    client.on('ready', () => {
         console.info('discord::connected');
     });
-    client.on('message', function (message) {
+    client.on('message', (message) => {
         if (message.author.id === '262599809347747842' || !message.content.startsWith('!')) {
             console.info('message not for me, ignoring');
             return;
         }
         console.info('message recieved: ', message.content);
         message.content = normalizeMessage(message.content);
-        var parsedMessage = parser.parseInput(message.content);
+        const parsedMessage = parser.parseInput(message.content);
         commands_1.CommandsBucket.getResult(parsedMessage, message.author.id)
-            .then(function (result) {
+            .then(result => {
             console.info(result);
             if (config.replyDisabled) {
                 return;
             }
             message.reply(result);
         })
-            .catch(function (err) {
+            .catch(err => {
             console.log(err);
             if (config.replyDisabled) {
                 return;
@@ -35,7 +35,7 @@ function init() {
                 message.reply(err.message);
                 return;
             }
-            message.reply("Weird error happened, some cov-ops and stealth bombers were dispached to assess the situation, additional info: " + (err ? err.toString() : err));
+            message.reply(`Weird error happened, some cov-ops and stealth bombers were dispached to assess the situation, additional info: ${err ? err.toString() : err}`);
         });
     });
     client.login(config.discordToken);

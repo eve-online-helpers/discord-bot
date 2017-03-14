@@ -12,19 +12,18 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 require("reflect-metadata");
-var Bluebird = require("bluebird");
-var priceService = require("../eve-client/api/price.service");
-var inversify_1 = require("inversify");
-var currency_formatter_1 = require("../formatters/currency-formatter");
-var string_error_1 = require("../models/string-error");
-var inversify_types_1 = require("../configurations/inversify.types");
-var PriceResolver = (function () {
-    function PriceResolver(persistance) {
+const priceService = require("../eve-client/api/price.service");
+const inversify_1 = require("inversify");
+const currency_formatter_1 = require("../formatters/currency-formatter");
+const string_error_1 = require("../models/string-error");
+const inversify_types_1 = require("../configurations/inversify.types");
+let PriceResolver = class PriceResolver {
+    constructor(persistance) {
         this.persistance = persistance;
     }
-    PriceResolver.prototype.resolveMessage = function (input) {
-        var persistance = this.persistance;
-        return new Bluebird(function (resolve, reject) {
+    resolveMessage(input) {
+        const persistance = this.persistance;
+        return new Promise((resolve, reject) => {
             if (input.has('help')) {
                 resolve('\n\nprice usage: `!p <item name> <!jita !amarr !hek !dodixie !rens|>`\n\n' +
                     '__Wildcards, you can use wildcards to make search more advanced:__\n' +
@@ -37,66 +36,64 @@ var PriceResolver = (function () {
                     '```');
                 return;
             }
-            var item = input.get('p').value;
-            var stationParam = input.getFirst(['jita', 'amarr', 'hek', 'dodixie']);
+            let item = input.get('p').value;
+            let stationParam = input.getFirst(['jita', 'amarr', 'hek', 'dodixie']);
             if (!item) {
                 return reject(new string_error_1.StringError('item name is mandatory'));
             }
             if (item.length < 3) {
-                return reject(new string_error_1.StringError("Item name should be at least 3 chatacter long, `" + item + "` is too short."));
+                return reject(new string_error_1.StringError(`Item name should be at least 3 chatacter long, \`${item}\` is too short.`));
             }
-            var ops = [];
+            const ops = [];
             ops.push(persistance.getItemsByName(item));
             ops.push(persistance.getStationByName(stationParam ? stationParam.key : 'jita'));
             Promise.all(ops)
-                .then(function (res) {
-                var items = res[0];
-                var station = res[1];
+                .then(res => {
+                const items = res[0];
+                const station = res[1];
                 if (items.length === 0) {
-                    reject(new string_error_1.StringError("No items found that match search criteria (" + item + ")"));
+                    reject(new string_error_1.StringError(`No items found that match search criteria (${item})`));
                     return;
                 }
                 if (items.length > 20) {
                     // TODO: beutify response
-                    reject(new string_error_1.StringError("Search returned too many items (" + items.length + "), please refine your search and try again! (max of 20 items display is available)"));
+                    reject(new string_error_1.StringError(`Search returned too many items (${items.length}), please refine your search and try again! (max of 20 items display is available)`));
                     return;
                 }
-                var pricesInspections = [];
-                for (var _i = 0, items_1 = items; _i < items_1.length; _i++) {
-                    var item_1 = items_1[_i];
-                    pricesInspections.push(priceService.getPriceForItemOnStation(item_1.id, station.regionID, station.stationID).reflect());
+                let pricesInspections = [];
+                for (let item of items) {
+                    pricesInspections.push(priceService.getPriceForItemOnStation(item.id, station.regionID, station.stationID).reflect());
                 }
                 Promise.all(pricesInspections)
-                    .then(function (priceResultsInspections) {
-                    var discordResponse = "**Results for " + station.stationName + "**\n\n";
-                    var itemsNotFound = '';
-                    for (var i = 0; i < priceResultsInspections.length; i++) {
+                    .then(priceResultsInspections => {
+                    let discordResponse = `**Results for ${station.stationName}**\n\n`;
+                    let itemsNotFound = '';
+                    for (let i = 0; i < priceResultsInspections.length; i++) {
                         if (priceResultsInspections[i].isRejected()) {
-                            console.log("item not found: " + items[i].name);
-                            itemsNotFound += "No orders for " + items[i].name + " were found\n";
+                            console.log(`item not found: ${items[i].name}`);
+                            itemsNotFound += `No orders for ${items[i].name} were found\n`;
                             continue;
                         }
-                        var priceResult = priceResultsInspections[i].value();
-                        discordResponse += "__" + items[i].name + "__\n";
+                        let priceResult = priceResultsInspections[i].value();
+                        discordResponse += `__${items[i].name}__\n`;
                         if (priceResult.sell) {
-                            discordResponse += "sell: " + priceResult.sell.volume_remain + " items for **" + currency_formatter_1.formatCurrency(priceResult.sell.price, 2) + " ISK**\n";
+                            discordResponse += `sell: ${priceResult.sell.volume_remain} items for **${currency_formatter_1.formatCurrency(priceResult.sell.price, 2)} ISK**\n`;
                         }
                         if (priceResult.buy) {
-                            discordResponse += "buy: " + priceResult.buy.volume_remain + " items for **" + currency_formatter_1.formatCurrency(priceResult.buy.price, 2) + " ISK**\n";
+                            discordResponse += `buy: ${priceResult.buy.volume_remain} items for **${currency_formatter_1.formatCurrency(priceResult.buy.price, 2)} ISK**\n`;
                             discordResponse += '\n';
                         }
                     }
                     discordResponse += itemsNotFound;
                     resolve(discordResponse);
                 })
-                    .catch(function (err) {
+                    .catch(err => {
                     reject(err);
                 });
             });
         });
-    };
-    return PriceResolver;
-}());
+    }
+};
 PriceResolver = __decorate([
     inversify_1.injectable(),
     __param(0, inversify_1.inject(inversify_types_1.TYPES.Perisistance)),

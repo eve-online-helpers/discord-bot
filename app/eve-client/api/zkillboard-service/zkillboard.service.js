@@ -8,29 +8,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var axios_1 = require("axios");
-var inversify_1 = require("inversify");
-var configurations_1 = require("../../../configurations");
-var ZkillboardService = (function () {
-    function ZkillboardService() {
+const axios_1 = require("axios");
+const inversify_1 = require("inversify");
+const configurations_1 = require("../../../configurations");
+let ZkillboardService = class ZkillboardService {
+    constructor() {
         this.config = configurations_1.getConfigurations();
     }
-    ZkillboardService.prototype.getZkillboardInfoById = function (id) {
+    getZkillboardInfoById(id) {
         if (!id) {
             return Promise.resolve(null);
         }
         return axios_1.default.get(this.config.esiApi.zkillboardInfoEndpoint.replace('{characterId}', id.toString()))
-            .then(function (r) { return r.data; });
-    };
-    ZkillboardService.prototype.getZkillboardLossesById = function (id) {
+            .then(r => r.data);
+    }
+    getZkillboardLossesById(id) {
         if (!id) {
             return Promise.resolve(null);
         }
         return axios_1.default.get(this.config.esiApi.zkillboardLossesEndpoint.replace('{characterId}', id.toString()))
-            .then(function (r) { return r.data; });
-    };
-    return ZkillboardService;
-}());
+            .then(r => r.data);
+    }
+};
 ZkillboardService = __decorate([
     inversify_1.injectable(),
     __metadata("design:paramtypes", [])

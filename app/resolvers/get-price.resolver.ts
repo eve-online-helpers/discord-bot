@@ -20,9 +20,9 @@ export class PriceResolver implements IResolvable {
     constructor( @inject(TYPES.Perisistance) private persistance: IPersistance) {
     }
 
-    resolveMessage(input: ParsedInput): Bluebird<string> {
+    resolveMessage(input: ParsedInput): Promise<string> {
         const persistance = this.persistance;
-        return new Bluebird<string>((resolve, reject) => {
+        return new Promise<string>((resolve, reject) => {
             if (input.has('help')) {
                 resolve('\n\nprice usage: `!p <item name> <!jita !amarr !hek !dodixie !rens|>`\n\n' +
                     '__Wildcards, you can use wildcards to make search more advanced:__\n' +

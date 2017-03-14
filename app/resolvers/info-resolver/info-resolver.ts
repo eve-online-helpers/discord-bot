@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 
-import * as Bluebird from 'bluebird';
 import * as _ from 'lodash';
 
 import { inject, injectable } from 'inversify';
@@ -28,14 +27,13 @@ export class InfoResolver implements IResolvable {
         @inject(TYPES.ZkillboardService) private zkillboardService: IZkillboardService,
         @inject(TYPES.CorporationService) private corporationService: ICorporationService) { }
 
-    async resolveMessage(input: ParsedInput): Bluebird<string> {
+    async resolveMessage(input: ParsedInput): Promise<string> {
         try {
-
             const query = input.get('c').value;
             const searchResult = await this.searchService.searchByStringForCategories(query, [SearchCategories.CORPORATION, SearchCategories.CHARACTER]);
 
             if (!searchResult.character || searchResult.character.length === 0) {
-                return Bluebird.reject(new StringError(`Character with name ${query} not found`));
+                return Promise.reject(new StringError(`Character with name ${query} not found`));
             }
 
             const characterId = _.first(searchResult.character);
@@ -69,10 +67,10 @@ export class InfoResolver implements IResolvable {
             result += '```\n';
             result += `More info on zkillboard: https://zkillboard.com/character/${characterId}/`;
 
-            return Bluebird.resolve(result);
+            return Promise.resolve(result);
         }
         catch (e) {
-            return Bluebird.reject(e);
+            return Promise.reject(e);
         }
     }
 

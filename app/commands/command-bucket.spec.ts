@@ -1,5 +1,3 @@
-import * as Bluebird from 'bluebird';
-
 import { expect as ex } from 'chai';
 import { CommandsBucket } from './command-bucket';
 import { ParsedInput } from '../models/parsed-input.model';
@@ -11,8 +9,8 @@ describe('command-bucket tests', () => {
     let resolver: IResolvable;
 
     class MockResolver implements IResolvable {
-        resolveMessage(input: ParsedInput): Bluebird<string> {
-            return Bluebird.resolve('true');
+        resolveMessage(input: ParsedInput): Promise<string> {
+            return Promise.resolve('true');
         }
     }
     before(() => {

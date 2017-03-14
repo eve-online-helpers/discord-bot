@@ -1,13 +1,13 @@
 "use strict";
-var Bluebird = require("bluebird");
-var _ = require("lodash");
-var inversify_config_1 = require("../configurations/inversify.config");
-var inversify_types_1 = require("../configurations/inversify.types");
-var base_reminder_1 = require("../reminders/base-reminder");
-var discord_1 = require("../discord");
-var persistance = inversify_config_1.container.get(inversify_types_1.TYPES.Perisistance);
-var _isSchedulerActive = false;
-var _repeatInterval;
+const Bluebird = require("bluebird");
+const _ = require("lodash");
+const inversify_config_1 = require("../configurations/inversify.config");
+const inversify_types_1 = require("../configurations/inversify.types");
+const base_reminder_1 = require("../reminders/base-reminder");
+const discord_1 = require("../discord");
+const persistance = inversify_config_1.container.get(inversify_types_1.TYPES.Perisistance);
+let _isSchedulerActive = false;
+let _repeatInterval;
 function startScheduler(repeatInterval) {
     console.info('scheduler:: startScheduler:: started');
     _repeatInterval = repeatInterval;
@@ -21,17 +21,17 @@ function stopScheduler() {
 }
 exports.stopScheduler = stopScheduler;
 function iterationRun() {
-    setTimeout(function () {
+    setTimeout(() => {
         console.info('scheduler:: iterationRun:: iteration start');
         persistance.getReminders()
-            .then(function (reminders) {
+            .then(reminders => {
             console.info('scheduler:: iterationRun:: reminders recieved from db');
-            var handlers = getReminderHandlers(reminders);
+            let handlers = getReminderHandlers(reminders);
             Bluebird.props(handlers)
-                .then((function (results) {
+                .then((results => {
                 console.log(JSON.stringify(results));
                 console.info('scheduler:: iterationRun:: reminders resolved');
-                _.forOwn(results, function (result) {
+                _.forOwn(results, (result) => {
                     if (!result) {
                         return;
                     }
@@ -45,11 +45,11 @@ function iterationRun() {
     }, _repeatInterval);
 }
 function getReminderHandlers(reminders) {
-    var handlers = {};
-    reminders.forEach(function (reminder) {
-        var reminderInstance = base_reminder_1.resolveReminderInstance(reminder);
+    let handlers = {};
+    reminders.forEach(reminder => {
+        const reminderInstance = base_reminder_1.resolveReminderInstance(reminder);
         if (!reminderInstance) {
-            console.error("scheduler:: iterationRun:: reminder of type " + reminder.reminderType + " not found");
+            console.error(`scheduler:: iterationRun:: reminder of type ${reminder.reminderType} not found`);
             return;
         }
         handlers[reminder._id.toString()] = base_reminder_1.resolveReminderInstance(reminder).handleReminder;

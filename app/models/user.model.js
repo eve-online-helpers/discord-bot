@@ -1,7 +1,4 @@
 "use strict";
-var UserModel = (function () {
-    function UserModel() {
-    }
-    return UserModel;
-}());
+class UserModel {
+}
 exports.UserModel = UserModel;

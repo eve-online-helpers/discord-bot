@@ -8,19 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var axios_1 = require("axios");
-var inversify_1 = require("inversify");
-var configurations_1 = require("../../../configurations");
-var CorporationService = (function () {
-    function CorporationService() {
+const axios_1 = require("axios");
+const inversify_1 = require("inversify");
+const configurations_1 = require("../../../configurations");
+let CorporationService = class CorporationService {
+    constructor() {
         this.config = configurations_1.getConfigurations();
     }
-    CorporationService.prototype.getCorporationInfoById = function (id) {
+    getCorporationInfoById(id) {
         return axios_1.default.get(this.config.esiApi.corporationInfoEnpoint.replace('{corporationId}', id.toString()))
-            .then(function (r) { return r.data; });
-    };
-    return CorporationService;
-}());
+            .then(r => r.data);
+    }
+};
 CorporationService = __decorate([
     inversify_1.injectable(),
     __metadata("design:paramtypes", [])

@@ -1,7 +1,4 @@
 "use strict";
-var ItemDBResponse = (function () {
-    function ItemDBResponse() {
-    }
-    return ItemDBResponse;
-}());
+class ItemDBResponse {
+}
 exports.ItemDBResponse = ItemDBResponse;

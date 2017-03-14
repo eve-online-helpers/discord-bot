@@ -17,7 +17,6 @@ export class AllianceService implements IAllianceService {
         }
 
         return axios.get(this.config.esiApi.allianceInfoEndpoint.replace('{allianceId}', id.toString()))
-            .then(r => r.data);
+            .then<IAlliancePublicResponse>(r => r.data);
     }
-
 }

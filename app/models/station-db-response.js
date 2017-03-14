@@ -1,7 +1,4 @@
 "use strict";
-var StationDBResponse = (function () {
-    function StationDBResponse() {
-    }
-    return StationDBResponse;
-}());
+class StationDBResponse {
+}
 exports.StationDBResponse = StationDBResponse;
