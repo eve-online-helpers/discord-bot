@@ -39,8 +39,8 @@ gulp.task('mocha-travis', () => {
         // .pipe(cover.gather())
         .pipe(gulp_env({
             vars: env
-        }))
-        .pipe(cover.format({ reporter: 'lcov' }))
-        .pipe(gulp.dest('reports'))
-        .pipe(coveralls());
+        }));
+        // .pipe(cover.format({ reporter: 'lcov' }))
+        // .pipe(gulp.dest('reports'))
+        // .pipe(coveralls());
 });
