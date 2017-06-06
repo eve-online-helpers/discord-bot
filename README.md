@@ -2,5 +2,20 @@
 |:-:|:-:|
 
 # eve-discord-bot
-discord bot for EVE online
-this is a test
+Discord bot for EVE online
+
+
+
+## Development installation instructions
+### prerequisites
+1. mongodb installed and running
+1. names and station collection in mongo: _TBD_
+
+### installation steps
+1. clone this repository
+1. install node.js latest stable version
+1. from within the directory run `npm install`
+1. install gulp in global `npm i -g gulp`
+1. rename `_env.json` to `env.json` and add all secret data
+1. run in development mode with `npm run serve`
+
