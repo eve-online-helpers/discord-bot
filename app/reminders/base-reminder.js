@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const price_reminder_1 = require("./price-reminder");
 // const _reminders = {
 //     PRICE: PriceReminder.getInstance
@@ -31,3 +32,4 @@ exports.HandlerResult = HandlerResult;
 class BaseReminder {
 }
 exports.BaseReminder = BaseReminder;
+//# sourceMappingURL=base-reminder.js.map

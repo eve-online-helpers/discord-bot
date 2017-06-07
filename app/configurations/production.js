@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const _config = {
     redirectUri: 'http://dev.eve-pi-manager.space:3000/callback&client_id=',
     registerUri: 'http://dev.eve-pi-manager.space:3000/authorize/:author_id',
@@ -11,5 +12,5 @@ const _config = {
         zkillboardLossesEndpoint: 'https://zkillboard.com/api/losses/characterID/{characterId}/'
     }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = _config;
+//# sourceMappingURL=production.js.map

@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 const search_service_1 = require("../eve-client/api/search-service");
 const character_service_1 = require("../eve-client/api/character-service");
@@ -20,3 +21,4 @@ exports.container.bind(inversify_types_1.TYPES.ZkillboardService).toConstantValu
 exports.container.bind(inversify_types_1.TYPES.PriceResolver).to(get_price_resolver_1.PriceResolver);
 exports.container.bind(inversify_types_1.TYPES.InfoResolver).to(info_resolver_1.InfoResolver);
 exports.container.bind(inversify_types_1.TYPES.HelpResolver).to(help_resolver_1.HelpResolver);
+//# sourceMappingURL=inversify.config.js.map

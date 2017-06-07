@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class ParsedInput {
     constructor() {
         this.params = [];
@@ -22,3 +23,4 @@ class ParsedInput {
     }
 }
 exports.ParsedInput = ParsedInput;
+//# sourceMappingURL=parsed-input.model.js.map

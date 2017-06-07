@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const register_resolver_1 = require("./register.resolver");
 const get_pi_resolver_1 = require("./get-pi.resolver");
 const about_resolver_1 = require("./about-resolver/about.resolver");
@@ -15,3 +16,4 @@ exports.registerResolver = register_resolver_1.registerResolver;
 exports.getPiResolver = get_pi_resolver_1.getPiResolver;
 exports.priceRemindResolver = price_remind_resolver_1.priceRemindResolver;
 exports.aboutResolver = about_resolver_1.aboutResolver;
+//# sourceMappingURL=index.js.map

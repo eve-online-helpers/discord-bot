@@ -8,14 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const Bluebird = require("bluebird");
 const mongodb_1 = require("mongodb");
 const configurations_1 = require("../configurations");
 const inversify_1 = require("inversify");
-const EXCEPTION_ITEMS = {
-    plex: `30 Day Pilot's License Extension (PLEX)`
-};
+const EXCEPTION_ITEMS = {};
 const config = configurations_1.getConfigurations();
 const client = new mongodb_1.MongoClient();
 const tradeHubsMap = new Map();
@@ -102,3 +101,4 @@ Persistance = __decorate([
     __metadata("design:paramtypes", [])
 ], Persistance);
 exports.Persistance = Persistance;
+//# sourceMappingURL=persistance.js.map

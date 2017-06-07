@@ -10,7 +10,7 @@ import { IPersistance } from './i-persistance';
 import { injectable } from 'inversify';
 
 const EXCEPTION_ITEMS = {
-    plex: `30 Day Pilot's License Extension (PLEX)`
+
 };
 const config = getConfigurations();
 const client = new MongoClient();

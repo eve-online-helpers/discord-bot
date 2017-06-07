@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const price_reminder_1 = require("../../reminders/price-reminder");
 const base_reminder_1 = require("../../reminders/base-reminder");
 const inversify_config_1 = require("../../configurations/inversify.config");
@@ -58,3 +59,4 @@ function priceRemindResolver(yargs, from) {
     });
 }
 exports.priceRemindResolver = priceRemindResolver;
+//# sourceMappingURL=price-remind.resolver.js.map

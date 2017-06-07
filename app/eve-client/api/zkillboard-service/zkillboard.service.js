@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 const inversify_1 = require("inversify");
 const configurations_1 = require("../../../configurations");
@@ -35,3 +36,4 @@ ZkillboardService = __decorate([
     __metadata("design:paramtypes", [])
 ], ZkillboardService);
 exports.ZkillboardService = ZkillboardService;
+//# sourceMappingURL=zkillboard.service.js.map

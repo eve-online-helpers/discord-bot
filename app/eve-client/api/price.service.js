@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const memotyCache = require("memory-cache");
 const moment = require("moment");
 const Bluebird = require("bluebird");
@@ -50,3 +51,4 @@ function filterPrices(prices, stationId) {
     }), record => record.price) || prices[0];
     return result;
 }
+//# sourceMappingURL=price.service.js.map

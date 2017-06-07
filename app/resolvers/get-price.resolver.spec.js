@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const get_price_resolver_1 = require("./get-price.resolver");
 const input_param_model_1 = require("../models/input-param.model");
 const parsed_input_model_1 = require("../models/parsed-input.model");
@@ -73,3 +74,4 @@ describe('getPriceResolver', () => {
         });
     });
 });
+//# sourceMappingURL=get-price.resolver.spec.js.map

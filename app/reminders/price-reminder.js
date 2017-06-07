@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const Bluebird = require("bluebird");
 const base_reminder_1 = require("./base-reminder");
 class PriceReminderModel {
@@ -17,3 +18,4 @@ class PriceReminder extends base_reminder_1.BaseReminder {
     }
 }
 exports.PriceReminder = PriceReminder;
+//# sourceMappingURL=price-reminder.js.map
