@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const input_param_model_1 = require("../models/input-param.model");
 const parsed_input_model_1 = require("../models/parsed-input.model");
 function parseInput(input) {
@@ -19,4 +18,3 @@ function parseInput(input) {
     return result;
 }
 exports.parseInput = parseInput;
-//# sourceMappingURL=input-parser.js.map

@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const Bluebird = require("bluebird");
 const mongodb_1 = require("mongodb");
@@ -101,4 +100,3 @@ Persistance = __decorate([
     __metadata("design:paramtypes", [])
 ], Persistance);
 exports.Persistance = Persistance;
-//# sourceMappingURL=persistance.js.map

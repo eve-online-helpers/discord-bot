@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const Bluebird = require("bluebird");
 const station_db_response_1 = require("../app/models/station-db-response");
 class PersistanceMock {
@@ -34,4 +33,3 @@ class PersistanceMock {
     }
 }
 exports.PersistanceMock = PersistanceMock;
-//# sourceMappingURL=persistance.mock.js.map

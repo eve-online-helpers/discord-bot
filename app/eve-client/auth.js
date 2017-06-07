@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 exports.CLIENT_ID = '52051e61f940445591822159d8e958d9';
 exports.CLIENT_SECRET = 'SuY41E0dgsDPAwNQQn9fFAe23B03L5WIedRbZc4Z';
@@ -25,4 +24,3 @@ function verifyUser(user) {
     });
 }
 exports.verifyUser = verifyUser;
-//# sourceMappingURL=auth.js.map

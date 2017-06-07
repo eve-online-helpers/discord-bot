@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const Bluebird = require("bluebird");
 const config = require("../configurations");
 const conf = config.getConfigurations();
@@ -10,4 +9,3 @@ function registerResolver(yargs, from) {
     });
 }
 exports.registerResolver = registerResolver;
-//# sourceMappingURL=register.resolver.js.map

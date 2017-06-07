@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
 const importers = require("./import-data");
 const fs = require("fs");
@@ -34,4 +33,3 @@ function unzip() {
         importers.importStations(path.join(__dirname, '/eve_resources/sde/bsd/staStations.yaml'));
     });
 }
-//# sourceMappingURL=start-import.js.map

@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const Bluebird = require("bluebird");
 const _ = require("lodash");
 const inversify_config_1 = require("../configurations/inversify.config");
@@ -57,4 +56,3 @@ function getReminderHandlers(reminders) {
     });
     return handlers;
 }
-//# sourceMappingURL=index.js.map

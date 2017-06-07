@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const priceService = require("../eve-client/api/price.service");
 const inversify_1 = require("inversify");
@@ -78,10 +77,10 @@ let PriceResolver = class PriceResolver {
                         let priceResult = priceResultsInspections[i].value();
                         discordResponse += `__${items[i].name}__\n`;
                         if (priceResult.sell) {
-                            discordResponse += `sell: ${priceResult.sell.volume_remain} items for **${currency_formatter_1.formatCurrency(priceResult.sell.price, 2)} ISK**\n`;
+                            discordResponse += `minimum sell order: ${priceResult.sell.volume_remain} items for **${currency_formatter_1.formatCurrency(priceResult.sell.price, 2)} ISK**\n`;
                         }
                         if (priceResult.buy) {
-                            discordResponse += `buy: ${priceResult.buy.volume_remain} items for **${currency_formatter_1.formatCurrency(priceResult.buy.price, 2)} ISK**\n`;
+                            discordResponse += `maximum buy order: ${priceResult.buy.volume_remain} items for **${currency_formatter_1.formatCurrency(priceResult.buy.price, 2)} ISK**\n`;
                             discordResponse += '\n';
                         }
                     }
@@ -101,4 +100,3 @@ PriceResolver = __decorate([
     __metadata("design:paramtypes", [Object])
 ], PriceResolver);
 exports.PriceResolver = PriceResolver;
-//# sourceMappingURL=get-price.resolver.js.map

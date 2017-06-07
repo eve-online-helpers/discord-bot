@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.TYPES = {
     Perisistance: Symbol('Perisistance'),
     PriceResolver: Symbol('PriceResolver'),
@@ -11,4 +10,3 @@ exports.TYPES = {
     ZkillboardService: Symbol('ZkillboardService'),
     HelpResolver: Symbol('HelpResolver')
 };
-//# sourceMappingURL=inversify.types.js.map

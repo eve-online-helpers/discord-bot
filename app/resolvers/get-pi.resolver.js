@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const Bluebird = require("bluebird");
 function getPiResolver(yargs) {
     return new Bluebird((resolve, reject) => {
@@ -11,4 +10,3 @@ function getPiResolver(yargs) {
     });
 }
 exports.getPiResolver = getPiResolver;
-//# sourceMappingURL=get-pi.resolver.js.map

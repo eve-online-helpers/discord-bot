@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const chai_1 = require("chai");
 const command_bucket_1 = require("./command-bucket");
 const string_error_1 = require("../models/string-error");
@@ -51,4 +50,3 @@ describe('command-bucket tests', () => {
         });
     });
 });
-//# sourceMappingURL=command-bucket.spec.js.map

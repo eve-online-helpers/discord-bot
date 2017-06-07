@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const chai_1 = require("chai");
 const input_parser_1 = require("./input-parser");
 describe('imput parser tests', () => {
@@ -43,4 +42,3 @@ describe('imput parser tests', () => {
         chai_1.expect(result.get('p').value).to.be.equal('some input');
     });
 });
-//# sourceMappingURL=input-parser.spec.js.map

@@ -11,7 +11,7 @@ console.log(`Initiating download from: ${TRANQUILITY_STATIC_DATA}`);
 const staticDataFile = fs.createWriteStream(TEMP_ZIP_FILE);
 
 const request = https.get(TRANQUILITY_STATIC_DATA).on('response', res => {
-    const fileSize = +res.headers['content-length'] / 1000
+    const fileSize = +res.headers['content-length'] / 1000;
     let totalDownloaded = 0;
     console.log(`connected, starting download of: ${fileSize}KB`);
 
@@ -24,7 +24,7 @@ const request = https.get(TRANQUILITY_STATIC_DATA).on('response', res => {
             staticDataFile.end();
             console.log('finished download');
             unzip();
-        })
+        });
 });
 
 function unzip() {

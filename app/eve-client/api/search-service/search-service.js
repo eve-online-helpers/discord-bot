@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const axios_1 = require("axios");
 const inversify_1 = require("inversify");
@@ -32,4 +31,3 @@ SearchService = __decorate([
     __metadata("design:paramtypes", [])
 ], SearchService);
 exports.SearchService = SearchService;
-//# sourceMappingURL=search-service.js.map

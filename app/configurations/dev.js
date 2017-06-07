@@ -1,7 +1,6 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const _config = {
-    mongodbConnection: 'mongodb://localhost:27017/eve-discord-bot',
+    mongodbConnection: 'mongodb://heroku_szkmsdmg:c5cbajmha62hpn53o74ob7kb0v@ds135049.mlab.com:35049/heroku_szkmsdmg',
     redirectUri: 'http://dev.eve-pi-manager.space:3000/callback&client_id=',
     registerUri: 'http://dev.eve-pi-manager.space:3000/authorize/:author_id',
     replyDisabled: false,
@@ -14,5 +13,5 @@ const _config = {
         zkillboardLossesEndpoint: 'https://zkillboard.com/api/losses/characterID/{characterId}/'
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = _config;
-//# sourceMappingURL=dev.js.map

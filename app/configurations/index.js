@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 let _config;
 const env = process.env.NODE_ENV || 'dev';
 console.info(`running with ${env} configurations`);
@@ -20,4 +19,3 @@ function getConfigurations() {
     return _config;
 }
 exports.getConfigurations = getConfigurations;
-//# sourceMappingURL=index.js.map

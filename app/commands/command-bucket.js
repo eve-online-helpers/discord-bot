@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const string_error_1 = require("../models/string-error");
 class CommandsBucket {
     static getResult(input, from) {
@@ -15,4 +14,3 @@ class CommandsBucket {
 }
 CommandsBucket._resolvers = new Map();
 exports.CommandsBucket = CommandsBucket;
-//# sourceMappingURL=command-bucket.js.map

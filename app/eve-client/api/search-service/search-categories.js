@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 class SearchCategories {
 }
 SearchCategories.AGENT = 'agent';
@@ -14,4 +13,3 @@ SearchCategories.SOLARSYSTEM = 'solarsystem';
 SearchCategories.STATION = 'station';
 SearchCategories.WORMHOLE = 'wormhole';
 exports.SearchCategories = SearchCategories;
-//# sourceMappingURL=search-categories.js.map

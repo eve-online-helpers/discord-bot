@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
 const Bluebird = require("bluebird");
 const SEARCH_ENDPOINT = 'https://esi.tech.ccp.is/latest/search/?search={searchString}&categories={seachCategories}&strict={strict}';
@@ -28,4 +27,3 @@ function resolveStringToNames(str, isStrict) {
     });
 }
 exports.resolveStringToNames = resolveStringToNames;
-//# sourceMappingURL=search.service.js.map

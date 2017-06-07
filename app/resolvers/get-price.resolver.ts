@@ -82,10 +82,10 @@ export class PriceResolver implements IResolvable {
                                 let priceResult = priceResultsInspections[i].value();
                                 discordResponse += `__${items[i].name}__\n`;
                                 if (priceResult.sell) {
-                                    discordResponse += `sell: ${priceResult.sell.volume_remain} items for **${formatCurrency(priceResult.sell.price, 2)} ISK**\n`;
+                                    discordResponse += `minimum sell order: ${priceResult.sell.volume_remain} items for **${formatCurrency(priceResult.sell.price, 2)} ISK**\n`;
                                 }
                                 if (priceResult.buy) {
-                                    discordResponse += `buy: ${priceResult.buy.volume_remain} items for **${formatCurrency(priceResult.buy.price, 2)} ISK**\n`;
+                                    discordResponse += `maximum buy order: ${priceResult.buy.volume_remain} items for **${formatCurrency(priceResult.buy.price, 2)} ISK**\n`;
                                     discordResponse += '\n';
                                 }
                             }

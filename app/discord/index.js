@@ -1,5 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const discord = require("discord.js");
 const parser = require("./input-parser");
 const string_error_1 = require("../models/string-error");
@@ -53,4 +52,3 @@ function sendMessage(message, userId) {
     client.users.get(userId).sendMessage(message);
 }
 exports.sendMessage = sendMessage;
-//# sourceMappingURL=index.js.map
