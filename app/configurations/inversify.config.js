@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 const search_service_1 = require("../eve-client/api/search-service");
 const character_service_1 = require("../eve-client/api/character-service");

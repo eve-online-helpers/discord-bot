@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const command_bucket_1 = require("./command-bucket");
 const resolvers = require("../resolvers");
 command_bucket_1.CommandsBucket.addResolver('p', resolvers.getPriceResolver);

@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 let _config;
 const env = process.env.NODE_ENV || 'dev';
 console.info(`running with ${env} configurations`);

@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const yaml = require("js-yaml");
 const fs = require("fs");
 const inversify_config_1 = require("../../configurations/inversify.config");

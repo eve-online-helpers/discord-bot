@@ -1,9 +1,11 @@
 {
   "name": "eve-discord-bot",
   "version": "0.0.0",
+  "main": "bin/www",
   "private": true,
   "scripts": {
-    "serve": "gulp serve",
+    "tscw": "tsc -w",
+    "serve": "concurrently \"npm run tscw\" \"nodemon --inspect\"",
     "start": "node ./bin/www",
     "test": "gulp test"
   },
@@ -13,7 +15,7 @@
     "body-parser": "1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
-    "discord.js": "^11.0.0",
+    "discord.js": "^11.1.0",
     "express": "~4.14.0",
     "gulp-istanbul": "^1.1.1",
     "inversify": "^3.1.0",
@@ -40,8 +42,9 @@
     "@types/moment": "^2.13.0",
     "@types/mongodb": "^2.1.37",
     "chai": "^3.5.0",
-    "cross-env": "^3.1.4",
-    "gulp": "gulpjs/gulp#4.0",
+    "concurrently": "^3.5.0",
+    "cross-env": "^3.2.4",
+    "gulp": "github:gulpjs/gulp#4.0",
     "gulp-coverage": "^0.3.38",
     "gulp-coveralls": "^0.1.4",
     "gulp-env": "^0.4.0",
@@ -54,7 +57,7 @@
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "tslint": "^4.4.2",
-    "typescript": "^2.1.6",
+    "typescript": "2.3.3",
     "unzipper": "^0.8.8"
   }
 }

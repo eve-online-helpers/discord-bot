@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const register_resolver_1 = require("./register.resolver");
 const get_pi_resolver_1 = require("./get-pi.resolver");
 const about_resolver_1 = require("./about-resolver/about.resolver");

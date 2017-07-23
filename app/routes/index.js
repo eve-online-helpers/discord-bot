@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const moment = require("moment");
 const auth = require("../eve-client/auth");

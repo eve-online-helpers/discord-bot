@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.tradeHubsIds = new Map();
 exports.tradeHubsIds.set('jita', {
     hubId: 60003760,
