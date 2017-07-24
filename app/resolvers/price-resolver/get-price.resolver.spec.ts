@@ -1,9 +1,9 @@
 import { PriceResolver } from './get-price.resolver';
-import { InputParam } from '../models/input-param.model';
-import { ParsedInput } from '../models/parsed-input.model';
+import { InputParam } from '../../models/input-param.model';
+import { ParsedInput } from '../../models/parsed-input.model';
 import { expect as ex } from 'chai';
 
-import { PersistanceMock } from '../../mocks/persistance.mock';
+import { PersistanceMock } from '../../../mocks/persistance.mock';
 
 describe('getPriceResolver', () => {
     let pResolver: PriceResolver;

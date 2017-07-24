@@ -8,7 +8,7 @@ import { IPersistance } from '../persistance/i-persistance';
 import { Persistance } from '../persistance/persistance';
 import { IResolvable } from '../resolvers/i-resolvable';
 import { InfoResolver } from '../resolvers/info-resolver/info-resolver';
-import { PriceResolver } from '../resolvers/get-price.resolver';
+import { PriceResolver } from '../resolvers/price-resolver/get-price.resolver';
 import { HelpResolver } from '../resolvers/help-resolver/help.resolver';
 import { TYPES } from './inversify.types';
 

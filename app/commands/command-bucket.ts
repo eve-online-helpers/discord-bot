@@ -3,18 +3,18 @@ import { StringError } from '../models/string-error';
 import { IResolvable } from './../resolvers/i-resolvable';
 
 export class CommandsBucket {
-    private static _resolvers = new Map<string, IResolvable>();
+    private static resolvers = new Map<string, IResolvable>();
 
     static getResult(input: ParsedInput, from: string): Promise<string> {
-        if (!CommandsBucket._resolvers.has(input.params[0].key)) {
+        if (!CommandsBucket.resolvers.has(input.params[0].key)) {
             return Promise.reject(new StringError(`Operation \`${input.params[0].key}\` is not a know command. Please check spelling or run \`!help\``));
         }
 
-        const resolver = CommandsBucket._resolvers.get(input.params[0].key);
+        const resolver = CommandsBucket.resolvers.get(input.params[0].key);
         return resolver.resolveMessage(input, from);
     }
 
     static addResolver(name: string, resolver: IResolvable) {
-        CommandsBucket._resolvers.set(name, resolver);
+        CommandsBucket.resolvers.set(name, resolver);
     }
 }

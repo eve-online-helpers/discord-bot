@@ -1,4 +1,4 @@
-import { PriceResolver } from './get-price.resolver';
+import { PriceResolver } from './price-resolver/get-price.resolver';
 import { registerResolver as _registerResolver } from './register.resolver';
 import { getPiResolver as _getPiResolver } from './get-pi.resolver';
 import { aboutResolver as _aboutResolver } from './about-resolver/about.resolver';
