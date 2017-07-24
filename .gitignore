@@ -3,10 +3,9 @@ typings
 **/*.js.map
 .vscode
 start.sh
-env.json
+.env
 .coverrun
 .coverdata
 reports
 .idea 
 npm-debug.log
-*.js

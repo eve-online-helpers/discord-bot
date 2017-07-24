@@ -1,25 +1,15 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "es6",
-        "lib":[
-            "ES2016",
-            "ES2016.Array.Include"
-        ],
-        "noImplicitAny": false,
-        "sourceMap": true,
-        "watch": false,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "typeRoots": [
-            "./node_modules/@types"
-        ]
-    },
-    "include": [
-        "app/**/*.ts",
-        "mocks/**/*.ts"
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "lib": [
+      "ES2016",
+      "ES2016.Array.Include"
     ],
-    "exclude": [
-        "./node_modules/axios/**/*.ts"
-    ]
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "watch": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
 }

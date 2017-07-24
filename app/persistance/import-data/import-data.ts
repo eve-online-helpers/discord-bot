@@ -7,7 +7,7 @@ import { TYPES } from '../../configurations/inversify.types';
 
 let persistance = container.get<IPersistance>(TYPES.Perisistance);
 export function importStations(filePath) {
-    let stations = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
+    let stations = yaml.safeLoad(fs.readFileSync(filePath, {encoding: 'utf8'}));
     const conn = persistance.getConnection();
 
     conn.dropCollection('stations');
@@ -21,7 +21,7 @@ export function importStations(filePath) {
 }
 
 export function importItems(filePath) {
-    const items = yaml.safeLoad(fs.readFileSync(filePath, 'utf8'));
+    const items = yaml.safeLoad(fs.readFileSync(filePath, {encoding: 'utf8'}));
     const conn = persistance.getConnection();
     conn.dropCollection('items');
 

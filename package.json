@@ -5,11 +5,13 @@
   "private": true,
   "scripts": {
     "tscw": "tsc -w",
-    "serve": "concurrently \"npm run tscw\" \"nodemon --inspect\"",
+    "env": "env-cmd .env",
+    "serve": "concurrently \"npm run tscw\" \"npm run env nodemon --inspect\"",
     "start": "node ./bin/www",
     "test": "gulp test"
   },
   "dependencies": {
+    "@types/node": "^8.0.15",
     "axios": "git+https://github.com/dimkinv/axios.git",
     "bluebird": "^3.4.7",
     "body-parser": "1.15.2",
@@ -40,10 +42,11 @@
     "@types/memory-cache": "^0.0.29",
     "@types/mocha": "^2.2.39",
     "@types/moment": "^2.13.0",
-    "@types/mongodb": "^2.1.37",
+    "@types/mongodb": "^2.2.7",
     "chai": "^3.5.0",
     "concurrently": "^3.5.0",
     "cross-env": "^3.2.4",
+    "env-cmd": "^5.1.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-coverage": "^0.3.38",
     "gulp-coveralls": "^0.1.4",
