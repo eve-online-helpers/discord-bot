@@ -76,8 +76,8 @@ export class InfoResolver implements IResolvable {
 
     private getShipsIdsFlown(zkillboarLossesResponse: IZkillboardLossesPublicResponse[]): string[] {
         let ships: number[] = [];
-        let losses = _.uniqBy(zkillboarLossesResponse, l => l.victim.shipTypeID)
-            .map(l => l.victim.shipTypeID.toString());
+        let losses = _.uniqBy(zkillboarLossesResponse, l => l.victim.ship_type_id)
+            .map(l => l.victim.ship_type_id.toString());
 
         return losses;
     }

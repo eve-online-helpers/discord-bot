@@ -1,7 +1,7 @@
 {
   "name": "eve-discord-bot",
   "version": "0.0.0",
-  "main": "bin/www",
+  "main": "app",
   "private": true,
   "scripts": {
     "clean:dist": "rm -rf dist",
@@ -11,7 +11,7 @@
     "tscw": "tsc -w",
     "env": "env-cmd .env",
     "serve": "concurrently \"npm run tscw\" \"npm run env nodemon --inspect\"",
-    "start": "node ./bin/www",
+    "start": "node ./app",
     "test": "mocha -R nyan app/**/*.spec.js"
   },
   "dependencies": {
