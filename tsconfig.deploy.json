@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "lib": [
+      "ES2016",
+      "ES2016.Array.Include"
+    ],
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "watch": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "./dist"
+  }
+}

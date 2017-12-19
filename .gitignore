@@ -10,3 +10,4 @@ reports
 .idea 
 npm-debug.log
 **/*.js
+dist

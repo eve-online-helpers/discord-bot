@@ -1,18 +1,18 @@
 {
   "name": "eve-discord-bot",
   "version": "0.0.0",
-  "engines": {
-    "node": "8.1.4",
-    "npm": "5.4.2"
-  },
   "main": "bin/www",
   "private": true,
   "scripts": {
+    "clean:dist": "rm -rf dist",
+    "copy": "cp package.json ./dist & cp yarn.lock ./dist",
+    "build": "yarn clean:dist && yarn tsc:build && yarn copy",
+    "tsc:build": "tsc -p tsconfig.deploy.json",
     "tscw": "tsc -w",
     "env": "env-cmd .env",
     "serve": "concurrently \"npm run tscw\" \"npm run env nodemon --inspect\"",
     "start": "node ./bin/www",
-    "test": "gulp test"
+    "test": "mocha -R nyan app/**/*.spec.js"
   },
   "dependencies": {
     "axios": "git+https://github.com/dimkinv/axios.git",
@@ -22,10 +22,10 @@
     "debug": "~2.2.0",
     "discord.js": "^11.1.0",
     "express": "~4.14.0",
+    "gulp": "^3.9.1",
     "gulp-istanbul": "^1.1.1",
     "inversify": "^3.1.0",
     "jade": "~1.11.0",
-    "js-yaml": "^3.7.0",
     "lodash": "^4.17.4",
     "memory-cache": "^0.1.6",
     "moment": "^2.17.1",
@@ -36,17 +36,16 @@
     "yargs-parser": "^4.2.1"
   },
   "devDependencies": {
-    "@types/node": "^8.0.15",
     "@types/axios": "^0.14.0",
     "@types/bluebird": "^3.5.8",
     "@types/chai": "^3.4.34",
     "@types/inversify": "^2.0.33",
-    "@types/js-yaml": "^3.5.29",
-    "@types/lodash": "^4.14.52",
+    "@types/lodash": "^4.14.91",
     "@types/memory-cache": "^0.0.29",
     "@types/mocha": "^2.2.39",
     "@types/moment": "^2.13.0",
     "@types/mongodb": "^2.2.7",
+    "@types/node": "^8.0.15",
     "chai": "^3.5.0",
     "concurrently": "^3.5.0",
     "cross-env": "^3.2.4",
