@@ -7,5 +7,6 @@ export const TYPES = {
     CorporationService: Symbol('CorporationService'),
     AllianceService: Symbol('AllianceService'),
     ZkillboardService: Symbol('ZkillboardService'),
-    HelpResolver: Symbol('HelpResolver')
+    HelpResolver: Symbol('HelpResolver'),
+    RollResolver: Symbol('RollResolver')
 };

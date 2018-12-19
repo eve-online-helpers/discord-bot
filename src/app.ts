@@ -1,13 +1,16 @@
-import './app/configurations/inversify.config';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+import './configurations/inversify.config';
 
 import * as express from 'express';
 import * as path from 'path';
 import * as logger from 'morgan';
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
-import * as index from './app/routes/index';
-import * as discord from './app/discord';
-import { ExpressError } from './app/models/express-error.model';
+import * as index from './routes/index';
+import * as discord from './discord';
+import { ExpressError } from './models/express-error.model';
 
 discord.init();
 // scheduler.startScheduler(5 * 60 * 1000);
@@ -19,7 +22,7 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

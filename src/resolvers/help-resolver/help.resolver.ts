@@ -16,6 +16,7 @@ export class HelpResolver implements IResolvable {
                 '!help           This help message\n' +
                 '!p <item>       Get sell and buy prices for items that match item (full or partial) for additional info run <!p !help>\n' +
                 '!c <character>  Get details for character, it\'s corporation and alliance if any. (note: search is strict)\n\n' +
+                '!roll <number>  Will roll random number between 0 and <number>' +
                 '```\n';
             resolve(help);
         });

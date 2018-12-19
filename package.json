@@ -10,8 +10,7 @@
     "tsc:build": "tsc -p tsconfig.deploy.json",
     "tscw": "tsc -w",
     "env": "env-cmd .env",
-    "serve": "concurrently \"npm run tscw\" \"npm run env nodemon --inspect\"",
-    "start": "node ./app",
+    "start": "ts-node --project tsconfig.json ./src/app.ts",
     "test": "mocha -R nyan app/**/*.spec.js"
   },
   "dependencies": {
@@ -21,6 +20,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "discord.js": "^11.1.0",
+    "dotenv": "^6.2.0",
     "express": "~4.14.0",
     "gulp": "^3.9.1",
     "gulp-istanbul": "^1.1.1",
@@ -39,6 +39,7 @@
     "@types/axios": "^0.14.0",
     "@types/bluebird": "^3.5.8",
     "@types/chai": "^3.4.34",
+    "@types/dotenv": "^6.1.0",
     "@types/inversify": "^2.0.33",
     "@types/lodash": "^4.14.91",
     "@types/memory-cache": "^0.0.29",
@@ -53,6 +54,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
+    "ts-node": "^7.0.1",
     "tslint": "^4.4.2",
     "typescript": "2.3.3",
     "unzipper": "^0.8.8"
