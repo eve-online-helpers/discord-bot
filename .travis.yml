@@ -8,3 +8,5 @@ before_script:
 script:
   - yarn build
   - yarn docker:build
+  - yarn docker:push
+  
