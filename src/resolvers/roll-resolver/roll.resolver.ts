@@ -13,7 +13,7 @@ export class RollResolver implements IResolvable {
             throw new StringError('!roll <number> must be of `number` type and of value `0-1000`');
         }
 
-        return `🎲 Rolled: \`${Math.floor(Math.random() + rollNumber)}\``;
+        return `🎲 Rolled: \`${Math.floor(Math.random() * rollNumber)}\``;
     }
 
 }
