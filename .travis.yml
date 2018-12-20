@@ -16,7 +16,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_25de5cd8b217_key -iv $encrypted_25de5cd8b217_iv
   -in credentials.tar.gz.enc -out credentials.tar.gz -d
 - gcloud version
-- PATH=`echo $PATH | sed -e 's/:\/usr\/lib\/google-cloud-sdk\/bin\/gsutil$//'`
+- echo $PATH
 - if [ ! -d ${HOME}/google-cloud-sdk ]; then
      curl https://sdk.cloud.google.com | bash > /dev/null;
   fi
