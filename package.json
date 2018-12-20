@@ -4,11 +4,10 @@
   "main": "app",
   "private": true,
   "scripts": {
-    "clean:dist": "rm -rf dist",
-    "copy": "cp package.json ./dist & cp yarn.lock ./dist",
-    "build": "yarn clean:dist && yarn tsc:build && yarn copy",
-    "tsc:build": "tsc -p tsconfig.deploy.json",
-    "tscw": "tsc -w",
+    "clean:dist": "rm -rf .dist",
+    "copy": "cp package.json ./.dist & cp yarn.lock ./.dist",
+    "build": "yarn clean:dist && tsc && yarn copy",
+    "docker:build": "docker build . --tag dimkinv/eve-discord-bot-test",
     "env": "env-cmd .env",
     "start": "ts-node --project tsconfig.json ./src/app.ts",
     "test": "mocha -R nyan app/**/*.spec.js"
