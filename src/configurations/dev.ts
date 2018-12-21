@@ -10,6 +10,7 @@ const _config: ConfigModel = {
         characterInfoEnpoint: 'https://esi.tech.ccp.is/latest/characters/{characterId}',
         corporationInfoEnpoint: 'https://esi.tech.ccp.is/latest/corporations/{corporationId}',
         allianceInfoEndpoint: 'https://esi.tech.ccp.is/latest/alliances/{allianceId}',
+        killmailDetails: 'https://esi.evetech.net/latest/killmails/{killmail_id}/{hash}',
         zkillboardInfoEndpoint: 'https://zkillboard.com/api/stats/characterID/{characterId}/',
         zkillboardLossesEndpoint: 'https://zkillboard.com/api/losses/characterID/{characterId}/'
     }

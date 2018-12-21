@@ -7,6 +7,7 @@ export interface ICharacterPublicResponse {
     bloodline_id: number;
     description: string;
     alliance_id: number;
+    faction_id: number;
     ancestry_id: number;
     security_status: number;
 }

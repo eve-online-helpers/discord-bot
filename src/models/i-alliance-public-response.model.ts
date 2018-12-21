@@ -1,5 +1,5 @@
 export interface IAlliancePublicResponse {
-    alliance_name: string;
+    name: string;
     ticker: string;
     date_founded: string;
     executor_corp: number;

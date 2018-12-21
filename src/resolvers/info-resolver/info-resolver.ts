@@ -45,18 +45,26 @@ export class InfoResolver implements IResolvable {
                 this.zkillboardService.getZkillboardInfoById(characterId),
                 this.zkillboardService.getZkillboardLossesById(characterId)]);
 
-            const shipsIdsFlown = this.getShipsIdsFlown(zkillboardLosses);
+            const killmailDetailsResponse = await this.zkillboardService.getKillmailsDetails(zkillboardLosses.map(kbLoss =>
+                ({
+                    killmail_id: kbLoss.killmail_id,
+                    hash: kbLoss.zkb.hash
+                })));
+
+            const shipsIdsFlown = killmailDetailsResponse.map(
+                killmailDetails => killmailDetails.victim.ship_type_id.toString()
+            );
             const shipsFlown = await this.persistance.getItemsByIds(shipsIdsFlown);
 
             let result = '\n```';
             result += `Name:               ${characterResult.name}`;
             result += characterId === corporationResult.ceo_id ? ' (CEO)\n' : '\n';
             result += `Security Status:    ${characterResult.security_status}\n`;
-            result += `Corporation Name:   ${corporationResult.corporation_name}\n`;
+            result += `Corporation Name:   ${corporationResult.name}\n`;
             result += `Corporation Ticker: ${corporationResult.ticker}\n`;
             result += `Member Count:       ${corporationResult.member_count}\n`;
             if (allianceResult) {
-                result += `Alliance Name:      ${allianceResult.alliance_name}\n`;
+                result += `Alliance Name:      ${allianceResult.name}\n`;
                 result += `Alliance Ticker:    ${allianceResult.ticker}\n`;
             }
             result += `Ships Destroyed:    ${zkillboardResult.shipsDestroyed || '0'}\n`;
@@ -74,11 +82,11 @@ export class InfoResolver implements IResolvable {
         }
     }
 
-    private getShipsIdsFlown(zkillboarLossesResponse: IZkillboardLossesPublicResponse[]): string[] {
-        let ships: number[] = [];
-        let losses = _.uniqBy(zkillboarLossesResponse, l => l.victim.ship_type_id)
-            .map(l => l.victim.ship_type_id.toString());
+    // private getShipsIdsFlown(zkillboarLossesResponse: IZkillboardLossesPublicResponse[]): string[] {
+    //     let ships: number[] = [];
+    //     let losses = _.uniqBy(zkillboarLossesResponse, l => l.victim.ship_type_id)
+    //         .map(l => l.victim.ship_type_id.toString());
 
-        return losses;
-    }
+    //     return losses;
+    // }
 }

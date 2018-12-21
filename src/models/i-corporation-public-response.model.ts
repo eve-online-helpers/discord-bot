@@ -1,5 +1,5 @@
 export interface ICorporationPublicResponse {
-    corporation_name: string;
+    name: string;
     ticker: string;
     member_count: number;
     ceo_id: number;

@@ -11,6 +11,7 @@ export interface ConfigModel {
         characterInfoEnpoint: string;
         corporationInfoEnpoint: string;
         allianceInfoEndpoint: string;
+        killmailDetails: string;
         zkillboardInfoEndpoint: string;
         zkillboardLossesEndpoint: string;
     };
