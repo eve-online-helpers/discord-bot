@@ -15,13 +15,10 @@ script:
 before_install:
 - openssl aes-256-cbc -K $encrypted_25de5cd8b217_key -iv $encrypted_25de5cd8b217_iv
   -in credentials.tar.gz.enc -out credentials.tar.gz -d
-- gcloud version
-- echo $PATH
-- if [ ! -d ${HOME}/google-cloud-sdk ]; then
-     curl https://sdk.cloud.google.com | bash > /dev/null;
-  fi
-# - ls ${HOME}/google-cloud-sdk
 - tar -xzf credentials.tar.gz
-- mkdir -p lib  
-- ${HOME}/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file client-secret.json
-- ${HOME}/google-cloud-sdk/bin/gcloud version
+
+- wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-228.0.0-linux-x86_64.tar.gz
+- tar xvzf google-cloud-sdk-228.0.0-linux-x86_64.tar.gz
+
+# - ${HOME}/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file client-secret.json
+# - ${HOME}/google-cloud-sdk/bin/gcloud version
