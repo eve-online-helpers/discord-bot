@@ -19,6 +19,6 @@ before_install:
 
 - wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-228.0.0-linux-x86_64.tar.gz
 - tar xvzf google-cloud-sdk-228.0.0-linux-x86_64.tar.gz > /dev/null
-
-# - ${HOME}/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file client-secret.json
-# - ${HOME}/google-cloud-sdk/bin/gcloud version
+- ls
+- ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file client-secret.json
+- ./google-cloud-sdk/bin/gcloud version
