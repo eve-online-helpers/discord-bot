@@ -24,4 +24,4 @@ before_install:
 - tar -xzf credentials.tar.gz
 - mkdir -p lib  
 - ${HOME}/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file client-secret.json
-- gcloud version
+- ${HOME}/google-cloud-sdk/bin/gcloud version
