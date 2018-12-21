@@ -16,7 +16,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_25de5cd8b217_key -iv $encrypted_25de5cd8b217_iv
   -in credentials.tar.gz.enc -out credentials.tar.gz -d
 - gcloud version
-- PATH=`echo $PATH | sed -e 's/:\/usr\/bin$//'`
+- PATH=`./node_modules/.bin:/home/travis/bin:/home/travis/.local/bin:/opt/pyenv/shims:/home/travis/.phpenv/shims:/home/travis/perl5/perlbrew/bin:/home/travis/.nvm/versions/node/v11.5.0/bin:/home/travis/.kiex/elixirs/elixir-1.4.5/bin:/home/travis/.kiex/bin:/home/travis/.rvm/gems/ruby-2.4.1/bin:/home/travis/.rvm/gems/ruby-2.4.1@global/bin:/home/travis/.rvm/rubies/ruby-2.4.1/bin:/home/travis/gopath/bin:/home/travis/.gimme/versions/go1.7.4.linux.amd64/bin:/usr/local/phantomjs/bin:/usr/local/phantomjs:/usr/local/neo4j-3.2.7/bin:/usr/local/maven-3.5.2/bin:/usr/local/cmake-3.9.2/bin:/usr/local/clang-5.0.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/bin:/home/travis/.rvm/bin:/home/travis/.phpenv/bin:/opt/pyenv/bin:/home/travis/.yarn/bin`
 - echo $PATH
 - if [ ! -d ${HOME}/google-cloud-sdk ]; then
      curl https://sdk.cloud.google.com | bash > /dev/null;
