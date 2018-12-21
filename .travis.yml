@@ -10,13 +10,13 @@ script:
 - yarn build
 
 - if [ "$BRANCH" == "master" ]; then yarn docker:build;
-  else echo "not master branch, skipping docker:build task"
+  else echo "not master branch, skipping docker:build task"; fi
 
 - if [ "$BRANCH" == "master" ]; then yarn docker:push;
-  else echo "not master branch, skipping docker:push task"
+  else echo "not master branch, skipping docker:push task"; fi
 
 - if [ "$BRANCH" == "master" ]; then ./google-cloud-sdk/bin/gcloud compute instances update-container docker --container-image=dimkinv/eve-discord-bot-test;
-  else echo "not master branch, skipping docker restart"
+  else echo "not master branch, skipping docker restart"; fi
 
 before_install:
 - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH;
