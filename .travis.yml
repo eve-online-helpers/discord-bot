@@ -20,3 +20,4 @@ before_install:
 - tar xvzf google-cloud-sdk-228.0.0-linux-x86_64.tar.gz > /dev/null
 - ./google-cloud-sdk/bin/gcloud auth activate-service-account --key-file client-secret.json
 - ./google-cloud-sdk/bin/gcloud config set project 'default-docker-vm'
+- ./google-cloud-sdk/bin/gcloud config set compute/zone 'europe-west1-b'
