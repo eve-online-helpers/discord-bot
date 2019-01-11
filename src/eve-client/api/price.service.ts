@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import axios from 'axios';
 import { HubData } from '../../eve-client/api/id-names-mapper';
 
-const PRICE_ENDPOINT = 'https://esi.tech.ccp.is/latest/markets/{regionId}/orders/?type_id={itemId}';
+const PRICE_ENDPOINT = 'https://esi.evetech.net/latest/markets/{regionId}/orders/?type_id={itemId}';
 export class PriceServiceResponse {
     sell: PriceResponse;
     buy: PriceResponse;

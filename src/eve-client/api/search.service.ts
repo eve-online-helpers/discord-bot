@@ -1,8 +1,8 @@
 import axios from 'axios';
 import * as Bluebird from 'bluebird';
 
-const SEARCH_ENDPOINT = 'https://esi.tech.ccp.is/latest/search/?search={searchString}&categories={seachCategories}&strict={strict}';
-const NAME_RESOLTION_ENDPOINT = 'https://esi.tech.ccp.is/latest/universe/names/?datasource=tranquility';
+const SEARCH_ENDPOINT = 'https://esi.evetech.net/latest/search/?search={searchString}&categories={seachCategories}&strict={strict}';
+const NAME_RESOLTION_ENDPOINT = 'https://esi.evetech.net/latest/universe/names/?datasource=tranquility';
 
 export function resolveStringToNames(str: string, isStrict: boolean): Bluebird<NameResolutionResponse[]> {
     return new Bluebird<NameResolutionResponse[]>((resolve, reject) => {
